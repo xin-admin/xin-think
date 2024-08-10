@@ -21,9 +21,7 @@
     ],
     "require": {
         "php": ">=8.2.0",
-        "ext-curl": "*",
         "ext-pdo": "*",
-        "ext-zip": "*",
         "topthink/framework": "^8.0",
         "topthink/think-orm": "3.0.18",
         "topthink/think-filesystem": "^2.0",
