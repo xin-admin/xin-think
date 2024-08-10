@@ -227,9 +227,9 @@ class Install extends Migrator
             ]);
             $table->addColumn('id', 'integer', ['comment' => '在线开发ID', 'null' => false, 'signed' => false, 'identity' => true])
                 ->addColumn('table_name', 'string', ['comment' => '表格名', 'null' => false, 'default' => '', 'limit' => 30])
-                ->addColumn('columns', 'text', ['comment' => '表头Json', 'null' => false, 'default' => ''])
-                ->addColumn('crud_config', 'text', ['comment' => 'crud配置', 'null' => false, 'default' => ''])
-                ->addColumn('table_config', 'text', ['comment' => '基础配置', 'null' => false, 'default' => ''])
+                ->addColumn('columns', 'text', ['comment' => '表头Json', 'null' => false])
+                ->addColumn('crud_config', 'text', ['comment' => 'crud配置', 'null' => false])
+                ->addColumn('table_config', 'text', ['comment' => '基础配置', 'null' => false])
                 ->addColumn('describe', 'string', ['comment' => '描述', 'null' => false, 'default' => '', 'limit' => 255])
                 ->addColumn('create_time', 'integer', ['limit' => 10, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '更新时间'])
                 ->addColumn('update_time', 'integer', ['limit' => 10, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '创建时间'])
