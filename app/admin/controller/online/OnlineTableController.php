@@ -42,6 +42,29 @@ class OnlineTableController extends Controller
     }
 
     /**
+     * 基础控制器新增方法
+     * @return Json
+     */
+    #[Auth('add'), Method('POST')]
+    public function add(): Json
+    {
+        if(!$this->model) return $this->warn('当前控制器未设置模型');
+        if(!$this->validate) return $this->warn('当前控制器未设置验证器');
+        $data = $this->request->post();
+        if (!$this->validate->scene('add')->check($data)) {
+            return $this->error($this->validate->getError());
+        }
+        $this->model->save([
+            'table_name' => $data['table_name'],
+            'columns' => '{}',
+            'crud_config' => '{}',
+            'table_config' => '{}',
+            'describe' => $data['describe'] ?? ''
+        ]);
+        return $this->success('ok');
+    }
+
+    /**
      * 保存更改
      * @return Json
      * @throws DataNotFoundException
