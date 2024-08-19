@@ -91,7 +91,7 @@ class OnlineTableController extends Controller
             $online->table_config = $data['table_config'];
             $online->crud_config = $data['crud_config'];
             $online->save();
-            return $this->success('保存成功', $data);
+            return $this->success('保存成功');
         }
         return $this->error('保存失败');
     }
