@@ -639,7 +639,7 @@ class InstallData extends Migrator
                 'type' => '0',
                 'sort' => 99,
                 'name' => 'Xin Admin',
-                'path' => 'https=>//xinadmin.cn/',
+                'path' => 'https://xinadmin.cn/',
                 'icon' => null,
                 'key' => 'xinadmin',
                 'locale' => 'menu.xinadmin',
