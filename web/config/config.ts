@@ -107,6 +107,7 @@ export default defineConfig({
   mfsu: {
     strategy: 'normal',
   },
+  // mako: {},
   /**
    * 约定式路由配置
    */
@@ -140,14 +141,6 @@ export default defineConfig({
     { name: 'description', content: 'Xin Admin是一款基于 Ant Design Pro components 构建一套完善的 Xin Table， 只需一个 Columns 就可以实现增删改查等表单、表格、查询等功能，以及组件的高度自定义' },
   ],
   plugins: [
-    './config/plugins/multiRoutes',
-    '@umijs/max-plugin-openapi'
+    './config/plugins/multiRoutes'
   ],
-  // openAPI: {
-  //   requestLibPath: "import { request } from '@umijs/max'",
-  //   // 或者使用在线的版本
-  //   schemaPath: "http://127.0.0.1:8000/swagger.php",
-  //   // schemaPath: join(__dirname, 'oneapi.json'),
-  //   mock: false,
-  // }
 });
