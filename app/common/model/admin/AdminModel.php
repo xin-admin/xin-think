@@ -17,7 +17,7 @@ use app\common\model\BaseModel;
  */
 class AdminModel extends BaseModel
 {
-    protected $table = 'admin';
+    protected $name = 'admin';
 
     protected $hidden = ['password'];
 }
