@@ -14,8 +14,8 @@ use app\admin\model\file\FileModel as UploadFileModel;
 use app\api\model\UserModel as UserModel;
 use app\api\validate\User as UserVal;
 use app\BaseController;
-use app\common\attribute as XinAttr;
 use app\common\attribute\Auth;
+use app\common\attribute\Method;
 use app\common\enum\FileType as FileTypeEnum;
 use app\common\library\storage\Storage as StorageDriver;
 use app\common\library\token\Token;
@@ -28,7 +28,6 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\response\Json;
 
-#[XinAttr\OpenApi\Tag(name: "前台用户", description: "前台Api接口用户控制器")]
 class UserController extends BaseController
 {
 
@@ -39,20 +38,7 @@ class UserController extends BaseController
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    #[XinAttr\OpenApi\Get(
-        title: '获取用户信息',
-        description: '获取用户信息',
-        path: '/api.php/user/getUserInfo',
-        operationId: 'getUserInfo',
-        tags: ['前台用户'],
-        response: [
-            ['info', '用户基本信息', '#/components/schemas/user_model'],
-            ['access', '权限标识', 'object'],
-            ['menus', '菜单', '#/components/schemas/user_rule_model'],
-        ]
-    )]
-    #[XinAttr\Auth]
-    #[XinAttr\Method('GET')]
+    #[Method('GET'), Auth]
     public function getUserInfo(): Json
     {
         $info = Auth::getUserInfo();
@@ -79,13 +65,6 @@ class UserController extends BaseController
      * @return Json
      * @throws Exception
      */
-    #[XinAttr\OpenApi\Get(
-        title: '刷新 Token',
-        description: '刷新 Token',
-        path: '/api.php/user/refreshToken',
-        operationId: 'refreshToken',
-        tags: ['前台用户']
-    )]
     public function refreshToken(): Json
     {
         $token = $this->request->header('x-user-token');
@@ -106,14 +85,7 @@ class UserController extends BaseController
      * 退出登录
      * @return Json
      */
-    #[XinAttr\Auth]
-    #[XinAttr\OpenApi\Get(
-        title: '退出登录',
-        description: '退出登录',
-        path: '/api.php/user/logout',
-        operationId: 'logout',
-        tags: ['前台用户']
-    )]
+    #[Auth]
     public function logout(): Json
     {
         $user_id = Auth::getUserId();
@@ -131,16 +103,6 @@ class UserController extends BaseController
      * @return Json
      * @throws Exception
      */
-    #[XinAttr\OpenApi\Get(
-        title: '头像上传接口',
-        description: '头像上传',
-        path: '/api.php/user/upAvatar',
-        operationId: 'upAvatar',
-        tags: ['前台用户'],
-        response: [
-            ['fileInfo', '文件信息', '#/components/schemas/file_model']
-        ]
-    )]
     public function upAvatar(): Json
     {
         // 实例化存储驱动
@@ -171,16 +133,7 @@ class UserController extends BaseController
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    #[XinAttr\Auth]
-    #[XinAttr\Method('POST')]
-    #[XinAttr\OpenApi\Post(
-        title: '设置用户信息',
-        description: '设置用户信息',
-        path: '/api.php/user/setUserInfo',
-        operationId: 'setUserInfo',
-        tags: ['前台用户'],
-        bodyRef: '#/components/schemas/set_user_info'
-    )]
+    #[Method('POST'), Auth]
     public function setUserInfo(): Json
     {
         $data = $this->request->post();
@@ -206,16 +159,7 @@ class UserController extends BaseController
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    #[XinAttr\Auth]
-    #[XinAttr\Method('POST')]
-    #[XinAttr\OpenApi\Post(
-        title: '设置密码',
-        description: '设置密码',
-        path: '/api.php/user/setPassword',
-        operationId: 'setPassword',
-        tags: ['前台用户'],
-        bodyRef: '#/components/schemas/set_user_password'
-    )]
+    #[Method('POST'), Auth]
     public function setPassword(): Json
     {
         $data = $this->request->post();
@@ -240,15 +184,7 @@ class UserController extends BaseController
      * @return Json
      * @throws DbException
      */
-    #[XinAttr\OpenApi\Get(
-        title: '获取用户余额记录',
-        description: '获取用户余额记录',
-        path: '/api.php/user/getMoneyLog',
-        operationId: 'getMoneyLog',
-        tags: ['前台用户']
-    )]
-    #[XinAttr\Method('GET')]
-    #[XinAttr\Auth]
+    #[Method('GET'), Auth]
     public function getMoneyLog(): Json
     {
         $user_id = Auth::getUserId();

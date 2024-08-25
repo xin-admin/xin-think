@@ -12,22 +12,13 @@ namespace app\common\model\user;
 
 use app\common\model\BaseModel;
 use think\model\relation\BelongsTo;
-use OpenApi\Attributes as OAT;
 
 /**
  * 用户余额记录模型
  */
-#[OAT\Schema(schema: 'user_money_log_model',properties: [
-    new OAT\Property(property: 'id', description: 'ID', type: 'int'),
-    new OAT\Property(property: 'user_id', description: '用户id', type: 'int'),
-    new OAT\Property(property: 'scene', description: '余额变动场景', type: 'string'),
-    new OAT\Property(property: 'money', description: '变动金额', type: 'int'),
-    new OAT\Property(property: 'describe', description: '描述/说明', type: 'string'),
-    new OAT\Property(property: 'create_time', description: '创建时间', type: 'string'),
-])]
 class UserMoneyLogModel extends BaseModel
 {
-    protected $table = 'xin_user_money_log';
+    protected $name = 'user_money_log';
 
     protected $updateTime = false;
 

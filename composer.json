@@ -28,8 +28,7 @@
         "topthink/think-multi-app": "^1.0",
         "topthink/think-migration": "^3.1",
         "topthink/think-view": "^2.0",
-        "phpmailer/phpmailer": "^6.9",
-        "zircote/swagger-php": "^4.10"
+        "phpmailer/phpmailer": "^6.9"
     },
     "require-dev": {
         "symfony/var-dumper": ">=4.2",
@@ -38,9 +37,6 @@
     "autoload": {
         "psr-4": {
             "app\\": "app"
-        },
-        "psr-0": {
-            "": "extend/"
         }
     },
     "config": {

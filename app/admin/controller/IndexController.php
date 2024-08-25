@@ -14,14 +14,11 @@ use app\admin\model\admin\AdminGroupModel;
 use app\admin\model\admin\AdminModel;
 use app\admin\model\admin\AdminRuleModel;
 use app\admin\validate\Admin as AdminVal;
-use app\common\attribute as XinAttr;
 use app\common\attribute\Auth;
 use app\common\library\token\Token;
 use Exception;
 use think\response\Json;
 
-
-#[XinAttr\OpenApi\Tag(name: "后台基本接口", description: "后台基本接口，控制器 app\admin\controller\IndexController")]
 class IndexController extends Controller
 {
 
@@ -34,39 +31,17 @@ class IndexController extends Controller
     /**
      * @return Json
      */
-    #[XinAttr\OpenApi\Get(
-        title: '后台测试接口',
-        path: '/admin.php/index/index',
-        operationId: 'adminIndex',
-        tags: ['后台基本接口'],
-        response: [
-            ['webSetting', '响应内容', [
-                ['title', '网站标题', 'string'],
-                ['logo', '网站LOGO', 'string'],
-                ['subtitle', '副标题', 'string'],
-            ]]
-        ]
-    )]
     public function index(): Json
     {
         $webSetting = get_setting('web');
-        return $this->success(compact('webSetting'), '恭喜你已经成功安装 XinAttr Admin');
+        return $this->success(compact('webSetting'), '恭喜你已经成功安装 Xin Admin');
     }
 
     /**
      * @return Json
      * @throws Exception
      */
-    #[XinAttr\OpenApi\Get(
-        title: '刷新令牌',
-        path: '/admin.php/index/refreshToken',
-        operationId: 'refreshAdminToken',
-        tags: ['后台基本接口'],
-        response: [
-            ['token', '令牌', 'string']
-        ]
-    )]
-    #[XinAttr\Auth]
+    #[Auth]
     public function refreshToken(): Json
     {
         $token = $this->request->header('x-token');
@@ -86,19 +61,6 @@ class IndexController extends Controller
     /**
      * @return Json
      */
-    #[XinAttr\OpenApi\Post(
-        title: '登录',
-        description: '用户登录',
-        path: '/admin.php/admin/login',
-        operationId: 'loginAdmin',
-        tags: ['后台基本接口'],
-        body: [
-            ['loginType', '登录方式', 'string'],
-            ['username', '用户名', 'string'],
-            ['password', '密码', 'string'],
-        ],
-        required: ['loginType']
-    )]
     public function login(): Json
     {
         if (!$this->request->isPost()) {
@@ -152,14 +114,7 @@ class IndexController extends Controller
      * 退出登录
      * @return Json
      */
-    #[XinAttr\Auth]
-    #[XinAttr\OpenApi\Get(
-        title: '退出登录',
-        description: '退出登录',
-        path: '/admin.php/admin/logout',
-        operationId: 'logoutAdmin',
-        tags: ['后台基本接口']
-    )]
+    #[Auth]
     public function logout(): Json
     {
         $user_id = Auth::getAdminId();
@@ -176,14 +131,7 @@ class IndexController extends Controller
      * @return Json
      * @throws Exception
      */
-    #[XinAttr\OpenApi\Get(
-        title: '获取管理员信息',
-        description: '获取用户信息',
-        path: '/admin.php/admin/getAdminInfo',
-        operationId: 'getAdminInfo',
-        tags: ['后台基本接口']
-    )]
-    #[XinAttr\Auth]
+    #[Auth]
     public function getAdminInfo(): Json
     {
         $info = Auth::getAdminInfo();

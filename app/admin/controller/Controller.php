@@ -17,7 +17,6 @@ use app\common\model\BaseModel;
 use think\db\exception\DbException;
 use think\response\Json;
 use think\Validate;
-use OpenApi\Attributes as OAT;
 
 class Controller extends BaseController
 {
@@ -137,15 +136,6 @@ class Controller extends BaseController
      * @throws DbException
      */
     #[Auth('list'), Method('GET')]
-    #[OAT\Schema(schema: 'baseList',properties: [
-        new OAT\Property(property: 'data', description: '响应消息', properties: [
-            new OAT\Property(property: 'current_page', description: '当前页数'),
-            new OAT\Property(property: 'data', description: '数据类型'),
-            new OAT\Property(property: 'last_page', description: '最后页数'),
-            new OAT\Property(property: 'per_page', description: '页大小'),
-            new OAT\Property(property: 'total', description: '总数'),
-        ], type: 'object'),
-    ],anyOf: [new OAT\Schema('#/components/schemas/requestSuccess')])]
     public function list(): Json
     {
         if(!$this->model) return $this->warn('当前控制器未设置模型');

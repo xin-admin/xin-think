@@ -14,23 +14,18 @@ use app\admin\controller\Controller;
 use app\admin\model\file\FileModel as FileModel;
 use app\admin\model\file\FileGroupModel as GroupModel;
 use app\admin\validate\file\Group as GroupVal;
-use app\BaseController;
 use app\common\attribute\Auth;
 use app\common\attribute\Method;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\response\Json;
-use app\common\attribute as XinAttr;
 
 class GroupController extends Controller
 {
 
     protected string $authName = 'file.group';
 
-
-
-    #[XinAttr\OpenApi\Post(title: '新增文件分组', path: '/admin.php/file.group/add', operationId: 'file_group_add', tags: ['文件接口'], bodyRef: '#/components/schemas/file_group_model')]
     public function initialize(): void
     {
         parent::initialize();
@@ -45,13 +40,6 @@ class GroupController extends Controller
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    #[XinAttr\OpenApi\Get(
-        title: '文件分组列表列表',
-        path: '/admin.php/file.group/list',
-        operationId: 'file_group_list',
-        tags: ['文件接口'],
-        ref: '#/components/schemas/file_group_model'
-    )]
     #[Auth('list'), Method('GET')]
     public function list(): Json
     {
@@ -66,13 +54,6 @@ class GroupController extends Controller
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    #[XinAttr\OpenApi\Put(
-        title: '编辑文件分组',
-        path: '/admin.php/file.group/edit',
-        operationId: 'file_group_edit',
-        tags: ['文件接口'],
-        ref: '#/components/schemas/file_group_model'
-    )]
     #[Auth('edit'), Method('PUT')]
     public function edit(): Json
     {
@@ -99,12 +80,6 @@ class GroupController extends Controller
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    #[XinAttr\OpenApi\Delete(
-        title: '删除文件分组',
-        path: '/admin.php/file.group/delete',
-        operationId: 'file_group_delete',
-        tags: ['文件接口']
-    )]
     #[Auth('delete'), Method('DELETE')]
     public function delete(): Json
     {

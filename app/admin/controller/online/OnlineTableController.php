@@ -13,7 +13,6 @@ namespace app\admin\controller\online;
 use app\admin\controller\Controller;
 use app\admin\model\OnlineTableModel as OnlineTableModel;
 use app\admin\validate\online\OnlineTable as OnlineTableVal;
-use app\BaseController;
 use app\common\attribute\Auth;
 use app\common\attribute\Method;
 use app\common\library\Crud;

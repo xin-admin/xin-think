@@ -14,8 +14,8 @@ use app\admin\controller\Controller;
 use app\admin\model\dict\DictItemModel as DictItemModel;
 use app\admin\model\dict\DictModel as DictModel;
 use app\admin\validate\system\DictItem as DictItemVal;
+use app\common\attribute\Auth;
 use think\response\Json;
-use app\common\attribute as XinAttr;
 
 class DictItemController extends Controller
 {
@@ -27,9 +27,6 @@ class DictItemController extends Controller
     ];
 
 
-    #[XinAttr\OpenApi\Post(title: '新增字典项', path: '/admin.php/system.dict_item/add', operationId: 'dict_item_add', tags: ['系统设置'], bodyRef: '#/components/schemas/dict_item_model')]
-    #[XinAttr\OpenApi\Put(title: '编辑字典项', path: '/admin.php/system.dict_item/edit', operationId: 'dict_item_edit', tags: ['系统设置'], ref: '#/components/schemas/dict_item_model')]
-    #[XinAttr\OpenApi\Delete(title: '删除字典项', path: '/admin.php/system.dict_item/delete',operationId: 'dict_item_delete', tags: ['系统设置'])]
     public function initialize(): void
     {
         parent::initialize();
@@ -37,17 +34,7 @@ class DictItemController extends Controller
         $this->validate = new DictItemVal();
     }
 
-    #[XinAttr\OpenApi\Get(
-        title: '获取字典项列表',
-        path: '/admin.php/system.dict_item/list',
-        operationId: 'dict_item_list',
-        tags: ['系统设置'],
-        ref: '#/components/schemas/dict_item_model',
-        params: [
-            ['dictId','字典ID','int']
-        ]
-    )]
-    #[XinAttr\Auth('list')]
+    #[Auth('list')]
     public function list(): Json
     {
         list($where, $paginate, $order) = $this->buildSearch();
@@ -65,13 +52,6 @@ class DictItemController extends Controller
         return $this->success($list);
     }
 
-    #[XinAttr\OpenApi\Get(
-        title: '获取字典',
-        path: '/admin.php/system.dict_item/dictList',
-        operationId: 'dict_item_dictList',
-        tags: ['系统设置'],
-        ref: '#/components/schemas/dict_item_model',
-    )]
     public function dictList(): Json
     {
         $dict = (new DictModel())->with('dictItems')->visible(['dictItems'=>['label','value','status']])->select()->toArray();

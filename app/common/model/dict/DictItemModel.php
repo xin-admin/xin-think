@@ -11,24 +11,13 @@
 namespace app\common\model\dict;
 
 use app\common\model\BaseModel;
-use OpenApi\Attributes as OAT;
 
 /**
  * 字典项模型
  */
-#[OAT\Schema(schema: 'dict_item_model',properties: [
-    new OAT\Property(property: 'id', description: 'ID', type: 'int'),
-    new OAT\Property(property: 'dict_id ', description: '字典ID', type: 'string'),
-    new OAT\Property(property: 'label', description: '字典项名称', type: 'string'),
-    new OAT\Property(property: 'value', description: '数据值', type: 'int'),
-    new OAT\Property(property: 'switch', description: '是否启用：0：禁用，1：启用', type: 'string'),
-    new OAT\Property(property: 'status', description: '状态', type: 'string'),
-    new OAT\Property(property: 'create_time', description: '创建时间', type: 'string'),
-    new OAT\Property(property: 'update_time', description: '修改时间', type: 'string'),
-])]
 class DictItemModel extends BaseModel
 {
 
-    protected $table = 'xin_dict_item';
+    protected $name = 'dict_item';
 
 }

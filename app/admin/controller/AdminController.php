@@ -12,14 +12,10 @@ namespace app\admin\controller;
 
 use app\admin\model\admin\AdminModel as AdminModel;
 use app\admin\validate\Admin as AdminVal;
-use app\common\attribute as XinAttr;
 use app\common\attribute\Auth;
+use app\common\attribute\Method;
 use think\response\Json;
 
-#[XinAttr\OpenApi\Tag(name: "后台管理员", description: "
-    Controller： 后台管理员 \n
-    Author: 小刘同学 <2302563948@qq.com> \n
-")]
 class AdminController extends Controller
 {
 
@@ -36,8 +32,6 @@ class AdminController extends Controller
         'nickname' => 'like'
     ];
 
-    #[XinAttr\OpenApi\Get(title: '获取管理员列表', path: '/admin.php/admin/list', operationId: 'admin_list', tags: ['后台管理员'], ref: '#/components/schemas/admin_model')]
-    #[XinAttr\OpenApi\Delete('删除管理员','/admin.php/admin/delete', 'admin_delete', ['后台管理员'])]
     public function initialize(): void
     {
         parent::initialize();
@@ -50,15 +44,7 @@ class AdminController extends Controller
      * 新增管理员
      * @return Json
      */
-    #[XinAttr\OpenApi\Post(
-        title: '新增管理员',
-        path: '/admin.php/admin/add',
-        operationId: 'admin_add',
-        tags: ['后台管理员'],
-        bodyRef: '#/components/schemas/admin_model'
-    )]
-    #[XinAttr\Auth('add')]
-    #[XinAttr\Method('POST')]
+    #[Method('POST'), Auth('add')]
     public function add(): Json
     {
         $data = $this->request->param();
@@ -74,16 +60,7 @@ class AdminController extends Controller
      * 编辑
      * @return Json
      */
-    #[XinAttr\OpenApi\Put(
-        title: '编辑管理员',
-        description: '编辑管理员',
-        path: '/admin.php/admin/edit',
-        operationId: 'admin_edit',
-        tags: ['后台管理员'],
-        ref: '#/components/schemas/admin_model'
-    )]
-    #[XinAttr\Auth('edit')]
-    #[XinAttr\Method('PUT')]
+    #[Method('PUT'), Auth('edit')]
     public function edit(): Json
     {
         $data = $this->request->param();
@@ -98,20 +75,7 @@ class AdminController extends Controller
      * 修改密码
      * @return Json
      */
-    #[XinAttr\OpenApi\Put(
-        title: '修改管理员密码',
-        description: '修改管理员密码',
-        path: '/admin.php/admin/updatePassword',
-        operationId: 'admin_updatePassword',
-        tags: ['后台管理员'],
-        body: [
-            ['id', '用户ID', 'int'],
-            ['password', '密码', 'string'],
-            ['rePassword', '确认密码', 'string']
-        ]
-    )]
-    #[XinAttr\Auth('updatePwd')]
-    #[XinAttr\Method('PUT')]
+    #[Method('PUT'), Auth('updatePwd')]
     public function updatePassword(): Json
     {
         $data = $this->request->param();
@@ -127,22 +91,7 @@ class AdminController extends Controller
      * 修改管理员信息
      * @return Json
      */
-    #[XinAttr\OpenApi\Put(
-        title: '修改管理员信息',
-        description: '修改管理员信息',
-        path: '/admin.php/admin/updateAdmin',
-        operationId: 'admin_updateAdmin',
-        tags: ['后台管理员'],
-        body: [
-            ['username', '用户ID', 'int'],
-            ['mobile', '手机号', 'string'],
-            ['nickname', '昵称', 'string'],
-            ['email', '邮箱', 'string'],
-            ['avatar_id', '头像ID', 'int']
-        ]
-    )]
-    #[XinAttr\Auth]
-    #[XinAttr\Method('PUT')]
+    #[Method('PUT'), Auth]
     public function updateAdmin(): Json
     {
         $data = $this->request->param();

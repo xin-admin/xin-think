@@ -12,7 +12,8 @@ namespace app\admin\controller\user;
 
 use app\admin\controller\Controller;
 use app\admin\validate\MoneyLog as MoneyLogVal;
-use app\common\attribute as XinAttr;
+use app\common\attribute\Auth;
+use app\common\attribute\Method;
 use app\common\model\user\UserModel;
 use app\common\model\user\UserMoneyLogModel as MoneyLogModel;
 use think\response\Json;
@@ -23,8 +24,6 @@ class UserMoneyLogController extends Controller
     protected string $authName = 'user.moneyLog';
 
 
-    #[XinAttr\OpenApi\Put(title: '编辑用户余额记录', path: '/admin.php/user.user_money_log/edit', operationId: 'user_money_log_edit', tags: ['后台用户'], ref: '#/components/schemas/user_money_log_model')]
-    #[XinAttr\OpenApi\Delete(title: '删除用户余额记录', path: '/admin.php/user.user_money_log/delete', operationId: 'user_money_log_delete', tags: ['后台用户'])]
     public function initialize(): void
     {
         parent::initialize();
@@ -32,15 +31,7 @@ class UserMoneyLogController extends Controller
         $this->validate = new MoneyLogVal();
     }
 
-    #[XinAttr\OpenApi\Get(
-        title: '用户余额记录列表',
-        path: '/admin.php/user.user_money_log/list',
-        operationId: 'user_money_log_list',
-        tags: ['后台用户'],
-        ref: '#/components/schemas/user_money_log_model'
-    )]
-    #[XinAttr\Auth('list')]
-    #[XinAttr\Method('GET')]
+    #[Method('GET'), Auth('list')]
     public function list(): Json
     {
         list($where, $paginate) = $this->buildSearch();
@@ -52,19 +43,7 @@ class UserMoneyLogController extends Controller
         return $this->success($list);
     }
 
-    #[XinAttr\OpenApi\Post(
-        title: '新增用户余额变动记录',
-        path: '/admin.php/user.user_money_log/add',
-        operationId: 'user_money_log_add',
-        tags: ['后台用户'],
-        body: [
-            ['id', '用户ID', 'int'],
-            ['money', '变动余额', 'int'],
-            ['remark', '备注', 'string']
-        ]
-    )]
-    #[XinAttr\Auth('add')]
-    #[XinAttr\Method('POST')]
+    #[Method('POST'), Auth('add')]
     public function add(): Json
     {
         $data = $this->request->post();

@@ -12,7 +12,7 @@ namespace app\admin\controller\user;
 
 use app\admin\controller\Controller;
 use app\api\validate\user\UserRule as UserRuleVal;
-use app\common\attribute as XinAttr;
+use app\common\attribute\Auth;
 use app\common\model\user\UserRuleModel as UserRuleModel;
 use Exception;
 use think\response\Json;
@@ -32,9 +32,6 @@ class UserRuleController extends Controller
 
     protected string $authName = 'user.rule';
 
-    #[XinAttr\OpenApi\Post(title: '新增用户权限', path: '/admin.php/user.user_rule/add', operationId: 'user_rule_add', tags: ['后台用户'], bodyRef: '#/components/schemas/user_rule_model')]
-    #[XinAttr\OpenApi\Put(title: '修改用户权限', path: '/admin.php/user.user_rule/edit', operationId: 'user_rule_edit', tags: ['后台用户'], ref: '#/components/schemas/user_rule_model')]
-    #[XinAttr\OpenApi\Delete(title: '删除用户权限', path: '/admin.php/user.user_rule/delete', operationId: 'user_rule_delete', tags: ['后台用户'])]
     public function initialize(): void
     {
         parent::initialize();
@@ -47,14 +44,7 @@ class UserRuleController extends Controller
      * @return Json
      * @throws Exception
      */
-    #[XinAttr\OpenApi\Get(
-        title: '获取用户权限列表',
-        path: '/admin.php/user.user_rule/list',
-        operationId: 'user_rule_list',
-        tags: ['后台用户'],
-        ref: '#/components/schemas/user_rule_model'
-    )]
-    #[XinAttr\Auth('list')]
+    #[Auth('list')]
     public function list(): Json
     {
         $rootNode = $this->model->order('sort', 'desc')->select()->toArray();
@@ -67,14 +57,7 @@ class UserRuleController extends Controller
      * @return Json
      * @throws Exception
      */
-    #[XinAttr\OpenApi\Get(
-        title: '获取用户权限父ID列表',
-        path: '/admin.php/user.user_rule/getRulePid',
-        operationId: 'user_rule_getRulePid',
-        tags: ['后台用户'],
-        ref: '#/components/schemas/user_rule_model'
-    )]
-    #[XinAttr\Auth('list')]
+    #[Auth('list')]
     public function getRulePid(): Json
     {
         $rootNode = $this->model

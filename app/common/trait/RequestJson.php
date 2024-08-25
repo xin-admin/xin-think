@@ -12,7 +12,6 @@ namespace app\common\trait;
 
 use app\common\enum\ApiEnum\ShowType as ShopTypeEnum;
 use app\common\enum\ApiEnum\StatusCode;
-use OpenApi\Attributes as OAT;
 use think\exception\HttpResponseException;
 use think\Response;
 use think\response\Json;
@@ -29,13 +28,6 @@ trait RequestJson
      * @param string $message 响应内容
      * @return Json
      */
-    #[OAT\Schema(schema: 'requestSuccess', properties: [
-        new OAT\Property(property: 'msg', description: '响应消息', type: 'string'),
-        new OAT\Property(property: 'showType', description: '错误显示类型', type: 'int'),
-        new OAT\Property(property: 'status', description: '状态码', type: 'int', default: StatusCode::OK->value),
-        new OAT\Property(property: 'success', description: '成功状态', type: 'boolean'),
-        new OAT\Property(property: 'data', description: '响应数据', type: 'object', default: [])
-    ])]
     protected function success(string | array $data = [], string $message = 'ok'): Json
     {
         if(is_array($data)) {
@@ -65,13 +57,6 @@ trait RequestJson
      * @param string $message 响应内容
      * @return Json
      */
-    #[OAT\Schema(schema: 'requestError', properties: [
-        new OAT\Property(property: 'msg', description: '响应消息', type: 'string', default: '报错内容'),
-        new OAT\Property(property: 'showType', description: '错误显示类型', type: 'int', default: 2),
-        new OAT\Property(property: 'status', description: '状态码', type: 'int', default: StatusCode::ERROR->value),
-        new OAT\Property(property: 'success', description: '成功状态', type: 'boolean', default: false),
-        new OAT\Property(property: 'data', description: '响应数据', type: 'object', default: [])
-    ])]
     protected function error(string | array $data = [], string $message = ''): Json
     {
         if(is_array($data)) {
@@ -101,13 +86,6 @@ trait RequestJson
      * @param string $message 响应内容
      * @return Json
      */
-    #[OAT\Schema(schema: 'requestWarn', properties: [
-        new OAT\Property(property: 'msg', description: '响应消息', type: 'string', default: '警告内容'),
-        new OAT\Property(property: 'showType', description: '错误显示类型', type: 'int', default: 1),
-        new OAT\Property(property: 'status', description: '状态码', type: 'int', default: StatusCode::WARN->value),
-        new OAT\Property(property: 'success', description: '成功状态', type: 'boolean', default: false),
-        new OAT\Property(property: 'data', description: '响应数据', type: 'object', default: [])
-    ])]
     protected function warn(string | array $data = [], string $message = ''): Json
     {
         if(is_array($data)) {

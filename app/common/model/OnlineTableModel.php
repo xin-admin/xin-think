@@ -10,27 +10,16 @@
 // +----------------------------------------------------------------------
 namespace app\common\model;
 
-use OpenApi\Attributes as OAT;
 
 /**
  * 在线开发记录模型
  */
-#[OAT\Schema(schema: 'online_table_model',properties: [
-    new OAT\Property(property: 'id', description: 'ID', type: 'int'),
-    new OAT\Property(property: 'table_name', description: '表格名称', type: 'string'),
-    new OAT\Property(property: 'columns', description: '表头Json', type: 'string'),
-    new OAT\Property(property: 'crud_config', description: 'crud配置', type: 'string'),
-    new OAT\Property(property: 'table_config', description: '基础配置', type: 'string'),
-    new OAT\Property(property: 'describe', description: '描述', type: 'string'),
-    new OAT\Property(property: 'update_time', description: '更新时间', type: 'string'),
-    new OAT\Property(property: 'create_time', description: '创建时间', type: 'string'),
-])]
 class OnlineTableModel extends BaseModel
 {
 
     protected $pk = 'id';
 
-    protected $table = 'xin_online_table';
+    protected $name = 'online_table';
 
 
 }

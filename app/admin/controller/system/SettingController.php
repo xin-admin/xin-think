@@ -14,7 +14,8 @@ use app\admin\controller\Controller;
 use app\admin\model\setting\SettingGroupModel as SettingGroupModel;
 use app\admin\model\setting\SettingModel as SettingModel;
 use app\admin\validate\system\Setting as SettingVal;
-use app\common\attribute as XinAttr;
+use app\common\attribute\Auth;
+use app\common\attribute\Method;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -28,9 +29,6 @@ class SettingController extends Controller
         'group_id' => '='
     ];
 
-    #[XinAttr\OpenApi\Post(title: '新增设置', path: '/admin.php/system.setting/add', operationId: 'setting_add', tags: ['系统设置'], bodyRef: '#/components/schemas/setting_model')]
-    #[XinAttr\OpenApi\Put(title: '编辑设置', path: '/admin.php/system.setting/edit', operationId: 'setting_edit', tags: ['系统设置'], ref: '#/components/schemas/setting_model')]
-    #[XinAttr\OpenApi\Delete(title: '删除设置', path: '/admin.php/system.setting/delete', operationId: 'setting_delete', tags: ['系统设置'])]
     public function initialize(): void
     {
         parent::initialize();
@@ -43,16 +41,7 @@ class SettingController extends Controller
      * @return Json
      * @throws DbException
      */
-    #[XinAttr\OpenApi\Get(
-        title: '获取设置列表',
-        path: '/admin.php/system.setting/list',
-        operationId: 'setting_list',
-        tags: ['系统设置'],
-        ref: '#/components/schemas/setting_model',
-        params: [['group_id', '分组ID', 'int']]
-    )]
-    #[XinAttr\Auth('list')]
-    #[XinAttr\Method('GET')]
+    #[Method('GET'), Auth('list')]
     public function list(): Json
     {
         $group_id = $this->request->param('group_id');
@@ -73,14 +62,7 @@ class SettingController extends Controller
      * 保存设置
      * @return Json
      */
-    #[XinAttr\OpenApi\Post(
-        title: '保存设置',
-        path: '/admin.php/system.setting/saveSetting',
-        operationId: 'setting_saveSetting',
-        tags: ['系统设置'],
-    )]
-    #[XinAttr\Auth('add')]
-    #[XinAttr\Method('POST')]
+    #[Method('POST'), Auth('add')]
     public function saveSetting(): Json
     {
         $data = $this->request->param();
@@ -102,14 +84,7 @@ class SettingController extends Controller
      * 新增分组
      * @return Json
      */
-    #[XinAttr\OpenApi\Post(
-        title: '新增分组',
-        path: '/admin.php/system.setting/addGroup',
-        operationId: 'setting_addGroup',
-        tags: ['系统设置'],
-    )]
-    #[XinAttr\Auth('addGroup')]
-    #[XinAttr\Method('POST')]
+    #[Method('POST'), Auth('addGroup')]
     public function addGroup(): Json
     {
         $params = $this->request->param();
@@ -128,14 +103,7 @@ class SettingController extends Controller
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    #[XinAttr\OpenApi\Get(
-        title: '查询设置分组',
-        path: '/admin.php/system.setting/querySettingGroup',
-        operationId: 'setting_querySettingGroup',
-        tags: ['系统设置'],
-    )]
-    #[XinAttr\Auth('querySettingGroup')]
-    #[XinAttr\Method('GET')]
+    #[Method('GET'), Auth('querySettingGroup')]
     public function querySettingGroup(): Json
     {
         $settingGroupModel = new SettingGroupModel();

@@ -15,7 +15,7 @@ use app\common\model\setting\SettingModel as BaseSettingModel;
 class SettingModel extends BaseSettingModel
 {
 
-    public function getOptionsAttr($value)
+    public function getOptionsAttr($value): array
     {
         $data = [];
         $value = explode("\n",$value);
@@ -32,7 +32,7 @@ class SettingModel extends BaseSettingModel
         return $data;
     }
 
-    public function getPropsAttr($value)
+    public function getPropsAttr($value): array
     {
         $data = [];
         $value = explode("\n",$value);

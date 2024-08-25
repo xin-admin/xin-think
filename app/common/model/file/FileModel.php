@@ -13,31 +13,13 @@ namespace app\common\model\file;
 use app\common\enum\FileType as FileTypeEnum;
 use app\common\model\BaseModel;
 use think\model\relation\BelongsTo;
-use OpenApi\Attributes as OAT;
 
 /**
  * 文件模型
  */
-#[OAT\Schema(schema: 'file_model',properties: [
-    new OAT\Property(property: 'file_id', description: '文件ID', type: 'int'),
-    new OAT\Property(property: 'group_id', description: '文件分组ID', type: 'int'),
-    new OAT\Property(property: 'channel', description: '上传来源', type: 'int'),
-    new OAT\Property(property: 'storage', description: '储存方式', type: 'string'),
-    new OAT\Property(property: 'domain', description: '储存域名', type: 'string'),
-    new OAT\Property(property: 'file_type', description: '文件类型', type: 'int'),
-    new OAT\Property(property: 'file_name', description: '文件名称', type: 'string'),
-    new OAT\Property(property: 'file_path', description: '文件路径', type: 'string'),
-    new OAT\Property(property: 'file_size', description: '文件大小', type: 'int'),
-    new OAT\Property(property: 'file_ext', description: '文件扩展名', type: 'string'),
-    new OAT\Property(property: 'cover', description: '文件封面', type: 'string'),
-    new OAT\Property(property: 'uploader_id', description: '上传用户ID', type: 'int'),
-    new OAT\Property(property: 'is_recycle', description: '是否在回收站', type: 'int'),
-    new OAT\Property(property: 'create_time', description: '创建时间', type: 'string'),
-    new OAT\Property(property: 'update_time', description: '修改时间', type: 'string'),
-])]
 class FileModel extends BaseModel
 {
-    protected $table = 'xin_file';
+    protected $name = 'file';
 
     // 定义主键
     protected $pk = 'file_id';

@@ -13,6 +13,7 @@ namespace app\api\controller;
 use app\BaseController;
 use app\api\model\UserModel as UserModel;
 use app\api\validate\User as UserVal;
+use app\common\attribute\Method;
 use app\common\library\sms\driver\Mail;
 use app\common\model\user\UserGroupModel;
 use app\common\model\user\UserRuleModel;
@@ -20,9 +21,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\response\Json;
-use app\common\attribute as XinAttr;
 
-#[XinAttr\OpenApi\Tag(name: "前台基本接口", description: "前台基本接口")]
 class IndexController extends BaseController
 {
 
@@ -32,20 +31,6 @@ class IndexController extends BaseController
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    #[XinAttr\OpenApi\Get(
-        title: '获取系统基本信息',
-        path: '/api.php/index/index',
-        operationId: 'index',
-        tags: ['前台基本接口'],
-        response: [
-            ['web_setting', 'Web 设置', [
-                ['title', '网站标题', 'string'],
-                ['logo', '网站LOGO', 'string'],
-                ['subtitle', '副标题', 'string'],
-            ]],
-            new XinAttr\OpenApi\Property(property: 'menus', ref: '#/components/schemas/user_rule_model', title: '菜单导航', description: '菜单导航')
-        ]
-    )]
     public function index(): Json
     {
         $group = (new UserGroupModel)->where('id',2)->findOrEmpty()->toArray();
@@ -60,22 +45,7 @@ class IndexController extends BaseController
      * 用户登录
      * @return Json
      */
-    #[XinAttr\OpenApi\Post(
-        title: '用户登录',
-        description: '用户登录',
-        path: '/api.php/index/login',
-        operationId: 'login',
-        tags: ['前台基本接口'],
-        body: [
-            ['loginType','登录方式','string'],
-            ['username','用户名','string'],
-            ['password','密码','string'],
-            ['email','登录方式','邮箱'],
-            ['captcha','邮箱验证码','string'],
-        ],
-        required: ['loginType']
-    )]
-    #[XinAttr\Method('POST')]
+    #[Method('POST')]
     public function login(): Json
     {
         $data = $this->request->post();
@@ -132,22 +102,7 @@ class IndexController extends BaseController
      * 用户注册
      * @return Json
      */
-    #[XinAttr\OpenApi\Post(
-        title: '用户注册',
-        description: '用户注册',
-        path: '/api.php/index/register',
-        operationId: 'register',
-        tags: ['前台基本接口'],
-        body: [
-            ['username','用户名','string'],
-            ['nickname','昵称','string'],
-            ['password','密码','string'],
-            ['rePassword','确认密码','string'],
-            ['regType','注册方式','string'],
-        ],
-        required: ['username','nickname','password','rePassword','regType']
-    )]
-    #[XinAttr\Method('POST')]
+    #[Method('POST')]
     public function register(): Json
     {
         $data = $this->request->post();
@@ -169,16 +124,6 @@ class IndexController extends BaseController
      * 发送邮箱验证码
      * @return Json
      */
-    #[XinAttr\OpenApi\Get(
-        title: '发送邮箱验证码',
-        description: '发送邮箱验证码',
-        path: '/api.php/index/sendMailCode',
-        operationId: 'sendMailCode',
-        tags: ['前台基本接口'],
-        params: [
-            ['email','邮箱','email']
-        ],
-    )]
     public function sendMailCode(): Json
     {
         $params = $this->request->param();

@@ -12,22 +12,19 @@ namespace app\admin\controller\file;
 
 use app\admin\controller\Controller;
 use app\admin\model\file\FileModel as FileModel;
-use app\common\attribute as XinAttr;
+use app\common\attribute\Auth;
+use app\common\attribute\Method;
 use app\common\library\storage\Storage as StorageDriver;
 use Exception;
 use think\db\exception\DbException;
 use think\response\Json;
 
-#[XinAttr\OpenApi\Tag(name: "文件接口", description: "
-    Controller： 文件接口 \n
-    Author: 小刘同学 <2302563948@qq.com> \n
-")]
+
 class FileController extends Controller
 {
     protected string $authName = 'file.file';
 
 
-    #[XinAttr\OpenApi\Put(title: '编辑文件记录', path: '/admin.php/file.file/edit', operationId: 'file_edit', tags: ['文件接口'], ref: '#/components/schemas/file_model')]
     public function initialize(): void
     {
         parent::initialize();
@@ -50,15 +47,7 @@ class FileController extends Controller
      * @return Json
      * @throws DbException
      */
-    #[XinAttr\OpenApi\Get(
-        title: '查询文件列表',
-        path: '/admin.php/file.file/list',
-        operationId: 'file_list',
-        tags: ['文件接口'],
-        ref: '#/components/schemas/file_model'
-    )]
-    #[XinAttr\Auth('list')]
-    #[XinAttr\Method('GET')]
+    #[Method('GET'), Auth('list')]
     public function list(): Json
     {
         list($where, $paginate) = $this->buildSearch();
@@ -75,14 +64,7 @@ class FileController extends Controller
      * @return Json
      * @throws Exception
      */
-    #[XinAttr\OpenApi\Delete(
-        title: '删除文件',
-        path: '/admin.php/file.file/delete',
-        operationId: 'file_delete',
-        tags: ['文件接口']
-    )]
-    #[XinAttr\Auth('delete')]
-    #[XinAttr\Method('DELETE')]
+    #[Method('DELETE'), Auth('delete')]
     public function delete(): Json
     {
         $data = $this->request->param();

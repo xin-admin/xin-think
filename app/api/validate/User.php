@@ -12,7 +12,6 @@ namespace app\api\validate;
 
 use app\common\attribute\Auth;
 use think\Validate;
-use OpenApi\Attributes as OAT;
 
 class User extends Validate
 {
@@ -51,20 +50,6 @@ class User extends Validate
 
     ];
 
-
-    #[OAT\Schema(schema: "set_user_info", required: ['username','nickname','gender','email','avatar','mobile'], properties: [
-        new OAT\Property(property: 'username',description: '用户名', type: 'string'),
-        new OAT\Property(property: 'nickname',description: '密码', type: 'string'),
-        new OAT\Property(property: 'gender',description: '性别', type: 'string'),
-        new OAT\Property(property: 'email',description: '邮箱', type: 'string'),
-        new OAT\Property(property: 'avatar',description: '头像', type: 'string'),
-        new OAT\Property(property: 'mobile',description: '手机号', type: 'string'),
-    ])]
-    #[OAT\Schema(schema: "set_user_password", required: ['oldPassword','newPassword','rePassword'], properties: [
-        new OAT\Property(property: 'oldPassword',description: '旧密码', type: 'string'),
-        new OAT\Property(property: 'newPassword',description: '新密码', type: 'string'),
-        new OAT\Property(property: 'rePassword',description: '验证新密码', type: 'string'),
-    ])]
     protected $scene = [
         // 账号密码登录
         'account'  =>  ['username','password'],

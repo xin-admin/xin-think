@@ -11,22 +11,13 @@
 namespace app\common\model\file;
 
 use app\common\model\BaseModel;
-use OpenApi\Attributes as OAT;
 
 /**
  * 文件分组模型
  */
-#[OAT\Schema(schema: 'file_group_model', properties: [
-    new OAT\Property(property: 'group_id', description: '分组ID', type: 'int'),
-    new OAT\Property(property: 'name ', description: '分组名称', type: 'string'),
-    new OAT\Property(property: 'parent_id', description: '父节点ID', type: 'int'),
-    new OAT\Property(property: 'sort', description: '排序', type: 'int'),
-    new OAT\Property(property: 'create_time', description: '创建时间', type: 'string'),
-    new OAT\Property(property: 'update_time', description: '修改时间', type: 'string'),
-])]
 class FileGroupModel extends BaseModel
 {
-    protected $table = 'xin_file_group';
+    protected $name = 'file_group';
 
     protected $pk = 'group_id';
 

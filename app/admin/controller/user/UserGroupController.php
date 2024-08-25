@@ -12,11 +12,11 @@ namespace app\admin\controller\user;
 
 use app\admin\controller\Controller;
 use app\api\validate\user\UserGroup as UserGroupVal;
+use app\common\attribute\Auth;
+use app\common\attribute\Method;
 use app\common\model\user\UserGroupModel as UserGroupModel;
 use Exception;
 use think\response\Json;
-use app\common\attribute as XinAttr;
-
 class UserGroupController extends Controller
 {
 
@@ -31,9 +31,6 @@ class UserGroupController extends Controller
     ];
 
 
-    #[XinAttr\OpenApi\Post(title: '新增用户分组', path: '/admin.php/user.user_group/add', operationId: 'user_group_add', tags: ['后台用户'], bodyRef: '#/components/schemas/user_group_model')]
-    #[XinAttr\OpenApi\Put(title: '编辑用户分组',path: '/admin.php/user.user_group/edit', operationId: 'user_group_edit', tags: ['后台用户'], ref: '#/components/schemas/user_group_model')]
-    #[XinAttr\OpenApi\Delete(title: '删除用户分组', path: '/admin.php/user.user_group/delete',operationId: 'user_group_delete',tags: ['后台用户'])]
     public function initialize(): void
     {
         parent::initialize();
@@ -45,14 +42,8 @@ class UserGroupController extends Controller
      * @return Json
      * @throws Exception
      */
-    #[XinAttr\OpenApi\Get(
-        title: '用户分组列表',
-        path: '/admin.php/user.user_group/list',
-        operationId: 'user_group_list',
-        tags: ['后台用户'],
-        ref: '#/components/schemas/user_group_model'
-    )]
-    #[XinAttr\Auth('list')]
+
+    #[Auth('list')]
     public function list(): Json
     {
         $rootNode = $this->model->select()->toArray();
@@ -65,19 +56,7 @@ class UserGroupController extends Controller
      * @return Json
      * @throws Exception
      */
-    #[XinAttr\OpenApi\Post(
-        title: '设置分组权限',
-        description: '设置分组权限',
-        path: '/admin.php/user.user_group/setGroupRule',
-        operationId: 'user_group_setGroupRule',
-        tags: ['后台用户'],
-        body: [
-            ['id', '设置分组ID', 'int'],
-            ['rule_ids', '权限ID', 'string']
-        ]
-    )]
-    #[XinAttr\Auth]
-    #[XinAttr\Method('POST')]
+    #[Method('POST'), Auth]
     public function setGroupRule(): Json
     {
         $params = $this->request->param();

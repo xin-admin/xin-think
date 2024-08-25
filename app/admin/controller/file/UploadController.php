@@ -17,7 +17,6 @@ use app\common\enum\FileType as FileTypeEnum;
 use app\common\library\storage\Storage as StorageDriver;
 use Exception;
 use think\response\Json;
-use app\common\attribute as XinAttr;
 
 class UploadController extends Controller
 {
@@ -29,18 +28,7 @@ class UploadController extends Controller
      * @return Json
      * @throws Exception
      */
-    #[XinAttr\OpenApi\Post(
-        title: '图片上传接口',
-        path: '/admin.php/file.upload/image',
-        operationId: 'file_upload_image',
-        tags: ['文件接口'],
-        bodyRef: '#/components/schemas/file_model',
-        body: [
-            ['group_id','分组ID','int'],
-            ['file','文件','object'],
-        ]
-    )]
-    #[XinAttr\Auth('image')]
+    #[Auth('image')]
     public function image(int $groupId = 0): Json
     {
         // 实例化存储驱动
@@ -68,18 +56,7 @@ class UploadController extends Controller
      * @return Json
      * @throws Exception
      */
-    #[XinAttr\OpenApi\Post(
-        title: '视频上传接口',
-        path: '/admin.php/file.upload/video',
-        operationId: 'file_upload_video',
-        tags: ['文件接口'],
-        bodyRef: '#/components/schemas/file_model',
-        body: [
-            ['group_id','分组ID','int'],
-            ['file','文件','object'],
-        ]
-    )]
-    #[XinAttr\Auth('video')]
+    #[Auth('video')]
     public function video(int $groupId = 0): Json
     {
         // 实例化存储驱动
@@ -107,18 +84,7 @@ class UploadController extends Controller
      * @return Json
      * @throws Exception
      */
-    #[XinAttr\OpenApi\Post(
-        title: '压缩文件上传接口',
-        path: '/admin.php/file.upload/zip',
-        operationId: 'file_upload_zip',
-        tags: ['文件接口'],
-        bodyRef: '#/components/schemas/file_model',
-        body: [
-            ['group_id','分组ID','int'],
-            ['file','文件','object'],
-        ]
-    )]
-    #[XinAttr\Auth('zip')]
+    #[Auth('zip')]
     public function zip(int $groupId = 0): Json
     {
         // 实例化存储驱动
@@ -146,18 +112,7 @@ class UploadController extends Controller
      * @return Json
      * @throws Exception
      */
-    #[XinAttr\OpenApi\Post(
-        title: '音频文件上传接口',
-        path: '/admin.php/file.upload/mp3',
-        operationId: 'file_upload_mp3',
-        tags: ['文件接口'],
-        bodyRef: '#/components/schemas/file_model',
-        body: [
-            ['group_id','分组ID','int'],
-            ['file','文件','object'],
-        ]
-    )]
-    #[XinAttr\Auth('mp3')]
+    #[Auth('mp3')]
     public function mp3(int $groupId = 0): Json
     {
         // 实例化存储驱动
@@ -185,18 +140,7 @@ class UploadController extends Controller
      * @return Json
      * @throws Exception
      */
-    #[XinAttr\OpenApi\Post(
-        title: '未知文件上传接口',
-        path: '/admin.php/file.upload/annex',
-        operationId: 'file_upload_annex',
-        tags: ['文件接口'],
-        bodyRef: '#/components/schemas/file_model',
-        body: [
-            ['group_id','分组ID','int'],
-            ['file','文件','object'],
-        ]
-    )]
-    #[XinAttr\Auth('annex')]
+    #[Auth('annex')]
     public function annex(int $groupId = 0): Json
     {
         // 实例化存储驱动
