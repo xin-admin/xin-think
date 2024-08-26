@@ -1,8 +1,8 @@
 import { request } from '@umijs/max';
 
 const api = {
-  vagueSearchApi: '/admin.php/user.user/vagueSearch', // 搜索用户
-  upUserMoneyApi: '/admin.php/user.userMoneyLog/add'
+  vagueSearchApi: '/admin/user.user/vagueSearch', // 搜索用户
+  upUserMoneyApi: '/admin/user.userMoneyLog/add'
 }
 
 /**

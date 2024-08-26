@@ -50,7 +50,7 @@ const Table : React.FC = () => {
         return <UploadImgItem
           form={form}
           dataIndex={'avatar_id'}
-          api={'/api.php/user/upAvatar'}
+          api={'/api/user/upAvatar'}
           defaultFile={form.getFieldValue('avatar_url')}
           crop={true}
         />
@@ -68,7 +68,7 @@ const Table : React.FC = () => {
 
   return (
     <UserLayout>
-      <Card title={'账户设置'}  extra={<Link to="/user/setPassword">修改密码</Link>}>
+      <Card title={'账户设置'}  extra={<Link to={'/user/setPassword'}>修改密码</Link>}>
         <BetaSchemaForm<USER.UserInfo>
           layoutType="Form"
           layout={'horizontal'}

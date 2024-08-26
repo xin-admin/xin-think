@@ -1,10 +1,10 @@
 import { request } from '@umijs/max';
 
 const api = {
-  loginApi: '/admin.php/index/login', // 用户登录
-  logoutApi: '/admin.php/index/logout', // 退出登录
-  getAdminInfoApi: '/admin.php/index/getAdminInfo', // 获取用户信息
-  refreshAdminTokenApi: '/admin.php/index/refreshToken', // 刷新 Token
+  loginApi: '/admin/index/login', // 用户登录
+  logoutApi: '/admin/index/logout', // 退出登录
+  getAdminInfoApi: '/admin/index/getAdminInfo', // 获取用户信息
+  refreshAdminTokenApi: '/admin/index/refreshToken', // 刷新 Token
 }
 
 /**

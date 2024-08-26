@@ -48,7 +48,7 @@ export default (props: {selectGroup: GroupDataType,getFileList: (group_id: numbe
   const items: MenuProps['items'] = [
     {
       label: UploadImage(
-        '/admin.php/file.upload/image?group_id=' + selectGroup.group_id,
+        '/admin/file.upload/image?group_id=' + selectGroup.group_id,
         'icon-wenjianleixing-suolvetu-tupianwenjian',
         '上传图片文件',
         '.jpg,.jpeg,.png,.bmp,.gif,.avif,.webp'
@@ -57,7 +57,7 @@ export default (props: {selectGroup: GroupDataType,getFileList: (group_id: numbe
     },
     {
       label: UploadImage(
-        '/admin.php/file.upload/zip?group_id=' + selectGroup.group_id,
+        '/admin/file.upload/zip?group_id=' + selectGroup.group_id,
         'icon-wenjianleixing-suolvetu-yasuowenjian',
         '上传压缩文件',
         '.zip,.rar'
@@ -66,7 +66,7 @@ export default (props: {selectGroup: GroupDataType,getFileList: (group_id: numbe
     },
     {
       label: UploadImage(
-        '/admin.php/file.upload/mp3?group_id=' + selectGroup.group_id,
+        '/admin/file.upload/mp3?group_id=' + selectGroup.group_id,
         'icon-wenjianleixing-suolvetu-shengyinwenjian',
         '上传音频文件',
         '.mp3,.wma,.wav,.ape,.flac,.ogg,.aac'
@@ -75,7 +75,7 @@ export default (props: {selectGroup: GroupDataType,getFileList: (group_id: numbe
     },
     {
       label: UploadImage(
-        '/admin.php/file.upload/video?group_id=' + selectGroup.group_id,
+        '/admin/file.upload/video?group_id=' + selectGroup.group_id,
         'icon-wenjianleixing-suolvetu-shipinwenjian',
         '上传视频文件',
         '.mp4,.mov,.wmv,.flv,.avl,.webm,.mkv'
@@ -84,7 +84,7 @@ export default (props: {selectGroup: GroupDataType,getFileList: (group_id: numbe
     },
     {
       label: UploadImage(
-        '/admin.php/file.upload/annex?group_id=' + selectGroup.group_id,
+        '/admin/file.upload/annex?group_id=' + selectGroup.group_id,
         'icon-wenjianleixing-suolvetu-weizhiwenjian',
         '上传其它文件',
         '*'

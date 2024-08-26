@@ -2,8 +2,8 @@ import { request } from '@umijs/max';
 import React from "react";
 
 const api = {
-  getRulePidApi: '/admin.php/adminRule/getRulePid', // 获取权限Pid
-  setGroupRuleApi: '/admin.php/adminGroup/setGroupRule', // 设置分组权限
+  getRulePidApi: '/admin/adminRule/getRulePid', // 获取权限Pid
+  setGroupRuleApi: '/admin/adminGroup/setGroupRule', // 设置分组权限
 }
 
 /**

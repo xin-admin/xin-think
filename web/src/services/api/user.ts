@@ -1,13 +1,13 @@
 import { request } from '@umijs/max';
 
 const api = {
-  getUserInfoApi: '/api.php/user/getUserInfo',
-  loginApi: '/api.php/index/login',
-  logoutApi: '/api.php/user/logout',
-  setUserApi: '/api.php/user/setUserInfo',
-  setPwdApi: '/api.php/user/setPassword',
-  reTokenApi: '/api.php/user/refreshToken',
-  getMoneyLogApi: '/api.php/user/getMoneyLog',
+  getUserInfoApi: '/api/user/getUserInfo',
+  loginApi: '/api/index/login',
+  logoutApi: '/api/user/logout',
+  setUserApi: '/api/user/setUserInfo',
+  setPwdApi: '/api/user/setPassword',
+  reTokenApi: '/api/user/refreshToken',
+  getMoneyLogApi: '/api/user/getMoneyLog',
 }
 
 /**

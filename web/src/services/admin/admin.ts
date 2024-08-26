@@ -1,7 +1,7 @@
 import { request } from '@umijs/max';
 
 const api = {
-  updateAdmin: '/admin.php/admin/updateAdmin'
+  updateAdmin: '/admin/admin/updateAdmin'
 }
 
 

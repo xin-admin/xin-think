@@ -1,10 +1,10 @@
 import { request } from '@umijs/max';
 
 const api = {
-  list: '/admin.php/file.file/list',
-  add: '/admin.php/file.group/add',
-  edit: '/admin.php/file.group/edit',
-  delete: '/admin.php/file.file/delete',
+  list: '/admin/file.file/list',
+  add: '/admin/file.group/add',
+  edit: '/admin/file.group/edit',
+  delete: '/admin/file.file/delete',
 }
 
 export async function FileList(params: any) {

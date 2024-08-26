@@ -1,9 +1,9 @@
 import { request } from '@umijs/max';
 
 const api = {
-  index: '/api.php/index',
-  login: '/api.php/index/login',
-  getMailCodeApi: '/api.php/index/sendMailCode'
+  index: '/api/index',
+  login: '/api/index/login',
+  getMailCodeApi: '/api/index/sendMailCode'
 }
 
 /**

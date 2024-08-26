@@ -1,10 +1,10 @@
 import { request } from '@umijs/max';
 
 const api = {
-  list: '/admin.php/file.group/list',
-  add: '/admin.php/file.group/add',
-  edit: '/admin.php/file.group/edit',
-  delete: '/admin.php/file.group/delete',
+  list: '/admin/file.group/list',
+  add: '/admin/file.group/add',
+  edit: '/admin/file.group/edit',
+  delete: '/admin/file.group/delete',
 }
 
 export async function GroupList() {
