@@ -1,7 +1,6 @@
 /**
  * Xin Table 公共接口
  */
-
 import { request } from '@umijs/max';
 interface XinApi {
    (
@@ -78,58 +77,3 @@ export const deleteApi: XinApi = (url,params,options) => {
     ...(options || {}),
   });
 }
-
-// interface XinApi {
-//
-//   url: string,
-//   params?: {
-//     keyword?: string;
-//     current?: number;
-//     pageSize?: number;
-//   } | { [key: string]: any },
-//   data?: { [key: string]: any },
-//   options?: { [key: string]: any }
-//
-// }
-//
-// export function listApi<T>(props: XinApi){
-//   const { url,params,options } = props
-//   return request<API.ResponseStructure<T>>(url, {
-//     method: 'GET',
-//     params: {
-//       ...params,
-//     },
-//     ...(options || {}),
-//   });
-// }
-//
-//
-// export function addApi<T>(props: XinApi){
-//   const { url,data,options } = props;
-//   return request<API.ResponseStructure<T>>(url, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     data: data,
-//     ...(options || {}),
-//   });
-// }
-//
-// export function editApi<T>(props:XinApi){
-//   const { url,params,options } = props
-//   return request<API.ResponseStructure<T>>(url, {
-//     method: 'GET',
-//     params: { ...params },
-//     ...(options || {}),
-//   });
-// }
-//
-// export function deleteApi<T>(props:XinApi){
-//   const { url,params,options } = props;
-//   return request<API.ResponseStructure<T>>(url, {
-//     method: 'DELETE',
-//     params: { ...params },
-//     ...(options || {}),
-//   });
-// }
