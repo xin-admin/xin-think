@@ -8,11 +8,11 @@
 // +----------------------------------------------------------------------
 // | Author: 小刘同学 <2302563948@qq.com>
 // +----------------------------------------------------------------------
-namespace app\api\validate\user;
+namespace app\admin\validate\user;
 
 use think\Validate;
 
-class UserRule extends Validate
+class UserGroup extends Validate
 {
     /**
      * 定义验证规则
@@ -20,7 +20,10 @@ class UserRule extends Validate
      *
      * @var array
      */
-    protected $rule = [];
+    protected $rule = [
+        'name'  => 'require',
+        'pid'   => 'number|max:2',
+    ];
 
     /**
      * 定义错误信息
@@ -28,5 +31,8 @@ class UserRule extends Validate
      *
      * @var array
      */
-    protected $message = [];
+    protected $message = [
+        'name.require' => '请输入名字',
+        'pid.number'   => '父ID格式错误'
+    ];
 }

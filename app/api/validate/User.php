@@ -57,7 +57,6 @@ class User extends Validate
         'email'    =>  ['email','captcha'],
         // 手机号登录
         'phone'    =>  ['mobile','captcha'],
-        'add'      =>  ['username','nickname','password'],
         // 注册会员
         'reg'      =>  ['username','nickname','password','rePassword','regType'],
 

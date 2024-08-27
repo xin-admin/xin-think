@@ -11,12 +11,13 @@
 namespace app\admin\controller\user;
 
 use app\admin\controller\Controller;
-use app\api\validate\user\UserGroup as UserGroupVal;
+use app\admin\validate\user\UserGroup as UserGroupVal;
 use app\common\attribute\Auth;
 use app\common\attribute\Method;
 use app\common\model\user\UserGroupModel as UserGroupModel;
 use Exception;
 use think\response\Json;
+
 class UserGroupController extends Controller
 {
 

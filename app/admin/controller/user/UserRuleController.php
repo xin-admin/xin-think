@@ -11,7 +11,7 @@
 namespace app\admin\controller\user;
 
 use app\admin\controller\Controller;
-use app\api\validate\user\UserRule as UserRuleVal;
+use app\admin\validate\user\UserRule as UserRuleVal;
 use app\common\attribute\Auth;
 use app\common\model\user\UserRuleModel as UserRuleModel;
 use Exception;
