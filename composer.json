@@ -1,22 +1,17 @@
 {
-    "name": "topthink/think",
+    "name": "xineny/xin-admin",
     "description": "the new thinkphp framework",
     "type": "project",
     "keywords": [
-        "framework",
         "thinkphp",
-        "ORM"
+        "xin admin"
     ],
-    "homepage": "https://www.thinkphp.cn/",
+    "homepage": "https://xinadmin.cn/",
     "license": "Apache-2.0",
     "authors": [
         {
-            "name": "liu21st",
-            "email": "liu21st@gmail.com"
-        },
-        {
-            "name": "yunwuxin",
-            "email": "448901948@qq.com"
+            "name": "小刘同学",
+            "email": "2302563948@qq.com"
         }
     ],
     "require": {
