@@ -48,19 +48,21 @@ class ExceptionHandle extends Handle
      * Render an exception into an HTTP response.
      *
      * @access public
-     * @param \think\Request   $request
+     * @param \think\Request $request
      * @param Throwable $e
      * @return Response
      */
-    public function render($request, Throwable $e): Response
+    public function render(\think\Request $request, Throwable $e): Response
     {
         // 添加自定义异常处理机制
         // 其他错误交给系统处理
         if($e instanceof HttpResponseException) {
             return  parent::render($request, $e);
         }
-        return $this->error((array)$e, $e->getMessage());
-
-
+        if(env('APP_DEBUG') == 'true') {
+            return $this->error((array)$e, $e->getMessage());
+        }else {
+            return $this->error($e->getMessage());
+        }
     }
 }
