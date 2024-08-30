@@ -15,7 +15,6 @@ namespace app;
 use app\common\attribute\Auth;
 use app\common\attribute\Method;
 use app\common\trait\RequestJson;
-use OpenApi\Attributes as OAT;
 use think\App;
 use think\db\exception\PDOException;
 use think\facade\Db;
@@ -24,12 +23,6 @@ use think\facade\Db;
 /**
  * 控制器基础类
  */
-#[OAT\Info(version: "1.0.0", description: "
-XinAdmin [ A Full stack framework ] \n
-Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved. \n
-Apache License ( http://www.apache.org/licenses/LICENSE-2.0 ) \n
-Author: 小刘同学 <2302563948@qq.com> \n
-", title: "Xin Admin 开发文档")]
 abstract class BaseController
 {
     use RequestJson;
