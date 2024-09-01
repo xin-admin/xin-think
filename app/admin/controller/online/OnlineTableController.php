@@ -1,17 +1,20 @@
 <?php
-// +----------------------------------------------------------------------
-// | XinAdmin [ A Full stack framework ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小刘同学 <2302563948@qq.com>
-// +----------------------------------------------------------------------
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
 namespace app\admin\controller\online;
 
 use app\admin\controller\Controller;
-use app\admin\model\OnlineTableModel as OnlineTableModel;
+use app\admin\model\OnlineTableModel;
 use app\admin\validate\online\OnlineTable as OnlineTableVal;
 use app\common\attribute\Auth;
 use app\common\attribute\Method;
@@ -28,7 +31,7 @@ class OnlineTableController extends Controller
         'table_id' => '=',
         'table_name' => 'like',
         'create_time' => 'date',
-        'update_time' => 'date'
+        'update_time' => 'date',
     ];
 
     protected string $authName = 'online.table';
@@ -41,16 +44,19 @@ class OnlineTableController extends Controller
     }
 
     /**
-     * 基础控制器新增方法
-     * @return Json
+     * 基础控制器新增方法.
      */
     #[Auth('add'), Method('POST')]
     public function add(): Json
     {
-        if(!$this->model) return $this->warn('当前控制器未设置模型');
-        if(!$this->validate) return $this->warn('当前控制器未设置验证器');
+        if (! $this->model) {
+            return $this->warn('当前控制器未设置模型');
+        }
+        if (! $this->validate) {
+            return $this->warn('当前控制器未设置验证器');
+        }
         $data = $this->request->post();
-        if (!$this->validate->scene('add')->check($data)) {
+        if (! $this->validate->scene('add')->check($data)) {
             return $this->error($this->validate->getError());
         }
         $this->model->save([
@@ -58,14 +64,13 @@ class OnlineTableController extends Controller
             'columns' => '{}',
             'crud_config' => '{}',
             'table_config' => '{}',
-            'describe' => $data['describe'] ?? ''
+            'describe' => $data['describe'] ?? '',
         ]);
         return $this->success('ok');
     }
 
     /**
-     * 保存更改
-     * @return Json
+     * 保存更改.
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
@@ -78,12 +83,12 @@ class OnlineTableController extends Controller
             'id' => 'require',
             'columns' => 'require',
             'table_config' => 'require',
-            'crud_config' => 'require'
+            'crud_config' => 'require',
         ]);
-        if (!$validate->check($data)) {
+        if (! $validate->check($data)) {
             return $this->warn($validate->getError());
         }
-        $data['id'] = (int)$data['id'];
+        $data['id'] = (int) $data['id'];
         $online = $this->model->where('id', $data['id'])->find();
         if ($online) {
             $online->columns = $data['columns'];
@@ -96,8 +101,7 @@ class OnlineTableController extends Controller
     }
 
     /**
-     * 获取 CRUD 数据
-     * @return Json
+     * 获取 CRUD 数据.
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
@@ -106,26 +110,24 @@ class OnlineTableController extends Controller
     public function getData(): Json
     {
         $id = request()->param('id');
-        if (!$id) {
+        if (! $id) {
             return $this->warn('id不存在');
         }
 
         $data = $this->model->field('columns,table_config,crud_config')->where('id', $id)->find();
-        if (!$data) {
+        if (! $data) {
             return $this->warn('表单不存在');
         }
         return $this->success(compact('data'));
-
     }
 
     /**
-     * CRUD
-     * @return Json
+     * CRUD.
      */
     #[Auth('crud'), Method('POST')]
     public function crud(): Json
     {
-        if(env('WEB_NAME') && env('WEB_NAME') == 'xin_test'){
+        if (env('WEB_NAME') && env('WEB_NAME') == 'xin_test') {
             return $this->warn('演示站已禁止此操作');
         }
         $data = request()->post();
@@ -133,18 +135,16 @@ class OnlineTableController extends Controller
             'id' => 'require',
             'columns' => 'require',
             'table_config' => 'require',
-            'crud_config' => 'require'
+            'crud_config' => 'require',
         ]);
-        if (!$validate->check($data)) {
+        if (! $validate->check($data)) {
             return $this->warn($validate->getError());
         }
 
         $crud = new Crud($data);
-        if($crud->generate()) {
+        if ($crud->generate()) {
             return $this->success('ok');
         }
         return $this->error($crud->getErrorMsg());
-
     }
-
 }

@@ -1,4 +1,16 @@
 <?php
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
 namespace app;
 
 use app\common\trait\RequestJson;
@@ -8,19 +20,19 @@ use think\exception\Handle;
 use think\exception\HttpException;
 use think\exception\HttpResponseException;
 use think\exception\ValidateException;
+use think\Request;
 use think\Response;
 use Throwable;
 
 /**
- * 应用异常处理类
+ * 应用异常处理类.
  */
 class ExceptionHandle extends Handle
 {
     use RequestJson;
 
-
     /**
-     * 不需要记录信息（日志）的异常类列表
+     * 不需要记录信息（日志）的异常类列表.
      * @var array
      */
     protected $ignoreReport = [
@@ -32,11 +44,7 @@ class ExceptionHandle extends Handle
     ];
 
     /**
-     * 记录异常信息（包括日志或者其它方式记录）
-     *
-     * @access public
-     * @param  Throwable $exception
-     * @return void
+     * 记录异常信息（包括日志或者其它方式记录）.
      */
     public function report(Throwable $exception): void
     {
@@ -47,20 +55,15 @@ class ExceptionHandle extends Handle
     /**
      * Render an exception into an HTTP response.
      *
-     * @access public
-     * @param \think\Request   $request
-     * @param Throwable $e
-     * @return Response
+     * @param Request $request
      */
     public function render($request, Throwable $e): Response
     {
         // 添加自定义异常处理机制
         // 其他错误交给系统处理
-        if($e instanceof HttpResponseException) {
-            return  parent::render($request, $e);
+        if ($e instanceof HttpResponseException) {
+            return parent::render($request, $e);
         }
-        return $this->error((array)$e, $e->getMessage());
-
-
+        return $this->error((array) $e, $e->getMessage());
     }
 }

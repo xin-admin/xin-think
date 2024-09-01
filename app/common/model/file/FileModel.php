@@ -1,21 +1,25 @@
 <?php
-// +----------------------------------------------------------------------
-// | XinAdmin [ A Full stack framework ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小刘同学 <2302563948@qq.com>
-// +----------------------------------------------------------------------
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
 namespace app\common\model\file;
 
 use app\common\enum\FileType as FileTypeEnum;
 use app\common\model\BaseModel;
+use Exception;
 use think\model\relation\BelongsTo;
 
 /**
- * 文件模型
+ * 文件模型.
  */
 class FileModel extends BaseModel
 {
@@ -27,7 +31,7 @@ class FileModel extends BaseModel
     // 追加的字段
     protected $append = [
         'preview_url',     // 图片预览url
-        'external_url'     // 文件外链url (用于视频文件)
+        'external_url',     // 文件外链url (用于视频文件)
     ];
 
     public function saveFile(array $data, int $user_id): bool
@@ -39,13 +43,13 @@ class FileModel extends BaseModel
             }
 
             $fileGroup = new FileGroupModel();
-            if (!isset($data['group_id'])) {
+            if (! isset($data['group_id'])) {
                 $group = $fileGroup->where('user_id', $user_id)->where('pid', 0)->find();
-                if (!$group) {
+                if (! $group) {
                     $fileGroup->save([
                         'pid' => 0,
                         'user_id' => $user_id,
-                        'name' => 'root'
+                        'name' => 'root',
                     ]);
                     $data['group_id'] = $fileGroup->id;
                 } else {
@@ -56,16 +60,14 @@ class FileModel extends BaseModel
             $this->save($data);
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->setErrorMsg($e->getMessage());
             return false;
         }
-
     }
 
     /**
-     * 关联模型：文件库分组
-     * @return BelongsTo
+     * 关联模型：文件库分组.
      */
     public function fileGroup(): BelongsTo
     {
@@ -73,10 +75,9 @@ class FileModel extends BaseModel
     }
 
     /**
-     * 生成预览url (preview_url)
-     * @param $value
-     * @param $data
-     * @return string
+     * 生成预览url (preview_url).
+     * @param mixed $value
+     * @param mixed $data
      */
     public function getPreviewUrlAttr($value, $data): string
     {
@@ -90,10 +91,9 @@ class FileModel extends BaseModel
     }
 
     /**
-     * 生成外链url (external_url)
-     * @param $value
-     * @param $data
-     * @return string
+     * 生成外链url (external_url).
+     * @param mixed $value
+     * @param mixed $data
      */
     public function getExternalUrlAttr($value, $data): string
     {
@@ -105,14 +105,10 @@ class FileModel extends BaseModel
     }
 
     /**
-     * 文件详情
-     * @param int $fileId
-     * @return static|array|null
+     * 文件详情.
      */
-    public static function detail(int $fileId): array|static|null
+    public static function detail(int $fileId): null|array|static
     {
         return self::get($fileId);
     }
-
-
 }

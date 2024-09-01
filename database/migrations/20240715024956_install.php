@@ -1,5 +1,15 @@
 <?php
-
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
 use think\migration\Migrator;
 
 class Install extends Migrator
@@ -47,7 +57,7 @@ class Install extends Migrator
 
     public function admin(): void
     {
-        if (!$this->hasTable('admin')) {
+        if (! $this->hasTable('admin')) {
             $table = $this->table('admin', [
                 'id' => false,
                 'comment' => '管理员表',
@@ -55,7 +65,7 @@ class Install extends Migrator
                 'row_format' => 'DYNAMIC',
                 'collation' => 'utf8mb4_unicode_ci',
             ]);
-            $table->addColumn('id', 'integer', ['comment' => 'ID', 'null' => false,  'signed' => false, 'identity' => true])
+            $table->addColumn('id', 'integer', ['comment' => 'ID', 'null' => false, 'signed' => false, 'identity' => true])
                 ->addColumn('username', 'string', ['limit' => 30, 'default' => '', 'comment' => '用户名', 'null' => false])
                 ->addColumn('nickname', 'string', ['limit' => 50, 'default' => '', 'comment' => '用户昵称', 'null' => false])
                 ->addColumn('avatar_id', 'integer', ['comment' => '头像', 'null' => false])
@@ -74,7 +84,7 @@ class Install extends Migrator
 
     public function adminGroup(): void
     {
-        if (!$this->hasTable('admin_group')) {
+        if (! $this->hasTable('admin_group')) {
             $table = $this->table('admin_group', [
                 'id' => false,
                 'comment' => '管理分组表',
@@ -82,7 +92,7 @@ class Install extends Migrator
                 'row_format' => 'DYNAMIC',
                 'collation' => 'utf8mb4_unicode_ci',
             ]);
-            $table->addColumn('id', 'integer', ['comment' => 'ID', 'null' => false,  'signed' => false, 'identity' => true])
+            $table->addColumn('id', 'integer', ['comment' => 'ID', 'null' => false, 'signed' => false, 'identity' => true])
                 ->addColumn('pid', 'integer', ['comment' => '上级分组ID', 'default' => 0, 'signed' => false, 'null' => false])
                 ->addColumn('name', 'string', ['limit' => 100, 'default' => '', 'comment' => '分组名称', 'null' => false])
                 ->addColumn('rules', 'text', ['null' => true, 'default' => null, 'comment' => '权限ID'])
@@ -94,7 +104,7 @@ class Install extends Migrator
 
     public function adminRule(): void
     {
-        if (!$this->hasTable('admin_rule')) {
+        if (! $this->hasTable('admin_rule')) {
             $table = $this->table('admin_rule', [
                 'id' => false,
                 'comment' => '管理员权限规则表',
@@ -102,7 +112,7 @@ class Install extends Migrator
                 'row_format' => 'DYNAMIC',
                 'collation' => 'utf8mb4_unicode_ci',
             ]);
-            $table->addColumn('id', 'integer', ['comment' => 'ID', 'null' => false,  'signed' => false, 'identity' => true])
+            $table->addColumn('id', 'integer', ['comment' => 'ID', 'null' => false, 'signed' => false, 'identity' => true])
                 ->addColumn('pid', 'integer', ['comment' => '父ID', 'null' => false, 'default' => 0, 'limit' => 10])
                 ->addColumn('type', 'string', ['comment' => '类型 0：页面 1：数据 2：按钮', 'null' => false, 'default' => 0, 'limit' => 1])
                 ->addColumn('sort', 'integer', ['comment' => '排序', 'null' => false, 'default' => 0])
@@ -122,7 +132,7 @@ class Install extends Migrator
 
     public function dict(): void
     {
-        if(!$this->hasTable('dict')) {
+        if (! $this->hasTable('dict')) {
             $table = $this->table('dict', [
                 'id' => false,
                 'comment' => '数据字典表',
@@ -130,7 +140,7 @@ class Install extends Migrator
                 'row_format' => 'DYNAMIC',
                 'collation' => 'utf8mb4_unicode_ci',
             ]);
-            $table->addColumn('id', 'integer', ['comment' => 'ID', 'null' => false,  'signed' => false, 'identity' => true])
+            $table->addColumn('id', 'integer', ['comment' => 'ID', 'null' => false, 'signed' => false, 'identity' => true])
                 ->addColumn('name', 'string', ['comment' => '字典名', 'null' => false, 'limit' => 20])
                 ->addColumn('type', 'string', ['comment' => '类型', 'null' => false, 'default' => 'default', 'limit' => 10])
                 ->addColumn('describe', 'string', ['comment' => '字典描述', 'null' => false, 'default' => '', 'limit' => 300])
@@ -144,7 +154,7 @@ class Install extends Migrator
 
     public function dictItem(): void
     {
-        if(!$this->hasTable('dict_item')) {
+        if (! $this->hasTable('dict_item')) {
             $table = $this->table('dict_item', [
                 'id' => false,
                 'comment' => '字典项列表',
@@ -152,7 +162,7 @@ class Install extends Migrator
                 'row_format' => 'DYNAMIC',
                 'collation' => 'utf8mb4_unicode_ci',
             ]);
-            $table->addColumn('id', 'integer', ['comment' => 'ID', 'null' => false,  'signed' => false, 'identity' => true])
+            $table->addColumn('id', 'integer', ['comment' => 'ID', 'null' => false, 'signed' => false, 'identity' => true])
                 ->addColumn('dict_id', 'integer', ['comment' => '字典ID', 'null' => false, 'signed' => false])
                 ->addColumn('label', 'string', ['comment' => '字典项名称', 'null' => false, 'limit' => 30])
                 ->addColumn('value', 'string', ['comment' => '数据值', 'null' => false, 'limit' => 30])
@@ -166,7 +176,7 @@ class Install extends Migrator
 
     public function file(): void
     {
-        if(!$this->hasTable('file')) {
+        if (! $this->hasTable('file')) {
             $table = $this->table('file', [
                 'id' => false,
                 'comment' => '文件库记录表',
@@ -174,7 +184,7 @@ class Install extends Migrator
                 'row_format' => 'DYNAMIC',
                 'collation' => 'utf8mb4_unicode_ci',
             ]);
-            $table->addColumn('file_id', 'integer', ['comment' => '文件ID', 'null' => false,  'signed' => false, 'identity' => true])
+            $table->addColumn('file_id', 'integer', ['comment' => '文件ID', 'null' => false, 'signed' => false, 'identity' => true])
                 ->addColumn('group_id', 'integer', ['comment' => '文件分组ID', 'null' => false, 'default' => 0, 'limit' => 10, 'signed' => false])
                 ->addColumn('channel', 'integer', ['comment' => '上传来源(10商户后台 20用户端)', 'null' => false, 'default' => 10, 'limit' => 2, 'signed' => false])
                 ->addColumn('storage', 'string', ['comment' => '存储方式', 'null' => false, 'default' => '', 'limit' => 10])
@@ -197,7 +207,7 @@ class Install extends Migrator
 
     public function fileGroup(): void
     {
-        if(!$this->hasTable('file_group')) {
+        if (! $this->hasTable('file_group')) {
             $table = $this->table('file_group', [
                 'id' => false,
                 'comment' => '文件库分组记录表',
@@ -205,7 +215,7 @@ class Install extends Migrator
                 'row_format' => 'DYNAMIC',
                 'collation' => 'utf8mb4_unicode_ci',
             ]);
-            $table->addColumn('group_id', 'integer', ['comment' => '分组ID', 'null' => false,  'signed' => false, 'identity' => true])
+            $table->addColumn('group_id', 'integer', ['comment' => '分组ID', 'null' => false, 'signed' => false, 'identity' => true])
                 ->addColumn('name', 'string', ['comment' => '分组名称', 'null' => false, 'default' => '', 'limit' => 30])
                 ->addColumn('parent_id', 'integer', ['comment' => '上级分组ID', 'null' => false, 'default' => 0, 'limit' => 10, 'signed' => false])
                 ->addColumn('sort', 'integer', ['comment' => '排序(数字越小越靠前)', 'null' => false, 'default' => 0, 'limit' => 10, 'signed' => false])
@@ -217,7 +227,7 @@ class Install extends Migrator
 
     public function onlineTable(): void
     {
-        if(!$this->hasTable('online_table')) {
+        if (! $this->hasTable('online_table')) {
             $table = $this->table('online_table', [
                 'id' => false,
                 'comment' => '在线开发记录表',
@@ -239,7 +249,7 @@ class Install extends Migrator
 
     public function setting(): void
     {
-        if(!$this->hasTable('setting')) {
+        if (! $this->hasTable('setting')) {
             $table = $this->table('setting', [
                 'id' => false,
                 'comment' => '设置记录表',
@@ -259,7 +269,7 @@ class Install extends Migrator
                 ->addColumn('sort', 'integer', ['comment' => '排序', 'null' => false, 'default' => 0])
                 ->addColumn('create_time', 'integer', ['limit' => 10, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '更新时间'])
                 ->addColumn('update_time', 'integer', ['limit' => 10, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '创建时间'])
-                ->addIndex('key',  ['unique' => true, 'type' => 'btree'])
+                ->addIndex('key', ['unique' => true, 'type' => 'btree'])
                 ->addIndex(['group_id'], ['type' => 'btree'])
                 ->create();
         }
@@ -267,7 +277,7 @@ class Install extends Migrator
 
     public function settingGroup(): void
     {
-        if(!$this->hasTable('setting_group')) {
+        if (! $this->hasTable('setting_group')) {
             $table = $this->table('setting_group', [
                 'id' => false,
                 'comment' => '设置分组表',
@@ -289,7 +299,7 @@ class Install extends Migrator
 
     public function token(): void
     {
-        if(!$this->hasTable('token')) {
+        if (! $this->hasTable('token')) {
             $table = $this->table('token', [
                 'id' => false,
                 'comment' => '用户Token表',
@@ -308,7 +318,7 @@ class Install extends Migrator
 
     public function user(): void
     {
-        if(!$this->hasTable('user')) {
+        if (! $this->hasTable('user')) {
             $table = $this->table('user', [
                 'id' => false,
                 'comment' => '用户列表',
@@ -332,15 +342,15 @@ class Install extends Migrator
                 ->addColumn('status', 'string', ['comment' => '状态', 'null' => false, 'default' => '1', 'limit' => 1])
                 ->addColumn('create_time', 'integer', ['limit' => 10, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '更新时间'])
                 ->addColumn('update_time', 'integer', ['limit' => 10, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '创建时间'])
-                ->addIndex('group_id', ['type'=>'btree'])
-                ->addIndex('username', [ 'unique' => true, 'type'=>'btree' ])
+                ->addIndex('group_id', ['type' => 'btree'])
+                ->addIndex('username', ['unique' => true, 'type' => 'btree'])
                 ->create();
         }
     }
 
     public function userMoneyLog(): void
     {
-        if(!$this->hasTable('user_money_log')) {
+        if (! $this->hasTable('user_money_log')) {
             $table = $this->table('user_money_log', [
                 'id' => false,
                 'comment' => '用户余额变动明细表',
@@ -349,19 +359,19 @@ class Install extends Migrator
                 'collation' => 'utf8mb4_unicode_ci',
             ]);
             $table->addColumn('id', 'integer', ['comment' => '记录ID', 'null' => false, 'signed' => false, 'identity' => true])
-                ->addColumn('user_id', 'integer', ['comment' => '用户ID', 'null' => false, 'signed' => false ])
-                ->addColumn('scene', 'string', ['comment' => '余额变动场景', 'null' => false, 'default' => '0', 'limit' => 1 ])
+                ->addColumn('user_id', 'integer', ['comment' => '用户ID', 'null' => false, 'signed' => false])
+                ->addColumn('scene', 'string', ['comment' => '余额变动场景', 'null' => false, 'default' => '0', 'limit' => 1])
                 ->addColumn('money', 'float', ['comment' => '余额变动场景', 'null' => false, 'default' => 0.00])
                 ->addColumn('describe', 'string', ['comment' => '描述/说明', 'null' => false, 'default' => '', 'limit' => 500])
                 ->addColumn('update_time', 'integer', ['limit' => 10, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '创建时间'])
-                ->addIndex('user_id', ['type'=>'btree'])
+                ->addIndex('user_id', ['type' => 'btree'])
                 ->create();
         }
     }
 
     public function userGroup(): void
     {
-        if (!$this->hasTable('user_group')) {
+        if (! $this->hasTable('user_group')) {
             $table = $this->table('user_group', [
                 'id' => false,
                 'comment' => '会员分组表',
@@ -369,7 +379,7 @@ class Install extends Migrator
                 'row_format' => 'DYNAMIC',
                 'collation' => 'utf8mb4_unicode_ci',
             ]);
-            $table->addColumn('id', 'integer', ['comment' => 'ID', 'null' => false,  'signed' => false, 'identity' => true])
+            $table->addColumn('id', 'integer', ['comment' => 'ID', 'null' => false, 'signed' => false, 'identity' => true])
                 ->addColumn('pid', 'integer', ['comment' => '上级分组ID', 'default' => 0, 'signed' => false, 'null' => false])
                 ->addColumn('name', 'string', ['limit' => 100, 'default' => '', 'comment' => '分组名称', 'null' => false])
                 ->addColumn('rules', 'text', ['null' => true, 'default' => null, 'comment' => '权限ID'])
@@ -381,7 +391,7 @@ class Install extends Migrator
 
     public function userRule(): void
     {
-        if (!$this->hasTable('user_rule')) {
+        if (! $this->hasTable('user_rule')) {
             $table = $this->table('user_rule', [
                 'id' => false,
                 'comment' => '会员权限规则表',
@@ -389,7 +399,7 @@ class Install extends Migrator
                 'row_format' => 'DYNAMIC',
                 'collation' => 'utf8mb4_unicode_ci',
             ]);
-            $table->addColumn('id', 'integer', ['comment' => 'ID', 'null' => false,  'signed' => false, 'identity' => true])
+            $table->addColumn('id', 'integer', ['comment' => 'ID', 'null' => false, 'signed' => false, 'identity' => true])
                 ->addColumn('pid', 'integer', ['comment' => '父ID', 'null' => false, 'default' => 0, 'limit' => 10])
                 ->addColumn('type', 'string', ['comment' => '类型 0：页面 1：数据 2：按钮', 'null' => false, 'default' => 0, 'limit' => 1])
                 ->addColumn('sort', 'integer', ['comment' => '排序', 'null' => false, 'default' => 0])
@@ -409,7 +419,7 @@ class Install extends Migrator
 
     public function verificationCode(): void
     {
-        if (!$this->hasTable('verification_code')) {
+        if (! $this->hasTable('verification_code')) {
             $table = $this->table('verification_code', [
                 'id' => false,
                 'comment' => '验证码记录表',
@@ -417,16 +427,15 @@ class Install extends Migrator
                 'row_format' => 'DYNAMIC',
                 'collation' => 'utf8mb4_unicode_ci',
             ]);
-            $table->addColumn('id', 'integer', ['comment' => 'ID', 'null' => false,  'signed' => false, 'identity' => true])
+            $table->addColumn('id', 'integer', ['comment' => 'ID', 'null' => false, 'signed' => false, 'identity' => true])
                 ->addColumn('type', 'string', ['comment' => '类型', 'null' => false, 'default' => '', 'limit' => 20])
                 ->addColumn('code', 'integer', ['comment' => '验证码', 'null' => false, 'signed' => false])
-                ->addColumn('status', 'integer', ['comment' => '状态0：未发送 1：已发送 2：已验证', 'null' => false, 'default' => 0,  'signed' => false])
-                ->addColumn('interval', 'integer', ['comment' => '有效期', 'null' => false, 'default' => 0,  'signed' => false])
+                ->addColumn('status', 'integer', ['comment' => '状态0：未发送 1：已发送 2：已验证', 'null' => false, 'default' => 0, 'signed' => false])
+                ->addColumn('interval', 'integer', ['comment' => '有效期', 'null' => false, 'default' => 0, 'signed' => false])
                 ->addColumn('data', 'string', ['comment' => '接收方', 'null' => false, 'default' => '', 'limit' => 255])
                 ->addColumn('create_time', 'integer', ['limit' => 10, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '更新时间'])
                 ->addColumn('update_time', 'integer', ['limit' => 10, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '创建时间'])
                 ->create();
         }
     }
-
 }

@@ -1,25 +1,27 @@
 <?php
-// +----------------------------------------------------------------------
-// | XinAdmin [ A Full stack framework ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小刘同学 <2302563948@qq.com>
-// +----------------------------------------------------------------------
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
 namespace app\admin\controller\user;
 
 use app\admin\controller\Controller;
 use app\admin\validate\user\UserRule as UserRuleVal;
 use app\common\attribute\Auth;
-use app\common\model\user\UserRuleModel as UserRuleModel;
+use app\common\model\user\UserRuleModel;
 use Exception;
 use think\response\Json;
 
 class UserRuleController extends Controller
 {
-
     protected array $searchField = [
         'id' => '=',
         'pid' => '=',
@@ -27,7 +29,7 @@ class UserRuleController extends Controller
         'name' => 'like',
         'key' => '=',
         'create_time' => 'date',
-        'update_time' => 'date'
+        'update_time' => 'date',
     ];
 
     protected string $authName = 'user.rule';
@@ -39,9 +41,7 @@ class UserRuleController extends Controller
         $this->validate = new UserRuleVal();
     }
 
-
     /**
-     * @return Json
      * @throws Exception
      */
     #[Auth('list')]
@@ -53,8 +53,7 @@ class UserRuleController extends Controller
     }
 
     /**
-     * 获取菜单节点
-     * @return Json
+     * 获取菜单节点.
      * @throws Exception
      */
     #[Auth('list')]

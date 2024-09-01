@@ -1,29 +1,28 @@
 <?php
-// +----------------------------------------------------------------------
-// | XinAdmin [ A Full stack framework ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小刘同学 <2302563948@qq.com>
-// +----------------------------------------------------------------------
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
 namespace app\common\enum;
-
-
-use think\file\UploadedFile;
 
 /**
  * 枚举类：文件类型
- * Class FileType
- * @package app\common\enum\goods
+ * Class FileType.
  */
 enum FileType: int
 {
     // 图片
     case IMAGE = 10;
 
-    //音频
+    // 音频
     case MP3 = 20;
 
     // 视频
@@ -60,10 +59,8 @@ enum FileType: int
         return self::ANNEX->value;
     }
 
-
     /**
      * 获取枚举类型值
-     * @return array
      */
     public static function data(): array
     {
@@ -73,36 +70,36 @@ enum FileType: int
                 'value' => self::IMAGE, // 类型值
                 'preview_path' => '', // 预览地址
                 'max_size' => 2097152, // 上传最大大小
-                'file_ext' => ['jpg','jpeg','png','bmp','gif','avif','webp'] // 文件扩展名
+                'file_ext' => ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'avif', 'webp'], // 文件扩展名
             ],
             self::MP3->value => [
                 'name' => '音频',
                 'value' => self::MP3,
                 'preview_path' => 'static/mp3.png',
                 'max_size' => 10485760,
-                'file_ext' => ['mp3','wma','wav','ape','flac','ogg','aac']
+                'file_ext' => ['mp3', 'wma', 'wav', 'ape', 'flac', 'ogg', 'aac'],
             ],
             self::VIDEO->value => [
                 'name' => '视频',
                 'value' => self::VIDEO,
                 'preview_path' => 'static/video.png',
                 'max_size' => 10485760,
-                'file_ext' => ['mp4','mov','wmv','flv','avl','webm','mkv']
+                'file_ext' => ['mp4', 'mov', 'wmv', 'flv', 'avl', 'webm', 'mkv'],
             ],
             self::ZIP->value => [
                 'name' => '压缩包',
                 'value' => self::ZIP,
                 'preview_path' => 'static/zip.png',
                 'max_size' => 10485760,
-                'file_ext' => ['zip','rar']
+                'file_ext' => ['zip', 'rar'],
             ],
             self::ANNEX->value => [
                 'name' => '附件',
                 'value' => self::ANNEX,
                 'preview_path' => 'static/annex.png',
                 'max_size' => 10485760,
-                'file_ext' => '*'
-            ]
+                'file_ext' => '*',
+            ],
         ];
     }
 }

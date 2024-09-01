@@ -1,12 +1,20 @@
 <?php
-
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
 use think\facade\Db;
 use think\migration\Migrator;
 
 class InstallData extends Migrator
 {
-
-
     public string $createTime = '';
 
     /**
@@ -61,10 +69,10 @@ class InstallData extends Migrator
                 'mobile' => '1888888888',
                 'update_time' => $this->createTime,
                 'create_time' => $this->createTime,
-            ]
+            ],
         ];
         $exist = Db::name('admin')->count();
-        if (!$exist) {
+        if (! $exist) {
             $table->insert($rows)->saveData();
         }
     }
@@ -99,7 +107,7 @@ class InstallData extends Migrator
             ],
         ];
         $exist = Db::name('admin_group')->count();
-        if (!$exist) {
+        if (! $exist) {
             $table->insert($rows)->saveData();
         }
     }
@@ -721,7 +729,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 54,
@@ -736,7 +744,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 55,
@@ -751,7 +759,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 56,
@@ -766,7 +774,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 57,
@@ -781,7 +789,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 58,
@@ -796,7 +804,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 59,
@@ -811,7 +819,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 60,
@@ -826,7 +834,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 61,
@@ -841,7 +849,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 62,
@@ -856,7 +864,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 63,
@@ -871,7 +879,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 64,
@@ -886,7 +894,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 69,
@@ -901,7 +909,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 70,
@@ -916,7 +924,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 71,
@@ -931,7 +939,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 72,
@@ -1532,10 +1540,10 @@ class InstallData extends Migrator
                 'show' => 0,
                 'update_time' => $this->createTime,
                 'create_time' => $this->createTime,
-            ]
+            ],
         ];
         $exist = Db::name('admin_rule')->count();
-        if (!$exist) {
+        if (! $exist) {
             $table->insert($rows)->saveData();
         }
     }
@@ -1551,7 +1559,7 @@ class InstallData extends Migrator
                 'describe' => '性别',
                 'code' => 'sex',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 13,
@@ -1560,7 +1568,7 @@ class InstallData extends Migrator
                 'describe' => '任务',
                 'code' => 'pop',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 14,
@@ -1569,7 +1577,7 @@ class InstallData extends Migrator
                 'describe' => '状态',
                 'code' => 'status',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 16,
@@ -1578,7 +1586,7 @@ class InstallData extends Migrator
                 'describe' => '权限类型',
                 'code' => 'ruleType',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 17,
@@ -1587,7 +1595,7 @@ class InstallData extends Migrator
                 'describe' => '前端表单类型字典，请不要修改',
                 'code' => 'valueType',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 19,
@@ -1596,7 +1604,7 @@ class InstallData extends Migrator
                 'describe' => '系统查询操作符，请不要修改',
                 'code' => 'select',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 20,
@@ -1605,7 +1613,7 @@ class InstallData extends Migrator
                 'describe' => 'CRUD 验证规则，请不要修改',
                 'code' => 'validation',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 21,
@@ -1614,11 +1622,11 @@ class InstallData extends Migrator
                 'describe' => '余额变动记录类型',
                 'code' => 'moneyLog',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
-            ]
+                'update_time' => $this->createTime,
+            ],
         ];
         $exist = Db::name('dict')->count();
-        if (!$exist) {
+        if (! $exist) {
             $table->insert($rows)->saveData();
         }
     }
@@ -1635,7 +1643,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 2,
@@ -1645,7 +1653,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 3,
@@ -1655,7 +1663,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'success',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 5,
@@ -1665,7 +1673,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'error',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 6,
@@ -1675,7 +1683,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 7,
@@ -1685,7 +1693,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'processing',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 8,
@@ -1695,7 +1703,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'success',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 9,
@@ -1705,7 +1713,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 10,
@@ -1715,7 +1723,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 11,
@@ -1725,7 +1733,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 12,
@@ -1735,7 +1743,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 13,
@@ -1745,7 +1753,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 14,
@@ -1755,7 +1763,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 15,
@@ -1765,7 +1773,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 17,
@@ -1775,7 +1783,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 18,
@@ -1785,7 +1793,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 19,
@@ -1795,7 +1803,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 20,
@@ -1805,7 +1813,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 21,
@@ -1815,7 +1823,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 22,
@@ -1825,7 +1833,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 23,
@@ -1835,7 +1843,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 24,
@@ -1845,7 +1853,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 25,
@@ -1855,7 +1863,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 26,
@@ -1865,7 +1873,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 27,
@@ -1875,7 +1883,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 28,
@@ -1885,7 +1893,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 29,
@@ -1895,7 +1903,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 30,
@@ -1905,7 +1913,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 31,
@@ -1915,7 +1923,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 32,
@@ -1925,7 +1933,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 33,
@@ -1935,7 +1943,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 34,
@@ -1945,7 +1953,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 35,
@@ -1955,7 +1963,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 36,
@@ -1965,7 +1973,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 37,
@@ -1975,7 +1983,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 42,
@@ -1985,7 +1993,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 43,
@@ -1995,7 +2003,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 44,
@@ -2005,7 +2013,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 45,
@@ -2015,7 +2023,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 46,
@@ -2025,7 +2033,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 47,
@@ -2035,7 +2043,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 48,
@@ -2045,7 +2053,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 49,
@@ -2055,7 +2063,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 50,
@@ -2065,7 +2073,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 51,
@@ -2075,7 +2083,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 52,
@@ -2085,7 +2093,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 53,
@@ -2095,7 +2103,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 54,
@@ -2105,7 +2113,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 55,
@@ -2115,7 +2123,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 56,
@@ -2125,7 +2133,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 57,
@@ -2135,7 +2143,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 58,
@@ -2145,7 +2153,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 61,
@@ -2155,7 +2163,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'processing',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 62,
@@ -2165,7 +2173,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'error',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 63,
@@ -2175,7 +2183,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'success',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 64,
@@ -2185,7 +2193,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 65,
@@ -2195,7 +2203,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 66,
@@ -2205,7 +2213,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 67,
@@ -2215,7 +2223,7 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 68,
@@ -2225,11 +2233,11 @@ class InstallData extends Migrator
                 'switch' => '1',
                 'status' => 'default',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
-            ]
+                'update_time' => $this->createTime,
+            ],
         ];
         $exist = Db::name('dict_item')->count();
-        if (!$exist) {
+        if (! $exist) {
             $table->insert($rows)->saveData();
         }
     }
@@ -2261,10 +2269,10 @@ class InstallData extends Migrator
                 'sort' => 0,
                 'update_time' => $this->createTime,
                 'create_time' => $this->createTime,
-            ]
+            ],
         ];
         $exist = Db::name('file_group')->count();
-        if (!$exist) {
+        if (! $exist) {
             $table->insert($rows)->saveData();
         }
     }
@@ -2285,7 +2293,7 @@ class InstallData extends Migrator
                 'group_id' => 3,
                 'sort' => 0,
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 4,
@@ -2299,7 +2307,7 @@ class InstallData extends Migrator
                 'group_id' => 3,
                 'sort' => 0,
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 5,
@@ -2313,7 +2321,7 @@ class InstallData extends Migrator
                 'group_id' => 3,
                 'sort' => 0,
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 6,
@@ -2327,7 +2335,7 @@ class InstallData extends Migrator
                 'group_id' => 4,
                 'sort' => 99,
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 7,
@@ -2341,7 +2349,7 @@ class InstallData extends Migrator
                 'group_id' => 4,
                 'sort' => 80,
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 8,
@@ -2355,7 +2363,7 @@ class InstallData extends Migrator
                 'group_id' => 4,
                 'sort' => 70,
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 9,
@@ -2369,7 +2377,7 @@ class InstallData extends Migrator
                 'group_id' => 4,
                 'sort' => 60,
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 10,
@@ -2383,7 +2391,7 @@ class InstallData extends Migrator
                 'group_id' => 4,
                 'sort' => 60,
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 11,
@@ -2397,7 +2405,7 @@ class InstallData extends Migrator
                 'group_id' => 4,
                 'sort' => 50,
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 12,
@@ -2411,11 +2419,11 @@ class InstallData extends Migrator
                 'group_id' => 4,
                 'sort' => 50,
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
-            ]
+                'update_time' => $this->createTime,
+            ],
         ];
         $exist = Db::name('setting')->count();
-        if (!$exist) {
+        if (! $exist) {
             $table->insert($rows)->saveData();
         }
     }
@@ -2431,7 +2439,7 @@ class InstallData extends Migrator
                 'key' => 'web',
                 'type' => '2',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
             [
                 'id' => 4,
@@ -2440,11 +2448,11 @@ class InstallData extends Migrator
                 'key' => 'mail',
                 'type' => '1',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
-            ]
+                'update_time' => $this->createTime,
+            ],
         ];
         $exist = Db::name('setting_group')->count();
-        if (!$exist) {
+        if (! $exist) {
             $table->insert($rows)->saveData();
         }
     }
@@ -2462,11 +2470,11 @@ class InstallData extends Migrator
                 'nickname' => '小刘同学',
                 'status' => '1',
                 'create_time' => $this->createTime,
-                'update_time' => $this->createTime
+                'update_time' => $this->createTime,
             ],
         ];
         $exist = Db::name('user')->count();
-        if (!$exist) {
+        if (! $exist) {
             $table->insert($rows)->saveData();
         }
     }
@@ -2493,7 +2501,7 @@ class InstallData extends Migrator
             ],
         ];
         $exist = Db::name('user_group')->count();
-        if (!$exist) {
+        if (! $exist) {
             $table->insert($rows)->saveData();
         }
     }
@@ -2515,7 +2523,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 9,
@@ -2530,7 +2538,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 10,
@@ -2545,7 +2553,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 11,
@@ -2560,7 +2568,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 12,
@@ -2575,7 +2583,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 13,
@@ -2590,7 +2598,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 17,
@@ -2605,7 +2613,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 18,
@@ -2620,7 +2628,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 19,
@@ -2635,7 +2643,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 20,
@@ -2650,7 +2658,7 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
+                'create_time' => $this->createTime,
             ],
             [
                 'id' => 21,
@@ -2665,13 +2673,12 @@ class InstallData extends Migrator
                 'status' => 1,
                 'show' => 1,
                 'update_time' => $this->createTime,
-                'create_time' => $this->createTime
-            ]
+                'create_time' => $this->createTime,
+            ],
         ];
         $exist = Db::name('user_rule')->count();
-        if (!$exist) {
+        if (! $exist) {
             $table->insert($rows)->saveData();
         }
     }
-
 }

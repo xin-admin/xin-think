@@ -1,13 +1,16 @@
 <?php
-// +----------------------------------------------------------------------
-// | XinAdmin [ A Full stack framework ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小刘同学 <2302563948@qq.com>
-// +----------------------------------------------------------------------
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
 namespace app\common\library\storage\driver;
 
 use app\common\enum\FileType;
@@ -18,8 +21,7 @@ use think\file\UploadedFile;
 
 /**
  * 存储引擎抽象类
- * Class Basics
- * @package app\common\library\storage\drivers
+ * Class Basics.
  */
 abstract class Driver
 {
@@ -32,7 +34,7 @@ abstract class Driver
     protected ?array $config;
 
     // file对象句柄
-    protected UploadedFile | array $files;
+    protected array|UploadedFile $files;
 
     // 验证规则
     protected string $validateRuleScene;
@@ -47,18 +49,16 @@ abstract class Driver
      * 构造函数
      * Server constructor.
      * @param string $storage 存储方式
-     * @param array|null $config 存储配置
+     * @param null|array $config 存储配置
      */
-    public function __construct(string $storage, array $config = null)
+    public function __construct(string $storage, ?array $config = null)
     {
         $this->storage = $storage;
         $this->config = $config;
     }
 
     /**
-     * 设置磁盘配置
-     * @param string $disk
-     * @return void
+     * 设置磁盘配置.
      */
     public function setDisk(string $disk): void
     {
@@ -66,9 +66,7 @@ abstract class Driver
     }
 
     /**
-     * 设置上传文件的验证规则
-     * @param string $scene
-     * @return void
+     * 设置上传文件的验证规则.
      */
     public function setValidationScene(string $scene = ''): void
     {
@@ -76,9 +74,7 @@ abstract class Driver
     }
 
     /**
-     * 设置上传的文件信息
-     * @param string $name
-     * @return void
+     * 设置上传的文件信息.
      */
     public function setUploadFile(string $name): void
     {
@@ -94,8 +90,7 @@ abstract class Driver
     }
 
     /**
-     * 生成保存的文件信息
-     * @return array
+     * 生成保存的文件信息.
      */
     public function getSaveFileInfo(): array
     {
@@ -108,7 +103,7 @@ abstract class Driver
         // 文件扩展名
         $fileExt = strtolower($this->files->extension());
         return [
-        'storage' => $this->storage,                            // 存储方式
+            'storage' => $this->storage,                            // 存储方式
             'domain' => $this->config['domain'] ?? $this->disk, // 存储域名
             'file_path' => $filePath,                           // 文件路径
             'file_name' => $fileName,                           // 文件名称
@@ -118,29 +113,7 @@ abstract class Driver
     }
 
     /**
-     * 生成 hash 文件名
-     * @param UploadedFile $file
-     * @return string
-     */
-    private function hashName(UploadedFile $file): string
-    {
-        return $file->hashName(function () {
-            return date('Ymd') . DIRECTORY_SEPARATOR . md5(uniqid((string)mt_rand(), true));
-        });
-    }
-
-    /**
-     * 获取hashName的路径
-     * @param string $hashName
-     * @return string
-     */
-    private function getFilePath(string $hashName): string
-    {
-        return convert_left_slash($hashName);
-    }
-
-    /**
-     * 返回错误信息
+     * 返回错误信息.
      * @return mixed
      */
     public function getError(): string
@@ -149,8 +122,7 @@ abstract class Driver
     }
 
     /**
-     * 验证上传的文件
-     * @return bool
+     * 验证上传的文件.
      */
     protected function validate(): bool
     {
@@ -159,20 +131,22 @@ abstract class Driver
 
         $fileValidate = FileType::data()[$this->validateRuleScene];
         // 验证文件大小
-        if($file_size > $fileValidate['max_size']) {
+        if ($file_size > $fileValidate['max_size']) {
             $this->error = '上传文件大小超限制！';
             return false;
         }
         // 验证扩展名
-        if($fileValidate['file_ext'] === '*') return true;
-        if(is_array($fileValidate['file_ext'])) {
-            if(in_array($file_ext, $fileValidate['file_ext'])) {
+        if ($fileValidate['file_ext'] === '*') {
+            return true;
+        }
+        if (is_array($fileValidate['file_ext'])) {
+            if (in_array($file_ext, $fileValidate['file_ext'])) {
                 return true;
             }
             $this->error = "不支持的{$fileValidate['name']}类型";
             return false;
         }
-        if($fileValidate['file_ext'] === $file_ext) {
+        if ($fileValidate['file_ext'] === $file_ext) {
             return true;
         }
         $this->error = "不支持的{$fileValidate['name']}类型";
@@ -180,15 +154,30 @@ abstract class Driver
     }
 
     /**
-     * 文件上传
-     * @return bool
+     * 文件上传.
      */
     abstract protected function upload(): bool;
 
     /**
-     * 文件删除
-     * @param array $fileInfo
-     * @return bool
+     * 文件删除.
      */
     abstract protected function delete(array $fileInfo): bool;
+
+    /**
+     * 生成 hash 文件名.
+     */
+    private function hashName(UploadedFile $file): string
+    {
+        return $file->hashName(function () {
+            return date('Ymd') . DIRECTORY_SEPARATOR . md5(uniqid((string) mt_rand(), true));
+        });
+    }
+
+    /**
+     * 获取hashName的路径.
+     */
+    private function getFilePath(string $hashName): string
+    {
+        return convert_left_slash($hashName);
+    }
 }

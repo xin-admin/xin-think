@@ -1,31 +1,32 @@
 <?php
-// +----------------------------------------------------------------------
-// | XinAdmin [ A Full stack framework ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小刘同学 <2302563948@qq.com>
-// +----------------------------------------------------------------------
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
 namespace app\admin\controller\system;
 
 use app\admin\controller\Controller;
-use app\admin\model\dict\DictItemModel as DictItemModel;
-use app\admin\model\dict\DictModel as DictModel;
+use app\admin\model\dict\DictItemModel;
+use app\admin\model\dict\DictModel;
 use app\admin\validate\system\DictItem as DictItemVal;
 use app\common\attribute\Auth;
 use think\response\Json;
 
 class DictItemController extends Controller
 {
-
     protected string $authName = 'system.dict.item';
 
     protected array $searchField = [
-        'name'      => 'like'
+        'name' => 'like',
     ];
-
 
     public function initialize(): void
     {
@@ -37,14 +38,14 @@ class DictItemController extends Controller
     #[Auth('list')]
     public function list(): Json
     {
-        list($where, $paginate, $order) = $this->buildSearch();
+        [$where, $paginate, $order] = $this->buildSearch();
         $params = $this->request->get();
-        if(!isset($params['dictId'])){
+        if (! isset($params['dictId'])) {
             return $this->warn('字典ID不存在');
         }
 
         $list = $this->model
-            ->where('dict_id',$params['dictId'])
+            ->where('dict_id', $params['dictId'])
             ->where($where)
             ->order($order)
             ->paginate($paginate)
@@ -54,7 +55,7 @@ class DictItemController extends Controller
 
     public function dictList(): Json
     {
-        $dict = (new DictModel())->with('dictItems')->visible(['dictItems'=>['label','value','status']])->select()->toArray();
+        $dict = (new DictModel())->with('dictItems')->visible(['dictItems' => ['label', 'value', 'status']])->select()->toArray();
         return $this->success($dict);
     }
 }

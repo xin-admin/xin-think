@@ -1,17 +1,20 @@
 <?php
-// +----------------------------------------------------------------------
-// | XinAdmin [ A Full stack framework ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小刘同学 <2302563948@qq.com>
-// +----------------------------------------------------------------------
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
 namespace app\api\controller;
 
 use app\admin\model\file\FileModel as UploadFileModel;
-use app\api\model\UserModel as UserModel;
+use app\api\model\UserModel;
 use app\api\validate\User as UserVal;
 use app\BaseController;
 use app\common\attribute\Auth;
@@ -21,7 +24,7 @@ use app\common\library\storage\Storage as StorageDriver;
 use app\common\library\token\Token;
 use app\common\model\user\UserGroupModel;
 use app\common\model\user\UserMoneyLogModel;
-use app\common\model\user\UserRuleModel as UserRuleModel;
+use app\common\model\user\UserRuleModel;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -30,10 +33,8 @@ use think\response\Json;
 
 class UserController extends BaseController
 {
-
     /**
-     * 获取用户信息
-     * @return Json
+     * 获取用户信息.
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
@@ -61,8 +62,7 @@ class UserController extends BaseController
     }
 
     /**
-     * 刷新 Token
-     * @return Json
+     * 刷新 Token.
      * @throws Exception
      */
     public function refreshToken(): Json
@@ -70,20 +70,18 @@ class UserController extends BaseController
         $token = $this->request->header('x-user-token');
         $reToken = $this->request->header('x-user-refresh-token');
         if ($this->request->isPost() && $reToken) {
-            $Token = new Token;
+            $Token = new Token();
             $Token->delete($token);
             $user_id = $Token->get($reToken)['user_id'];
             $token = md5(random_bytes(10));
             $Token->set($token, 'user', $user_id);
             return $this->success(compact('token'));
-        } else {
-            return $this->error('请先登录！');
         }
+        return $this->error('请先登录！');
     }
 
     /**
-     * 退出登录
-     * @return Json
+     * 退出登录.
      */
     #[Auth]
     public function logout(): Json
@@ -92,15 +90,12 @@ class UserController extends BaseController
         $model = new UserModel();
         if ($model->logout($user_id)) {
             return $this->success('退出登录成功');
-        } else {
-            return $this->error($model->getErrorMsg());
         }
+        return $this->error($model->getErrorMsg());
     }
 
-
     /**
-     * 头像上传接口
-     * @return Json
+     * 头像上传接口.
      * @throws Exception
      */
     public function upAvatar(): Json
@@ -112,23 +107,21 @@ class UserController extends BaseController
         // 设置上传文件验证规则
         $storage->setValidationScene('image');
         // 执行文件上传
-        if (!$storage->upload()) {
+        if (! $storage->upload()) {
             return $this->error('图片上传失败：' . $storage->getError());
         }
         // 文件信息
         $fileInfo = $storage->getSaveFileInfo();
         // 添加文件库记录
-        $model = new UploadFileModel;
+        $model = new UploadFileModel();
         $user_id = Auth::getUserId();
         $model->add($fileInfo, FileTypeEnum::IMAGE->value, $user_id, 14, 20);
         // 图片上传成功
         return $this->success(['fileInfo' => $model->toArray()], '图片上传成功');
     }
 
-
     /**
-     * 设置用户信息
-     * @return Json
+     * 设置用户信息.
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
@@ -140,7 +133,7 @@ class UserController extends BaseController
         $validate = new UserVal();
         $model = new UserModel();
         $result = $validate->scene('set')->check($data);
-        if (!$result) {
+        if (! $result) {
             return $this->warn($validate->getError());
         }
         $user = $model->where('id', Auth::getUserId())->find();
@@ -151,10 +144,8 @@ class UserController extends BaseController
         return $this->error('更新失败');
     }
 
-
     /**
      * 设置密码
-     * @return Json
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
@@ -166,13 +157,13 @@ class UserController extends BaseController
         $validate = new UserVal();
         $model = new UserModel();
         $result = $validate->scene('set_pwd')->check($data);
-        if (!$result) {
+        if (! $result) {
             return $this->warn($validate->getError());
         }
         $user_id = Auth::getUserId();
         $user = $model->where('id', $user_id)->find();
         if ($user->save([
-            'password' => password_hash($data['newPassword'], PASSWORD_DEFAULT)
+            'password' => password_hash($data['newPassword'], PASSWORD_DEFAULT),
         ])) {
             return $this->success('更新成功');
         }
@@ -180,8 +171,7 @@ class UserController extends BaseController
     }
 
     /**
-     * 获取用户余额记录
-     * @return Json
+     * 获取用户余额记录.
      * @throws DbException
      */
     #[Method('GET'), Auth]
@@ -193,11 +183,10 @@ class UserController extends BaseController
             'list_rows' => $params['pageSize'] ?? 10,
             'page' => $params['current'] ?? 1,
         ];
-        $list = (new UserMoneyLogModel)
+        $list = (new UserMoneyLogModel())
             ->where('user_id', $user_id)
             ->paginate($paginate)
             ->toArray();
         return $this->success($list);
     }
-
 }

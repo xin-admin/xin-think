@@ -1,30 +1,33 @@
 <?php
-// +----------------------------------------------------------------------
-// | XinAdmin [ A Full stack framework ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小刘同学 <2302563948@qq.com>
-// +----------------------------------------------------------------------
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
 namespace app\common\model;
 
 use app\common\enum\ApiEnum\ShowType as ShopTypeEnum;
 use app\common\enum\ApiEnum\StatusCode;
 use app\common\trait\RequestJson;
+use Exception;
 use think\Model;
 
-
 /**
- * 基础模型
+ * 基础模型.
  */
 class BaseModel extends Model
 {
     use RequestJson;
 
     /**
-     * 错误信息
+     * 错误信息.
      */
     private string $errorMsg = '';
 
@@ -53,70 +56,49 @@ class BaseModel extends Model
     }
 
     /**
-     * 新增前
-     * @param Model $model
-     * @return void
+     * 新增前.
      */
-    public static function onBeforeInsert(Model $model): void
-    {
-
-    }
+    public static function onBeforeInsert(Model $model): void {}
 
     /**
-     * 新增后
-     * @param Model $model
-     * @return void
+     * 新增后.
      */
-    public static function onAfterInsert(Model $model): void
-    {
+    public static function onAfterInsert(Model $model): void {}
 
+    /**
+     * 查找单条记录.
+     * @param mixed $data 查询条件
+     * @param array $with 关联查询
+     */
+    public static function get(mixed $data, array $with = []): null|array|static
+    {
+        try {
+            $query = (new static())->with($with);
+            return is_array($data) ? $query->where($data)->find() : $query->find((int) $data);
+        } catch (Exception $e) {
+            return null;
+        }
     }
 
     /**
      * 字段值增长
-     * @param int|bool|array $where
-     * @param string $field
-     * @param float $step
-     * @return bool
      */
-    protected function setInc(int|bool|array $where, string $field, float $step = 1): bool
+    protected function setInc(array|bool|int $where, string $field, float $step = 1): bool
     {
         if (is_numeric($where)) {
-            $where = [$this->getPk() => (int)$where];
+            $where = [$this->getPk() => (int) $where];
         }
         return $this->where($where)->inc($field, $step)->save();
     }
 
     /**
-     * 字段值消减
-     * @param int|bool|array $where
-     * @param string $field
-     * @param float $step
-     * @return bool
+     * 字段值消减.
      */
-    protected function setDec(int|bool|array $where, string $field, float $step = 1): bool
+    protected function setDec(array|bool|int $where, string $field, float $step = 1): bool
     {
         if (is_numeric($where)) {
-            $where = [$this->getPk() => (int)$where];
+            $where = [$this->getPk() => (int) $where];
         }
         return $this->where($where)->dec($field, $step)->save();
     }
-
-    /**
-     * 查找单条记录
-     * @param mixed $data 查询条件
-     * @param array $with 关联查询
-     * @return array|static|null
-     */
-    public static function get(mixed $data, array $with = []): array|static|null
-    {
-        try {
-            $query = (new static)->with($with);
-            return is_array($data) ? $query->where($data)->find() : $query->find((int)$data);
-        } catch (\Exception $e) {
-            return null;
-        }
-    }
-
-
 }

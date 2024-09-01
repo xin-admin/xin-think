@@ -1,13 +1,16 @@
 <?php
-// +----------------------------------------------------------------------
-// | XinAdmin [ A Full stack framework ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小刘同学 <2302563948@qq.com>
-// +----------------------------------------------------------------------
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
 namespace app\common\library\token\driver;
 
 use BadFunctionCallException;
@@ -20,59 +23,55 @@ use think\Response;
  */
 class Redis extends Driver
 {
-
-
     /**
-     * 默认配置
-     * @var array
+     * 默认配置.
      */
     protected array $options = [];
 
     /**
-     * 构造函数
-     * @access public
+     * 构造函数.
      * @param array $options 参数
      * @throws RedisException
      */
     public function __construct(array $options = [])
     {
-        if (!extension_loaded('redis')) {
+        if (! extension_loaded('redis')) {
             throw new BadFunctionCallException('未安装redis扩展');
         }
-        if (!empty($options)) {
+        if (! empty($options)) {
             $this->options = array_merge($this->options, $options);
         }
-        $this->handler = new \Redis;
+        $this->handler = new \Redis();
         if ($this->options['persistent']) {
             $this->handler->pconnect($this->options['host'], $this->options['port'], $this->options['timeout'], 'persistent_id_' . $this->options['select']);
         } else {
             $this->handler->connect($this->options['host'], $this->options['port'], $this->options['timeout']);
         }
 
-        if ('' != $this->options['password']) {
+        if ($this->options['password'] != '') {
             $this->handler->auth($this->options['password']);
         }
 
-        if (false !== $this->options['select']) {
+        if ($this->options['select'] !== false) {
             $this->handler->select($this->options['select']);
         }
     }
 
-    public function set(string $token, string $type, int $user_id, int $expire = null): bool
+    public function set(string $token, string $type, int $user_id, ?int $expire = null): bool
     {
         if (is_null($expire)) {
             $expire = $this->options['expire'];
         }
         $expiretime = $expire !== 0 ? time() + $expire : 0;
-        $token      = $this->getEncryptedToken($token);
-        $tokenInfo  = [
-            'token'      => $token,
-            'type'       => $type,
-            'user_id'    => $user_id,
+        $token = $this->getEncryptedToken($token);
+        $tokenInfo = [
+            'token' => $token,
+            'type' => $type,
+            'user_id' => $user_id,
             'createtime' => time(),
             'expiretime' => $expiretime,
         ];
-        $tokenInfo  = json_encode($tokenInfo, JSON_UNESCAPED_UNICODE);
+        $tokenInfo = json_encode($tokenInfo, JSON_UNESCAPED_UNICODE);
         if ($expire) {
             if ($type == 'admin' || $type == 'user') {
                 // 增加 redis中的 token 过期时间，以免 token 过期自动刷新永远无法触发
@@ -88,9 +87,9 @@ class Redis extends Driver
 
     public function get(string $token, bool $expirationException = true): array
     {
-        $key  = $this->getEncryptedToken($token);
+        $key = $this->getEncryptedToken($token);
         $data = $this->handler->get($key);
-        if (is_null($data) || false === $data) {
+        if (is_null($data) || $data === false) {
             return [];
         }
         $data = json_decode($data, true);
@@ -110,7 +109,9 @@ class Redis extends Driver
     public function check(string $token, string $type, int $user_id, bool $expirationException = true): bool
     {
         $data = $this->get($token, $expirationException);
-        if (!$data || (!$expirationException && $data['expiretime'] && $data['expiretime'] <= time())) return false;
+        if (! $data || (! $expirationException && $data['expiretime'] && $data['expiretime'] <= time())) {
+            return false;
+        }
         return $data['type'] == $type && $data['user_id'] == $user_id;
     }
 
@@ -118,7 +119,7 @@ class Redis extends Driver
     {
         $data = $this->get($token, false);
         if ($data) {
-            $key     = $this->getEncryptedToken($token);
+            $key = $this->getEncryptedToken($token);
             $user_id = $data['user_id'];
             $this->handler->del($key);
             $this->handler->sRem($this->getUserKey($user_id), $key);
@@ -135,13 +136,11 @@ class Redis extends Driver
     }
 
     /**
-     * 获取会员的key
-     * @param $user_id
-     * @return string
+     * 获取会员的key.
+     * @param mixed $user_id
      */
     protected function getUserKey($user_id): string
     {
         return $this->options['userprefix'] . $user_id;
     }
-
 }

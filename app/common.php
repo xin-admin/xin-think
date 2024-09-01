@@ -1,5 +1,15 @@
 <?php
-// 应用公共文件
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
 use app\admin\model\setting\SettingGroupModel;
 use app\common\enum\ApiEnum\ShowType;
 use app\common\enum\ApiEnum\StatusCode;
@@ -7,78 +17,70 @@ use think\exception\HttpResponseException;
 use think\facade\Request;
 use think\Response;
 
-use app\common\trait\RequestJson;
 /**
  * 驼峰转下划线
- * @param string $camelCaps
- * @param string $separator
- * @return string
  */
 function uncamelize(string $camelCaps, string $separator = '_'): string
 {
-    return strtolower(preg_replace('/([a-z])([A-Z])/', "$1" . $separator . "$2", $camelCaps));
+    return strtolower(preg_replace('/([a-z])([A-Z])/', '$1' . $separator . '$2', $camelCaps));
 }
 
 /**
- * 获取站点的系统配置，不传递参数则获取所有配置项
+ * 获取站点的系统配置，不传递参数则获取所有配置项.
  * @param string $name 变量名
- * @return string | array
  */
-function get_setting(string $name): array | string
+function get_setting(string $name): array|string
 {
-    $setting_name = explode('.',$name);
-    $setting_group = (new SettingGroupModel())->where('key',$setting_name[0])->findOrEmpty();
-    if($setting_group->isEmpty()){
+    $setting_name = explode('.', $name);
+    $setting_group = (new SettingGroupModel())->where('key', $setting_name[0])->findOrEmpty();
+    if ($setting_group->isEmpty()) {
         $data = [
             'data' => [],
             'success' => false,
             'status' => StatusCode::WARN->value,
-            'msg'   => '设置不存在',
-            'showType' => ShowType::WARN_MESSAGE->value
+            'msg' => '设置不存在',
+            'showType' => ShowType::WARN_MESSAGE->value,
         ];
         $response = Response::create($data, 'json', StatusCode::WARN->value);
         throw new HttpResponseException($response);
     }
-    if(count($setting_name) > 1){
-        $setting = $setting_group->setting()->where('key',$setting_name[1])->findOrEmpty();
-        if($setting->isEmpty()){
+    if (count($setting_name) > 1) {
+        $setting = $setting_group->setting()->where('key', $setting_name[1])->findOrEmpty();
+        if ($setting->isEmpty()) {
             $data = [
                 'data' => [],
                 'success' => false,
                 'status' => StatusCode::WARN->value,
-                'msg'   => '设置不存在',
-                'showType' => ShowType::WARN_MESSAGE->value
+                'msg' => '设置不存在',
+                'showType' => ShowType::WARN_MESSAGE->value,
             ];
             $response = Response::create($data, 'json', StatusCode::WARN->value);
             throw new HttpResponseException($response);
         }
         return $setting['values'];
-    }else {
-        try {
-            $setting = $setting_group->setting()->select();
-        } catch (Exception $e) {
-            $data = [
-                'data' => [],
-                'success' => false,
-                'status' => StatusCode::WARN->value,
-                'msg'   => $e->getMessage(),
-                'showType' => ShowType::WARN_MESSAGE->value
-            ];
-            $response = Response::create($data, 'json', StatusCode::WARN->value);
-            throw new HttpResponseException($response);
-        }
-        $arr = [];
-        foreach ($setting as $set){
-            $arr[$set['key']] = $set['values'];
-        }
-        return $arr;
     }
+    try {
+        $setting = $setting_group->setting()->select();
+    } catch (Exception $e) {
+        $data = [
+            'data' => [],
+            'success' => false,
+            'status' => StatusCode::WARN->value,
+            'msg' => $e->getMessage(),
+            'showType' => ShowType::WARN_MESSAGE->value,
+        ];
+        $response = Response::create($data, 'json', StatusCode::WARN->value);
+        throw new HttpResponseException($response);
+    }
+    $arr = [];
+    foreach ($setting as $set) {
+        $arr[$set['key']] = $set['values'];
+    }
+    return $arr;
 }
 
 /**
- * 文本左斜杠转换为右斜杠
- * @param string $string
- * @return string
+ * 文本左斜杠转换为右斜杠.
  */
 function convert_left_slash(string $string): string
 {
@@ -86,8 +88,7 @@ function convert_left_slash(string $string): string
 }
 
 /**
- * 获取web根目录
- * @return string
+ * 获取web根目录.
  */
 function web_path(): string
 {
@@ -100,8 +101,7 @@ function web_path(): string
 }
 
 /**
- * 获取当前域名及根路径
- * @return string
+ * 获取当前域名及根路径.
  */
 function base_url(): string
 {
@@ -119,8 +119,7 @@ function base_url(): string
 }
 
 /**
- * 获取当前url的子目录路径
- * @return string
+ * 获取当前url的子目录路径.
  */
 function root_url(): string
 {
@@ -135,7 +134,6 @@ function root_url(): string
 
 /**
  * 获取当前uploads目录访问地址
- * @return string
  */
 function uploads_url(): string
 {

@@ -23,12 +23,15 @@
         "topthink/think-multi-app": "^1.0",
         "topthink/think-migration": "^3.1",
         "topthink/think-view": "^2.0",
-        "phpmailer/phpmailer": "^6.9"
+        "phpmailer/phpmailer": "^6.9",
+        "ext-redis": "*"
     },
     "require-dev": {
         "symfony/var-dumper": ">=4.2",
-        "topthink/think-trace": "^1.0"
+        "topthink/think-trace": "^1.0",
+        "friendsofphp/php-cs-fixer": "^3.58"
     },
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "app\\": "app"
@@ -41,6 +44,7 @@
         "post-autoload-dump": [
             "@php think service:discover",
             "@php think vendor:publish"
-        ]
+        ],
+        "cs-fix": "php-cs-fixer fix $1"
     }
 }

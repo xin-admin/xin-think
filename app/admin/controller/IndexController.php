@@ -1,13 +1,16 @@
 <?php
-// +----------------------------------------------------------------------
-// | XinAdmin [ A Full stack framework ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小刘同学 <2302563948@qq.com>
-// +----------------------------------------------------------------------
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
 namespace app\admin\controller;
 
 use app\admin\model\admin\AdminGroupModel;
@@ -21,16 +24,12 @@ use think\response\Json;
 
 class IndexController extends Controller
 {
-
     public function initialize(): void
     {
         parent::initialize();
         $this->validate = new AdminVal();
     }
 
-    /**
-     * @return Json
-     */
     public function index(): Json
     {
         $webSetting = get_setting('web');
@@ -38,7 +37,6 @@ class IndexController extends Controller
     }
 
     /**
-     * @return Json
      * @throws Exception
      */
     #[Auth]
@@ -47,23 +45,19 @@ class IndexController extends Controller
         $token = $this->request->header('x-token');
         $reToken = $this->request->header('x-refresh-token');
         if ($this->request->isPost() && $reToken) {
-            $Token = new Token;
+            $Token = new Token();
             $Token->delete($token);
             $user_id = $Token->get($reToken)['user_id'];
             $token = md5(random_bytes(10));
             $Token->set($token, 'admin', $user_id);
             return $this->success(compact('token'));
-        } else {
-            return $this->error('请先登录！');
         }
+        return $this->error('请先登录！');
     }
 
-    /**
-     * @return Json
-     */
     public function login(): Json
     {
-        if (!$this->request->isPost()) {
+        if (! $this->request->isPost()) {
             return $this->warn('请求方法错误！');
         }
 
@@ -76,9 +70,9 @@ class IndexController extends Controller
             // 规则验证
             $result = $this->validate->scene('account')->check([
                 'username' => $username,
-                'password' => $password
+                'password' => $password,
             ]);
-            if (!$result) {
+            if (! $result) {
                 return $this->warn($this->validate->getError());
             }
 
@@ -107,28 +101,24 @@ class IndexController extends Controller
         }
 
         return $this->warn('请选择登录方式！');
-
     }
 
     /**
-     * 退出登录
-     * @return Json
+     * 退出登录.
      */
     #[Auth]
     public function logout(): Json
     {
         $user_id = Auth::getAdminId();
-        $admin = new AdminModel;
+        $admin = new AdminModel();
         if ($admin->logout($user_id)) {
             return $this->success('退出登录成功');
-        } else {
-            return $this->error($admin->getErrorMsg());
         }
+        return $this->error($admin->getErrorMsg());
     }
 
     /**
-     * 获取管理员信息
-     * @return Json
+     * 获取管理员信息.
      * @throws Exception
      */
     #[Auth]
@@ -151,5 +141,4 @@ class IndexController extends Controller
         $menus = $this->getTreeData($menus);
         return $this->success(compact('menus', 'access', 'info'));
     }
-
 }

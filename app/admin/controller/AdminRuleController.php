@@ -1,16 +1,19 @@
 <?php
-// +----------------------------------------------------------------------
-// | XinAdmin [ A Full stack framework ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小刘同学 <2302563948@qq.com>
-// +----------------------------------------------------------------------
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
 namespace app\admin\controller;
 
-use app\admin\model\admin\AdminRuleModel as AdminRuleModel;
+use app\admin\model\admin\AdminRuleModel;
 use app\admin\validate\AdminRule as AdminRuleVal;
 use app\common\attribute\Auth;
 use Exception;
@@ -26,11 +29,10 @@ class AdminRuleController extends Controller
         'name' => 'like',
         'key' => '=',
         'create_time' => 'date',
-        'update_time' => 'date'
+        'update_time' => 'date',
     ];
 
     protected string $authName = 'admin.rule';
-
 
     public function initialize(): void
     {
@@ -40,8 +42,7 @@ class AdminRuleController extends Controller
     }
 
     /**
-     * 查询列表
-     * @return Json
+     * 查询列表.
      * @throws DbException
      */
     #[Auth('list')]
@@ -53,8 +54,7 @@ class AdminRuleController extends Controller
     }
 
     /**
-     * 获取菜单节点
-     * @return Json
+     * 获取菜单节点.
      * @throws Exception
      */
     #[Auth]

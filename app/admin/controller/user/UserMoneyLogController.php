@@ -1,13 +1,16 @@
 <?php
-// +----------------------------------------------------------------------
-// | XinAdmin [ A Full stack framework ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小刘同学 <2302563948@qq.com>
-// +----------------------------------------------------------------------
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
 namespace app\admin\controller\user;
 
 use app\admin\controller\Controller;
@@ -20,9 +23,7 @@ use think\response\Json;
 
 class UserMoneyLogController extends Controller
 {
-
     protected string $authName = 'user.moneyLog';
-
 
     public function initialize(): void
     {
@@ -34,7 +35,7 @@ class UserMoneyLogController extends Controller
     #[Method('GET'), Auth('list')]
     public function list(): Json
     {
-        list($where, $paginate) = $this->buildSearch();
+        [$where, $paginate] = $this->buildSearch();
         $list = $this->model
             ->with('user')
             ->where($where)
@@ -47,7 +48,7 @@ class UserMoneyLogController extends Controller
     public function add(): Json
     {
         $data = $this->request->post();
-        if (!$this->validate->scene('add')->check($data)) {
+        if (! $this->validate->scene('add')->check($data)) {
             return $this->error($this->validate->getError());
         }
         $userModel = new UserModel();
@@ -57,7 +58,5 @@ class UserMoneyLogController extends Controller
             $userModel->setDecMoney($data['id'], abs($data['money']), $data['remark'], '0', []);
         }
         return $this->success();
-
     }
-
 }

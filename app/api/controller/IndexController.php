@@ -1,18 +1,21 @@
 <?php
-// +----------------------------------------------------------------------
-// | XinAdmin [ A Full stack framework ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小刘同学 <2302563948@qq.com>
-// +----------------------------------------------------------------------
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
 namespace app\api\controller;
 
-use app\BaseController;
-use app\api\model\UserModel as UserModel;
+use app\api\model\UserModel;
 use app\api\validate\User as UserVal;
+use app\BaseController;
 use app\common\attribute\Method;
 use app\common\library\sms\driver\Mail;
 use app\common\model\user\UserGroupModel;
@@ -24,26 +27,23 @@ use think\response\Json;
 
 class IndexController extends BaseController
 {
-
     /**
-     * @return Json
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
     public function index(): Json
     {
-        $group = (new UserGroupModel)->where('id',2)->findOrEmpty()->toArray();
+        $group = (new UserGroupModel())->where('id', 2)->findOrEmpty()->toArray();
         $rule_model = new UserRuleModel();
-        $menus = $rule_model->where('id','in',$group['rules'])->order('sort', 'desc')->select()->toArray();
+        $menus = $rule_model->where('id', 'in', $group['rules'])->order('sort', 'desc')->select()->toArray();
         $menus = $this->getTreeData($menus);
         $web_setting = get_setting('web');
         return $this->success(compact('web_setting', 'menus'));
     }
 
     /**
-     * 用户登录
-     * @return Json
+     * 用户登录.
      */
     #[Method('POST')]
     public function login(): Json
@@ -52,45 +52,45 @@ class IndexController extends BaseController
         $model = new UserModel();
         $validate = new UserVal();
         // 账号密码登录
-        if(isset($data['loginType']) && $data['loginType'] === 'account') {
+        if (isset($data['loginType']) && $data['loginType'] === 'account') {
             // 规则验证
             $result = $validate->scene('account')->check($data);
-            if(!$result){
+            if (! $result) {
                 return $this->warn($validate->getError());
             }
-            $data = $model->login($data['username'],$data['password']);
-            if($data) {
+            $data = $model->login($data['username'], $data['password']);
+            if ($data) {
                 return $this->success($data);
             }
             return $this->error($model->getErrorMsg());
         }
         // 邮箱登录
-        if(isset($data['loginType']) && $data['loginType'] === 'email') {
-            if(get_setting('mail.login') != 1) {
+        if (isset($data['loginType']) && $data['loginType'] === 'email') {
+            if (get_setting('mail.login') != 1) {
                 return $this->warn('暂未开启邮箱登录！');
             }
             // 规则验证
             $result = $validate->scene('email')->check($data);
-            if(!$result){
+            if (! $result) {
                 return $this->warn($validate->getError());
             }
             $mail = new Mail();
-            $verify = $mail->verify($data['email'],$data['captcha']);
-            if($verify !== true){
+            $verify = $mail->verify($data['email'], $data['captcha']);
+            if ($verify !== true) {
                 return $this->error($verify);
             }
             $data = $model->mailLogin($data['email']);
-            if($data){
+            if ($data) {
                 return $this->success($data);
             }
             return $this->error($model->getErrorMsg());
         }
 
         // 手机号登录
-        if(isset($data['loginType']) && $data['loginType'] === 'phone') {
+        if (isset($data['loginType']) && $data['loginType'] === 'phone') {
             // 规则验证
             $result = $validate->scene('phone')->check($data);
-            if(!$result){
+            if (! $result) {
                 return $this->warn($validate->getError());
             }
             return $this->warn('暂未开通手机号登录！');
@@ -99,8 +99,7 @@ class IndexController extends BaseController
     }
 
     /**
-     * 用户注册
-     * @return Json
+     * 用户注册.
      */
     #[Method('POST')]
     public function register(): Json
@@ -110,11 +109,11 @@ class IndexController extends BaseController
         $validate = new UserVal();
         $model = new UserModel();
         $result = $validate->scene('reg')->check($data);
-        if(!$result){
+        if (! $result) {
             return $this->warn($validate->getError());
         }
         $data = $model->register($data);
-        if($data) {
+        if ($data) {
             return $this->success($data);
         }
         return $this->error($model->getErrorMsg());
@@ -122,20 +121,18 @@ class IndexController extends BaseController
 
     /**
      * 发送邮箱验证码
-     * @return Json
      */
     public function sendMailCode(): Json
     {
         $params = $this->request->param();
-        if(!isset($params['email'])) {
+        if (! isset($params['email'])) {
             return $this->error('请输入邮箱！');
         }
         $SMS = new Mail();
         $data = $SMS->sendCode($params['email']);
-        if($data === true){
+        if ($data === true) {
             return $this->success('ok');
-        }else {
-            return $this->error($data);
         }
+        return $this->error($data);
     }
 }

@@ -1,18 +1,21 @@
 <?php
-// +----------------------------------------------------------------------
-// | XinAdmin [ A Full stack framework ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小刘同学 <2302563948@qq.com>
-// +----------------------------------------------------------------------
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
 namespace app\admin\controller\file;
 
 use app\admin\controller\Controller;
-use app\admin\model\file\FileModel as FileModel;
 use app\admin\model\file\FileGroupModel as GroupModel;
+use app\admin\model\file\FileModel;
 use app\admin\validate\file\Group as GroupVal;
 use app\common\attribute\Auth;
 use app\common\attribute\Method;
@@ -23,7 +26,6 @@ use think\response\Json;
 
 class GroupController extends Controller
 {
-
     protected string $authName = 'file.group';
 
     public function initialize(): void
@@ -34,8 +36,7 @@ class GroupController extends Controller
     }
 
     /**
-     * 文件分组列表
-     * @return Json
+     * 文件分组列表.
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
@@ -49,7 +50,6 @@ class GroupController extends Controller
     }
 
     /**
-     * @return Json
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
@@ -74,8 +74,7 @@ class GroupController extends Controller
     }
 
     /**
-     * 删除商品分组
-     * @return Json
+     * 删除商品分组.
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
@@ -95,21 +94,35 @@ class GroupController extends Controller
         $delNum = $this->model->destroy($data['group_id']);
         if ($delNum != 0) {
             return $this->success('删除成功，删除了' . $delNum . '条数据');
-        } else {
-            return $this->warn('没有删除任何数据');
         }
+        return $this->warn('没有删除任何数据');
     }
 
     /**
-     * 获取所有上级id集
-     * @param int $groupId
-     * @param array|null $list
-     * @return array
+     * 获取树状列表.
+     * @param mixed $list
+     */
+    protected function getTreeData(&$list, int $parentId = 0): array
+    {
+        $data = [];
+        foreach ($list as $key => $item) {
+            if ($item['parent_id'] == $parentId) {
+                $children = $this->getTreeData($list, $item['group_id']);
+                ! empty($children) && $item['children'] = $children;
+                $data[] = $item;
+                unset($list[$key]);
+            }
+        }
+        return $data;
+    }
+
+    /**
+     * 获取所有上级id集.
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    private function getTopGroupIds(int $groupId, array $list = null): array
+    private function getTopGroupIds(int $groupId, ?array $list = null): array
     {
         static $parentIds = [];
         is_null($list) && $list = $this->model->order(['sort', 'create_time'])->select();
@@ -121,25 +134,4 @@ class GroupController extends Controller
         }
         return $parentIds;
     }
-
-    /**
-     * 获取树状列表
-     * @param $list
-     * @param int $parentId
-     * @return array
-     */
-    protected function getTreeData(&$list, int $parentId = 0): array
-    {
-        $data = [];
-        foreach ($list as $key => $item) {
-            if ($item['parent_id'] == $parentId) {
-                $children = $this->getTreeData($list, $item['group_id']);
-                !empty($children) && $item['children'] = $children;
-                $data[] = $item;
-                unset($list[$key]);
-            }
-        }
-        return $data;
-    }
-
 }

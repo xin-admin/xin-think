@@ -1,13 +1,16 @@
 <?php
-// +----------------------------------------------------------------------
-// | XinAdmin [ A Full stack framework ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小刘同学 <2302563948@qq.com>
-// +----------------------------------------------------------------------
+/*
+ *  +----------------------------------------------------------------------
+ *  | XinAdmin [ A Full stack framework ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2023~2024 http://xinadmin.cn All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Apache License ( http://www.apache.org/licenses/LICENSE-2.0 )
+ *  +----------------------------------------------------------------------
+ *  | Author: 小刘同学 <2302563948@qq.com>
+ *  +----------------------------------------------------------------------
+ */
+
 namespace app\admin\model\file;
 
 use app\common\model\file\FileModel as BaseFileModel;
@@ -15,23 +18,16 @@ use app\common\model\file\FileModel as BaseFileModel;
 class FileModel extends BaseFileModel
 {
     /**
-     * 批量移动文件分组
-     * @param int $groupId
-     * @param array $fileIds
-     * @return bool
+     * 批量移动文件分组.
      */
     public function moveGroup(int $groupId, array $fileIds): bool
     {
-        return (bool)static::update(['group_id' => $groupId], [['file_id', 'in', $fileIds]]);
+        return (bool) static::update(['group_id' => $groupId], [['file_id', 'in', $fileIds]]);
     }
 
     /**
-     * 添加文件库记录
-     * @param array $data
-     * @param int $fileType
-     * @param $user_id
-     * @param int $groupId
-     * @param int $channel
+     * 添加文件库记录.
+     * @param mixed $user_id
      * @return bool|false
      */
     public function add(array $data, int $fileType, $user_id, int $groupId = 0, int $channel = 10): bool
@@ -46,14 +42,12 @@ class FileModel extends BaseFileModel
             'file_size' => $data['file_size'],
             'file_ext' => $data['file_ext'],
             'file_type' => $fileType,
-            'uploader_id' => $user_id
+            'uploader_id' => $user_id,
         ]);
     }
 
     /**
-     * 编辑记录
-     * @param array $data
-     * @return bool
+     * 编辑记录.
      */
     public function edit(array $data): bool
     {
