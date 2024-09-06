@@ -10,14 +10,13 @@
 // +----------------------------------------------------------------------
 namespace app\common\attribute;
 
-use app\common\enum\ApiEnum\StatusCode;
 use app\common\trait\RequestJson;
 use Attribute;
 
 /**
  * 请求注解类
  */
-#[Attribute(\Attribute::TARGET_METHOD)]
+#[Attribute(Attribute::TARGET_METHOD)]
 class Method
 {
     use RequestJson;
