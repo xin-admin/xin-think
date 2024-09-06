@@ -14,6 +14,7 @@ use app\admin\model\admin\AdminModel as AdminModel;
 use app\admin\validate\Admin as AdminVal;
 use app\common\attribute\Auth;
 use app\common\attribute\Method;
+use app\common\attribute\Monitor;
 use think\response\Json;
 
 class AdminController extends Controller
@@ -44,7 +45,7 @@ class AdminController extends Controller
      * 新增管理员
      * @return Json
      */
-    #[Method('POST'), Auth('add')]
+    #[Method('POST'), Auth('add'), Monitor('新增管理员')]
     public function add(): Json
     {
         $data = $this->request->param();

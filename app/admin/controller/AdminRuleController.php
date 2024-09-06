@@ -16,6 +16,7 @@ use app\common\attribute\Auth;
 use Exception;
 use think\db\exception\DbException;
 use think\response\Json;
+use app\common\attribute\Monitor;
 
 class AdminRuleController extends Controller
 {
@@ -44,9 +45,10 @@ class AdminRuleController extends Controller
      * @return Json
      * @throws DbException
      */
-    #[Auth('list')]
+    #[Auth('list'), Monitor('查询列表')]
     public function list(): Json
     {
+        trace('1231231');
         $rootNode = $this->model->order('sort', 'desc')->select()->toArray();
         $data = $this->getTreeData($rootNode);
         return $this->success(compact('data'));

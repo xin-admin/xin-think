@@ -15,6 +15,7 @@ namespace app;
 use app\common\attribute\Auth;
 use app\common\attribute\Method;
 use app\common\trait\RequestJson;
+use app\common\attribute\Monitor;
 use think\App;
 use think\db\exception\PDOException;
 use think\facade\Db;
@@ -106,6 +107,9 @@ abstract class BaseController
                     $attr->newInstance();
                 }
                 if($attr->getName() === Method::class) {
+                    $attr->newInstance();
+                }
+                if($attr->getName() === Monitor::class) {
                     $attr->newInstance();
                 }
             }
