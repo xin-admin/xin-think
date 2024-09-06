@@ -4,10 +4,29 @@ use app\admin\model\setting\SettingGroupModel;
 use app\common\enum\ApiEnum\ShowType;
 use app\common\enum\ApiEnum\StatusCode;
 use think\exception\HttpResponseException;
+use think\facade\Lang;
 use think\facade\Request;
 use think\Response;
 
-use app\common\trait\RequestJson;
+
+if (!function_exists('__')) {
+    /**
+     * 语言翻译
+     * @param string $name 被翻译字符
+     * @param array  $vars 替换字符数组
+     * @param string $lang 翻译语言
+     * @return mixed
+     */
+    function __(string $name, array $vars = [], string $lang = ''): mixed
+    {
+        if (is_numeric($name) || !$name) {
+            return $name;
+        }
+        return Lang::get($name, $vars, $lang);
+    }
+}
+
+
 /**
  * 驼峰转下划线
  * @param string $camelCaps

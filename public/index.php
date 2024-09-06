@@ -12,6 +12,18 @@
 // [ 应用入口文件 ]
 namespace think;
 
+
+//$server = $_SERVER['REQUEST_METHOD'] == 'OPTIONS';
+//if(!$server) {
+//    $rootPath = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR;
+//    // 是否安装
+//    if (!is_file($rootPath . 'install.lock') && is_file($rootPath . 'install' . DIRECTORY_SEPARATOR . 'index.html')) {
+//        header("location:" . DIRECTORY_SEPARATOR . 'install' . DIRECTORY_SEPARATOR);
+//        exit();
+//    }
+//}
+
+
 require __DIR__ . '/../vendor/autoload.php';
 
 // 执行HTTP应用并响应
