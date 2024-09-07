@@ -18,6 +18,8 @@ class MonitorController extends Controller
 {
     protected string $authName = "monitor";
 
+    protected array $withModel = ['user.avatar'];
+
     protected function initialize(): void
     {
         parent::initialize();

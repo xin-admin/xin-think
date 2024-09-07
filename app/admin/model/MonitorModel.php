@@ -10,11 +10,23 @@
 // +----------------------------------------------------------------------
 namespace app\admin\model;
 
+use app\admin\model\admin\AdminModel;
 use app\common\model\BaseModel;
+use think\model\relation\BelongsTo;
 
 class MonitorModel extends BaseModel
 {
     protected $name = "monitor";
 
     protected $pk = "id";
+
+        /**
+     * 关联会员记录表
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(AdminModel::class,'user_id','id');
+    }
+
 }
