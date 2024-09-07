@@ -61,7 +61,7 @@ class AdminController extends Controller
      * 编辑
      * @return Json
      */
-    #[Method('PUT'), Auth('edit')]
+    #[Method('PUT'), Auth('edit'), Monitor('编辑管理员')]
     public function edit(): Json
     {
         $data = $this->request->param();
@@ -76,7 +76,7 @@ class AdminController extends Controller
      * 修改密码
      * @return Json
      */
-    #[Method('PUT'), Auth('updatePwd')]
+    #[Method('PUT'), Auth('updatePwd'), Monitor('修改管理员密码')]
     public function updatePassword(): Json
     {
         $data = $this->request->param();
@@ -92,7 +92,7 @@ class AdminController extends Controller
      * 修改管理员信息
      * @return Json
      */
-    #[Method('PUT'), Auth]
+    #[Method('PUT'), Auth, Monitor('修改管理员信息')]
     public function updateAdmin(): Json
     {
         $data = $this->request->param();
