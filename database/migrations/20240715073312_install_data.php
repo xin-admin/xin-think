@@ -1532,7 +1532,37 @@ class InstallData extends Migrator
                 'show' => 0,
                 'update_time' => $this->createTime,
                 'create_time' => $this->createTime,
-            ]
+            ],
+            [
+                'id' => 119,
+                'pid' => 10,
+                'type' => '2',
+                'sort' => 5,
+                'name' => '系统监控',
+                'path' => '/system/monitor',
+                'icon' => null,
+                'key' => 'system.monitor',
+                'locale' => 'menu.system.monitor',
+                'status' => 1,
+                'show' => 1,
+                'update_time' => $this->createTime,
+                'create_time' => $this->createTime,
+            ],
+            [
+                'id' => 120,
+                'pid' => 119,
+                'type' => '2',
+                'sort' => 5,
+                'name' => '监控列表',
+                'path' => null,
+                'icon' => null,
+                'key' => 'system.monitor.list',
+                'locale' => null,
+                'status' => 1,
+                'show' => 1,
+                'update_time' => $this->createTime,
+                'create_time' => $this->createTime,
+            ],
         ];
         $exist = Db::name('admin_rule')->count();
         if (!$exist) {
