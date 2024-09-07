@@ -38,5 +38,6 @@ export default {
   'menu.log': 'log',
   'menu.log.moneyLog': 'Money Log',
   'menu.File': 'Files',
-  'menu.testTable': 'Test Table'
+  'menu.testTable': 'Test Table',
+  'menu.system.monitor': 'System Monitor'
 };

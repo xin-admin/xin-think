@@ -8,31 +8,25 @@
 // +----------------------------------------------------------------------
 // | Author: 小刘同学 <2302563948@qq.com>
 // +----------------------------------------------------------------------
-namespace app\common\attribute;
+namespace app\admin\model;
 
-use app\common\trait\RequestJson;
-use Attribute;
+use app\admin\model\admin\AdminModel;
+use app\common\model\BaseModel;
+use think\model\relation\BelongsTo;
 
-/**
- * 请求注解类
- */
-#[Attribute(Attribute::TARGET_METHOD)]
-class Method
+class MonitorModel extends BaseModel
 {
-    use RequestJson;
+    protected $name = "monitor";
 
-    public function __construct(string $method)
+    protected $pk = "id";
+
+        /**
+     * 关联会员记录表
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
     {
-        if (!$method) {
-            return;
-        }
-        if(function_exists('request')) {
-            $currentMethod = request()->method();
-            if ($method == $currentMethod) {
-                return;
-            }
-            $this->throwError('请求方式错误，请检查！');
-        }
+        return $this->belongsTo(AdminModel::class,'user_id','id');
     }
 
 }

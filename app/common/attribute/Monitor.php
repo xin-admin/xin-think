@@ -10,29 +10,29 @@
 // +----------------------------------------------------------------------
 namespace app\common\attribute;
 
-use app\common\trait\RequestJson;
+use app\admin\model\MonitorModel;
 use Attribute;
+use think\facade\Request;
 
 /**
  * 请求注解类
  */
 #[Attribute(Attribute::TARGET_METHOD)]
-class Method
+class Monitor
 {
-    use RequestJson;
 
-    public function __construct(string $method)
+    public function __construct(string $name = '')
     {
-        if (!$method) {
-            return;
-        }
-        if(function_exists('request')) {
-            $currentMethod = request()->method();
-            if ($method == $currentMethod) {
-                return;
-            }
-            $this->throwError('请求方式错误，请检查！');
-        }
+        $user_id = Auth::getAdminId();
+        $controller = Request::controller();
+        $action = Request::action();
+        $ip = Request::ip();
+        $url = Request::url();
+        $host = Request::host();
+        $data = json_encode(Request::post(), JSON_UNESCAPED_UNICODE);
+        $params = json_encode(Request::param(), JSON_UNESCAPED_UNICODE);
+        $create_time = time();
+        MonitorModel::insert(compact('name','user_id','action','url','data','host','controller','ip','params','create_time'));
     }
 
 }

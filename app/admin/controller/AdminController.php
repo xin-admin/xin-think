@@ -14,6 +14,7 @@ use app\admin\model\admin\AdminModel as AdminModel;
 use app\admin\validate\Admin as AdminVal;
 use app\common\attribute\Auth;
 use app\common\attribute\Method;
+use app\common\attribute\Monitor;
 use think\response\Json;
 
 class AdminController extends Controller
@@ -44,7 +45,7 @@ class AdminController extends Controller
      * 新增管理员
      * @return Json
      */
-    #[Method('POST'), Auth('add')]
+    #[Method('POST'), Auth('add'), Monitor('新增管理员')]
     public function add(): Json
     {
         $data = $this->request->param();
@@ -60,7 +61,7 @@ class AdminController extends Controller
      * 编辑
      * @return Json
      */
-    #[Method('PUT'), Auth('edit')]
+    #[Method('PUT'), Auth('edit'), Monitor('编辑管理员')]
     public function edit(): Json
     {
         $data = $this->request->param();
@@ -75,7 +76,7 @@ class AdminController extends Controller
      * 修改密码
      * @return Json
      */
-    #[Method('PUT'), Auth('updatePwd')]
+    #[Method('PUT'), Auth('updatePwd'), Monitor('修改管理员密码')]
     public function updatePassword(): Json
     {
         $data = $this->request->param();
@@ -91,7 +92,7 @@ class AdminController extends Controller
      * 修改管理员信息
      * @return Json
      */
-    #[Method('PUT'), Auth]
+    #[Method('PUT'), Auth, Monitor('修改管理员信息')]
     public function updateAdmin(): Json
     {
         $data = $this->request->param();
