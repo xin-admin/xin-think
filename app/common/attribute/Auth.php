@@ -28,7 +28,7 @@ use think\Response;
 /**
  * 接口权限注解
  */
-#[Attribute(\Attribute::TARGET_METHOD)]
+#[Attribute(Attribute::TARGET_METHOD)]
 class Auth
 {
 
@@ -45,7 +45,6 @@ class Auth
      */
     public function __construct(string $key = '')
     {
-        if ( $key == '' ) return;
         if(!function_exists('app')) return;
 
         $app = app('http')->getName();

@@ -8,31 +8,22 @@
 // +----------------------------------------------------------------------
 // | Author: 小刘同学 <2302563948@qq.com>
 // +----------------------------------------------------------------------
-namespace app\common\attribute;
 
-use app\common\trait\RequestJson;
-use Attribute;
+namespace app\admin\controller\system;
 
-/**
- * 请求注解类
- */
-#[Attribute(Attribute::TARGET_METHOD)]
-class Method
+use app\admin\controller\Controller;
+use app\admin\model\MonitorModel;
+
+class MonitorController extends Controller
 {
-    use RequestJson;
+    protected string $authName = "monitor";
 
-    public function __construct(string $method)
+    protected array $withModel = ['user.avatar'];
+
+    protected function initialize(): void
     {
-        if (!$method) {
-            return;
-        }
-        if(function_exists('request')) {
-            $currentMethod = request()->method();
-            if ($method == $currentMethod) {
-                return;
-            }
-            $this->throwError('请求方式错误，请检查！');
-        }
+        parent::initialize();
+        $this->model = new MonitorModel();
     }
 
 }
