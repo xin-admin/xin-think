@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\api\controller;
 
+use app\api\validate\Install;
 use app\BaseController;
 use think\db\exception\PDOException;
 use think\facade\Config;
@@ -156,12 +157,45 @@ class InstallController extends BaseController
     }
 
     /**
-     * 安装
+     * 写入 Env
      * @return Json
      */
-    public function install(): Json
+    public function writeEnv(): Json
     {
-        return $this->success();
+        $data = $this->request->post();
+        $val = new Install();
+        if(!$val->check($data)) {
+            return $this->error($val->getError());
+        }
+        // 写入.env文件
+        $envFile         = root_path() . '.env';
+        $envFileContent  = '[DATABASE]' . "\n";
+        $envFileContent .= 'DB_TYPE = mysql' . "\n";
+        $envFileContent .= 'DB_HOST = ' . $data['mysql_hostname'] . "\n";
+        $envFileContent .= 'DB_NAME = ' . $data['mysql_name'] . "\n";
+        $envFileContent .= 'DB_USER = ' . $data['mysql_username'] . "\n";
+        $envFileContent .= 'DB_PASS = ' . $data['mysql_password'] . "\n";
+        $envFileContent .= 'DB_PORT = ' . $data['mysql_port'] . "\n";
+        $envFileContent .= 'DB_PREFIX = ' . $data['mysql_prefix'] . "\n";
+        $envFileContent .= 'DB_CHARSET = utf8mb4' . "\n";
+        $envFileContent .= "\n" . '[DEBUG]' . "\n";
+        $envFileContent .= 'APP_DEBUG = true' . "\n";
+        $envFileContent .= "\n" . '[WEB]' . "\n";
+        $envFileContent .= 'WEB_PATH = ./web' . "\n";
+        $result         = @file_put_contents($envFile, $envFileContent);
+        if (!$result) {
+            return $this->error('文件不可写');
+        }
+        return $this->success('ok');
+    }
+
+    /**
+     * 安装数据库
+     * @return Json
+     */
+    public function installDb(): Json
+    {
+        $dbInstall = self::getOutputFromProc('');
     }
 
 
