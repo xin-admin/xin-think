@@ -17,6 +17,7 @@ use app\admin\validate\Admin as AdminVal;
 use app\common\attribute\Auth;
 use app\common\library\token\Token;
 use Exception;
+use app\common\attribute\Monitor;
 use think\response\Json;
 
 class IndexController extends Controller
@@ -41,7 +42,6 @@ class IndexController extends Controller
      * @return Json
      * @throws Exception
      */
-    #[Auth]
     public function refreshToken(): Json
     {
         $token = $this->request->header('x-token');
@@ -81,10 +81,10 @@ class IndexController extends Controller
             if (!$result) {
                 return $this->warn($this->validate->getError());
             }
-
             $model = new AdminModel();
             $data = $model->login($username, $password);
             if ($data) {
+                new Monitor("管理员登录", false, $data['id']);
                 return $this->success($data);
             }
             return $this->error($model->getErrorMsg());

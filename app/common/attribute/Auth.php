@@ -47,14 +47,14 @@ class Auth
     {
         if(!function_exists('app')) return;
 
-        $app = app('http')->getName();
-        if ( $app === 'app' ) {
-            $token = self::getUserToken();
-        } else {
+        $appName = app('http')->getName();
+        if ( $appName == 'admin' ) {
             $token = self::getToken();
+        } else {
+            $token = self::getUserToken();
         }
         $tokenData = self::getTokenData($token);
-        if ( $tokenData['type'] != $app ) {
+        if ( $tokenData['type'] != $appName ) {
             self::throwError('Token 类型不正确！');
         }
         $rules = [];
@@ -78,7 +78,7 @@ class Auth
         }
 
         // 使用反射机制获取当前控制器的 AuthName
-        $class = 'app\\' . $app . '\\controller\\' . str_replace(".", "\\", request()->controller());
+        $class = 'app\\' . $appName . '\\controller\\' . str_replace(".", "\\", request()->controller());
         $reflection = new ReflectionClass($class);
         $properties = $reflection->getProperty('authName')->getDefaultValue();
         $allowAction = $reflection->getProperty('allowAction')->getDefaultValue(); // 权限验证白名单
@@ -90,7 +90,6 @@ class Auth
         } else {
             $authKey = strtolower(str_replace("\\", ".", request()->controller()) . '.' . $key);
         }
-        trace($authKey);
         if (!in_array($authKey, $rules)) {
             self::throwError('暂无权限！');
         }

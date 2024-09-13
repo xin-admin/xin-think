@@ -9,6 +9,8 @@ export default defineConfig({
   antd: {},
   request: {},
   access: {},
+  // 如果前端文件放在后端public 下面可开启
+  // publicPath: '/assets/',
   headScripts: [
     // 解决首次加载时白屏的问题
     { src: '/scripts/loading.js', async: true },
@@ -25,4 +27,7 @@ export default defineConfig({
     { name: 'description', content: 'Xin Admin是一款基于 Ant Design Pro components 构建一套完善的 Xin Table， 只需一个 Columns 就可以实现增删改查等表单、表格、查询等功能，以及组件的高度自定义' },
   ],
   plugins: [ './config/plugins/multiRoutes' ],
+  define: {
+    "process.env.DOMAIN": process.env.DOMAIN,
+  }
 });

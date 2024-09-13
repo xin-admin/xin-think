@@ -1536,7 +1536,7 @@ class InstallData extends Migrator
             [
                 'id' => 119,
                 'pid' => 10,
-                'type' => '2',
+                'type' => '1',
                 'sort' => 5,
                 'name' => '系统监控',
                 'path' => '/system/monitor',

@@ -41,12 +41,13 @@ class Monitor extends Migrator
                 ->addColumn('action', 'string', ['limit' => 50, 'default' => '', 'comment' => '请求方法', 'null' => false])
                 ->addColumn('ip', 'string', ['limit' => 30, 'default' => '', 'comment' => '请求IP', 'null' => false])
                 ->addColumn('host', 'string', ['limit' => 50, 'default' => '', 'comment' => '当前访问域名或者IP', 'null' => false])
+                ->addColumn('address', 'string', ['limit'=> 500, 'default' => '', 'comment' => '地址', 'null' => false])
                 ->addColumn('url', 'text', ['null' => true, 'default' => null, 'comment' => '请求地址'])
                 ->addColumn('data', 'text', ['null' => true, 'default' => null, 'comment' => 'POST参数'])
                 ->addColumn('params', 'text', ['null' => true, 'default' => null, 'comment' => 'Params参数'])
                 ->addColumn('user_id', 'integer', ['limit' => 10, 'comment' => '管理员ID', 'null' => false])
                 ->addColumn('create_time', 'integer', ['limit' => 10, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '访问时间'])
-                ->create();
+                ->create(); 
         }
         
     }

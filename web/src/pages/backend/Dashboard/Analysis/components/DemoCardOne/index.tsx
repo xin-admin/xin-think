@@ -1,17 +1,17 @@
-import {Button, Card, Space, DatePicker,Row, Col, List, Avatar, ConfigProvider} from "antd";
+import { Button, Card, Space, DatePicker, Row, Col, List, Avatar, ConfigProvider } from "antd";
 import DemoColumn from "../Carts/DemoColumn";
-import {FormattedMessage} from "@umijs/max";
+import { FormattedMessage } from "@umijs/max";
 const { RangePicker } = DatePicker;
 export default () => {
 
   const tableList = [
     {
       key: 'a',
-      label: <FormattedMessage id={'analysis.tab1'}/>,
+      label: <FormattedMessage id={'analysis.tab1'} />,
     },
     {
       key: 'b',
-      label: <FormattedMessage id={'analysis.tab2'}/>,
+      label: <FormattedMessage id={'analysis.tab2'} />,
     },
   ]
 
@@ -31,13 +31,11 @@ export default () => {
   ];
   const tabBarExtraContent = (
     <Space>
-      <Button type={"text"}><FormattedMessage id={'analysis.button1'}/></Button>
-      <Button type={"text"}><FormattedMessage id={'analysis.button2'}/></Button>
-      <Button type={"text"}><FormattedMessage id={'analysis.button3'}/></Button>
-      <Button type={"text"}><FormattedMessage id={'analysis.button4'}/></Button>
-      <RangePicker
-        disabled={[false, true]}
-      />
+      <Button type={"text"}><FormattedMessage id={'analysis.button1'} /></Button>
+      <Button type={"text"}><FormattedMessage id={'analysis.button2'} /></Button>
+      <Button type={"text"}><FormattedMessage id={'analysis.button3'} /></Button>
+      <Button type={"text"}><FormattedMessage id={'analysis.button4'} /></Button>
+      <RangePicker />
     </Space>
   )
 
@@ -61,7 +59,7 @@ export default () => {
             <DemoColumn></DemoColumn>
           </Col>
           <Col span={8}>
-            <FormattedMessage id={'analysis.title5'}/>
+            <FormattedMessage id={'analysis.title5'} />
             <List
               dataSource={data}
               renderItem={(item, index) => (

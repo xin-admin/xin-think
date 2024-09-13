@@ -16,7 +16,6 @@
     "@ant-design/icons": "^5.3.6",
     "@ant-design/pro-components": "^2.7.10",
     "@umijs/max": "^4.2.13",
-    "@umijs/max-plugin-openapi": "2.0.3",
     "ahooks": "^3.7.11",
     "antd": "^5.16.0",
     "antd-img-crop": "^4.21.0",

@@ -16,6 +16,7 @@ interface Data {
   data?: string
   params?: string
   user_id?: number
+  address?: string
   user?: USER.AdminInfo
   create_time?: string
 }
@@ -47,6 +48,11 @@ const Table: React.FC = () => {
     {
       title: '访问IP',
       dataIndex: 'ip',
+      valueType: 'text'
+    },
+    {
+      title: '访问地址',
+      dataIndex: 'address',
       valueType: 'text'
     },
     {

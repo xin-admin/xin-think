@@ -14,6 +14,7 @@ use app\admin\model\admin\AdminGroupModel as AdminGroupModel;
 use app\admin\validate\AdminGroup as AdminGroupVal;
 use app\common\attribute\Auth;
 use app\common\attribute\Method;
+use app\common\attribute\Monitor;
 use Exception;
 use think\response\Json;
 
@@ -56,7 +57,7 @@ class AdminGroupController extends Controller
      * @return Json
      * @throws Exception
      */
-    #[Method('POST'), Auth]
+    #[Method('POST'), Auth, Monitor('设置分组权限')]
     public function setGroupRule(): Json
     {
         $params = $this->request->param();
