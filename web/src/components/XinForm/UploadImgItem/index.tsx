@@ -1,6 +1,6 @@
 import ImgCrop from 'antd-img-crop';
 import React, { useEffect, useState } from 'react';
-import {Upload} from 'antd';
+import { Upload } from 'antd';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import { FormInstance } from 'antd/lib/form';
 
@@ -15,16 +15,16 @@ interface PropsType {
 
 
 const UploadImgItem: React.FC<PropsType> = (props) => {
-  const {form,dataIndex, api, maxCount = 1, crop, defaultFile} = props
+  const { form, dataIndex, api, maxCount = 1, crop, defaultFile } = props
 
   const [fileList, setFileList] = useState<UploadFile[]>();
 
   useEffect(() => {
     // 设置默认显示图片
-    if(!defaultFile) {
+    if (!defaultFile) {
       return
     }
-    if(defaultFile instanceof Array) {
+    if (defaultFile instanceof Array) {
       setFileList(defaultFile.map((item, index): UploadFile => {
         return {
           uid: index.toString(),
@@ -41,16 +41,16 @@ const UploadImgItem: React.FC<PropsType> = (props) => {
         url: defaultFile,
       }])
     }
-  },[defaultFile])
+  }, [defaultFile])
 
   const onChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
     setFileList(newFileList);
-    if(newFileList.length === 0){
+    if (newFileList.length === 0) {
       return
     }
-    if(newFileList[0].status === 'done'){
+    if (newFileList[0].status === 'done') {
       console.log(newFileList[0].response)
-      form.setFieldValue(dataIndex ,newFileList[0].response.data.fileInfo.file_id)
+      form.setFieldValue(dataIndex, newFileList[0].response.data.fileInfo.file_id)
     }
   };
 
@@ -71,11 +71,11 @@ const UploadImgItem: React.FC<PropsType> = (props) => {
 
   return (
     <>
-      { crop ?
+      {crop ?
         <ImgCrop rotationSlider>
           <Upload
             maxCount={maxCount}
-            action={api}
+            action={process.env.DOMAIN + api}
             listType="picture-card"
             fileList={fileList}
             onChange={onChange}
@@ -88,7 +88,7 @@ const UploadImgItem: React.FC<PropsType> = (props) => {
         :
         <Upload
           maxCount={maxCount}
-          action={api}
+          action={process.env.DOMAIN + api}
           listType="picture-card"
           fileList={fileList}
           onChange={onChange}
