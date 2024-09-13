@@ -94,7 +94,7 @@ abstract class BaseController
         try {
             Db::execute("SELECT 1");
         } catch (PDOException $e) {
-            $this->throwError($e->getMessage());
+            $this->throwError('数据库链接失败：' . $e->getMessage() . "\n未安装请访问/install安装");
         }
         // 获取请求路由信息
         $this->getRouteInfo();

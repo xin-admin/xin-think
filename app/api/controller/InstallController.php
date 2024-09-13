@@ -13,6 +13,7 @@ namespace app\api\controller;
 use app\api\validate\Install;
 use app\BaseController;
 use app\common\library\Terminal;
+use think\db\exception\DbException;
 use think\db\exception\PDOException;
 use think\facade\Config;
 use think\facade\Db;
@@ -224,6 +225,22 @@ class InstallController extends BaseController
         } catch (\Throwable $e) {
             return $this->error($e->getMessage());
         }
+    }
+
+    /**
+     * 设置用户信息
+     * @return Json
+     * @throws DbException
+     */
+    public function setUser(): Json
+    {
+        $username = $this->request->post('username', 'admin');
+        $pwd   = $this->request->post('password', '123456');
+        Db::name('admin')->where('id', '1')->update([
+            'username' => $username,
+            'password' => password_hash($pwd, PASSWORD_DEFAULT)
+        ]);
+        return $this->success('ok');
     }
 
     /**
