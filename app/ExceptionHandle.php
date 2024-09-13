@@ -59,6 +59,7 @@ class ExceptionHandle extends Handle
         if($e instanceof HttpResponseException) {
             return  parent::render($request, $e);
         }
+        return $this->error((array)$e, $e->getMessage());
         if(env('APP_DEBUG') == 'true') {
             return $this->error((array)$e, $e->getMessage());
         }else {

@@ -12,6 +12,7 @@ namespace app\api\controller;
 
 use app\api\validate\Install;
 use app\BaseController;
+use app\common\library\Terminal;
 use think\db\exception\PDOException;
 use think\facade\Config;
 use think\facade\Db;
@@ -145,7 +146,6 @@ class InstallController extends BaseController
             $connect->execute("SELECT 1");
 
             $tables = $connect->query("SHOW DATABASES");
-            trace($tables);
             if (!in_array($database['name'], array_column($tables, 'Database'))) {
                 return $this->error('数据库不存在，请先创建数据库！');
             }
@@ -169,7 +169,8 @@ class InstallController extends BaseController
         }
         // 写入.env文件
         $envFile         = root_path() . '.env';
-        $envFileContent  = '[DATABASE]' . "\n";
+        $envFileContent  = 'APP_DEBUG = true' . "\n";
+        $envFileContent .= "\n";
         $envFileContent .= 'DB_TYPE = mysql' . "\n";
         $envFileContent .= 'DB_HOST = ' . $data['mysql_hostname'] . "\n";
         $envFileContent .= 'DB_NAME = ' . $data['mysql_name'] . "\n";
@@ -178,8 +179,6 @@ class InstallController extends BaseController
         $envFileContent .= 'DB_PORT = ' . $data['mysql_port'] . "\n";
         $envFileContent .= 'DB_PREFIX = ' . $data['mysql_prefix'] . "\n";
         $envFileContent .= 'DB_CHARSET = utf8mb4' . "\n";
-        $envFileContent .= "\n" . '[DEBUG]' . "\n";
-        $envFileContent .= 'APP_DEBUG = true' . "\n";
         $envFileContent .= "\n" . '[WEB]' . "\n";
         $envFileContent .= 'WEB_PATH = ./web' . "\n";
         $result         = @file_put_contents($envFile, $envFileContent);
@@ -190,14 +189,42 @@ class InstallController extends BaseController
     }
 
     /**
+     * 安装前端依赖
+     * @return Json
+     */
+    public function installWeb(): Json
+    {
+        try {
+            $t = new Terminal;
+            $dbInstall = $t->exec('web-install');
+            if($dbInstall) {
+                return $this->success('ok');
+            }else {
+                return $this->error($t->getErrorMessage());
+            }
+        } catch (\Throwable $e) {
+            return $this->error($e->getMessage());
+        }
+    }
+
+    /**
      * 安装数据库
      * @return Json
      */
-    public function installDb(): Json
+    public function installSql(): Json
     {
-        $dbInstall = self::getOutputFromProc('');
+        try {
+            $t = new Terminal;
+            $dbInstall = $t->exec('sql-install');
+            if($dbInstall) {
+                return $this->success('ok');
+            }else {
+                return $this->error($t->getErrorMessage());
+            }
+        } catch (\Throwable $e) {
+            return $this->error($e->getMessage());
+        }
     }
-
 
     /**
      * 比较两个版本号
