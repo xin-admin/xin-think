@@ -25,4 +25,7 @@ export default defineConfig({
     { name: 'description', content: 'Xin Admin是一款基于 Ant Design Pro components 构建一套完善的 Xin Table， 只需一个 Columns 就可以实现增删改查等表单、表格、查询等功能，以及组件的高度自定义' },
   ],
   plugins: [ './config/plugins/multiRoutes' ],
+  define: {
+    "process.env.DOMAIN": process.env.DOMAIN,
+  }
 });

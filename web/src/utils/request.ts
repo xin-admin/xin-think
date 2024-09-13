@@ -13,10 +13,8 @@ enum ErrorShowType {
   REDIRECT = 9,
 }
 
-const { NODE_ENV } = process.env
-
 const requestConfig: RuntimeConfig['request'] = {
-  baseURL: NODE_ENV === 'development' ? 'http://127.0.0.1:8000' : '/index.php?s=',
+  baseURL: process.env.DOMAIN,
   timeout: 5000,
   headers: { 'X-Requested-With': 'XMLHttpRequest' },
   // 请求拦截器
