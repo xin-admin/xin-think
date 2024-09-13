@@ -41,7 +41,6 @@ class IndexController extends Controller
      * @return Json
      * @throws Exception
      */
-    #[Auth]
     public function refreshToken(): Json
     {
         $token = $this->request->header('x-token');
