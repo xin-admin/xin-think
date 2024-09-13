@@ -45,7 +45,7 @@ class AdminRuleController extends Controller
      * @return Json
      * @throws DbException
      */
-    #[Auth('list'), Monitor('权限查询列表')]
+    #[Auth('list')]
     public function list(): Json
     {
         trace('1231231');
