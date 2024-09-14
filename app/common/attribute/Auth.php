@@ -46,7 +46,6 @@ class Auth
     public function __construct(string $key = '')
     {
         if(!function_exists('app')) return;
-
         $appName = app('http')->getName();
         if ( $appName == 'admin' ) {
             $token = self::getToken();
@@ -54,7 +53,10 @@ class Auth
             $token = self::getUserToken();
         }
         $tokenData = self::getTokenData($token);
-        if ( $tokenData['type'] != $appName ) {
+        if ( $appName == 'admin' && $tokenData['type'] != 'admin' ) {
+            self::throwError('Token 类型不正确！');
+        }
+        if ( $appName == 'app' && $tokenData['type'] != 'user' ) {
             self::throwError('Token 类型不正确！');
         }
         $rules = [];
