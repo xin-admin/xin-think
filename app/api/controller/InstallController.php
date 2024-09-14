@@ -228,7 +228,7 @@ class InstallController extends BaseController
     }
 
     /**
-     * 设置用户信息
+     * 设置网站信息
      * @return Json
      * @throws DbException
      */
@@ -236,9 +236,13 @@ class InstallController extends BaseController
     {
         $username = $this->request->post('username', 'admin');
         $pwd   = $this->request->post('password', '123456');
+        $web_name = $this->request->post('web_name','Xin Admin');
         Db::name('admin')->where('id', '1')->update([
             'username' => $username,
             'password' => password_hash($pwd, PASSWORD_DEFAULT)
+        ]);
+        Db::name('setting')->where('id','1')->update([
+            'values' => $web_name
         ]);
         return $this->success('ok');
     }
