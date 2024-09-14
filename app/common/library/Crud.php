@@ -67,7 +67,7 @@ class Crud
         if(!isset($crudConfig['sqlTableName']) || !$crudConfig['sqlTableName']) {
             throw new Exception('请输入数据表名称');
         }
-        $tableName = 'xin_'.$crudConfig['sqlTableName'];
+        $tableName = env('DB_PREFIX', 'xin_') . $crudConfig['sqlTableName'];
         $sql  = "CREATE TABLE IF NOT EXISTS `{$tableName}` (" . PHP_EOL;
         $pk   = '';
         foreach ($this->columns as $field) {

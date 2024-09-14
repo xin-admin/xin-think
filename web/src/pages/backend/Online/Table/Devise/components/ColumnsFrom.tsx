@@ -237,12 +237,6 @@ function CreateForm() {
       valueType: 'option',
       width: 100,
       align: 'center',
-      render: (text, record) => (
-        <a key='delete' onClick={() => {
-          setDataSource(dataSource.filter((item: any) => item.dataIndex !== record.dataIndex));
-        }}
-        >删除</a>
-      ),
       fixed: 'right',
     },
   ];
@@ -319,15 +313,15 @@ function CreateForm() {
       >
         编辑字段
       </Button>
-      { modelShow &&
+      {modelShow &&
         <div style={CardStyle}>
-          <Row style={{padding: 20}}>
+          <Row style={{ padding: 20 }}>
             <Col span={20}>
-              { defaultSql.map((item,index) => (
-                <div style={{padding: '0 20px', marginBottom: 10}} key={index}>
+              {defaultSql.map((item, index) => (
+                <div style={{ padding: '0 20px', marginBottom: 10 }} key={index}>
                   <Space wrap={true}>
                     <span>{item.title}：</span>
-                    { item.component.map((component) => {
+                    {item.component.map((component) => {
                       return <Button type="dashed" key={component.title} onClick={() => createColumns(component)} >{component.title}</Button>
                     })}
                   </Space>
@@ -336,13 +330,13 @@ function CreateForm() {
             </Col>
             <Col span={4} style={BottomButtonStyle}>
               <Button onClick={() => setModelShow(false)} danger type={'primary'}>取消保存并返回</Button>
-              <Button style={{marginLeft: 10}} onClick={onSave} type={'primary'}>保存并返回</Button>
+              <Button style={{ marginLeft: 10 }} onClick={onSave} type={'primary'}>保存并返回</Button>
             </Col>
           </Row>
           <EditableProTable
             columns={columns}
             rowKey='key'
-            scroll={{ x: 1600}}
+            scroll={{ x: 1600 }}
             value={dataSource}
             bordered
             recordCreatorProps={false}
@@ -350,8 +344,15 @@ function CreateForm() {
             editable={{
               type: 'multiple',
               editableKeys,
-              actionRender: (_, __, defaultDom) => [defaultDom.delete],
-              onValuesChange: (record, recordList) => {updateConfig.run(recordList)}
+              actionRender: (record) => [
+                <a key='delete' onClick={() => {
+                  console.log(123);
+
+                  setDataSource(dataSource.filter((item: any) => item.dataIndex !== record.dataIndex));
+                }}
+                >删除</a>
+              ],
+              onValuesChange: (record, recordList) => { updateConfig.run(recordList) }
             }}
           />
         </div>
