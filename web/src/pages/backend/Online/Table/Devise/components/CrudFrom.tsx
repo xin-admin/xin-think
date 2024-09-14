@@ -1,8 +1,7 @@
 import type { ProFormColumnsType, ProFormInstance } from '@ant-design/pro-components';
 import { BetaSchemaForm } from '@ant-design/pro-components';
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useRef } from 'react';
-import { Typography } from 'antd';
 import TableConfigContext from './TableConfigContext';
 
 const columns: ProFormColumnsType<OnlineType.CrudConfig>[] = [
@@ -12,9 +11,8 @@ const columns: ProFormColumnsType<OnlineType.CrudConfig>[] = [
     valueType: 'text',
     fieldProps: {
       placeholder: '请输入数据表名称',
-      addonBefore: 'xin-',
     },
-    tooltip: '必填'
+    tooltip: '必填,不带数据表前缀，生成自动添加'
   },
   {
     title: '数据库备注',
@@ -81,14 +79,14 @@ const columns: ProFormColumnsType<OnlineType.CrudConfig>[] = [
 
 export default () => {
 
-  const {tableConfig,setTableConfig} = useContext(TableConfigContext);
+  const { tableConfig, setTableConfig } = useContext(TableConfigContext);
 
   const formRef = useRef<ProFormInstance>()
   useEffect(() => {
-    if(tableConfig) {
+    if (tableConfig) {
       formRef.current?.setFieldsValue(tableConfig.crudConfig)
     }
-  },[tableConfig])
+  }, [tableConfig])
 
   return (
     <>
@@ -99,8 +97,8 @@ export default () => {
         })}
         layoutType={'Form'}
         layout={'inline'}
-        colProps={{span: 8}}
-        labelCol={{span: 7}}
+        colProps={{ span: 8 }}
+        labelCol={{ span: 7 }}
         grid={true}
         initialValues={{
           name: 'TableName',
@@ -111,7 +109,7 @@ export default () => {
         }}
         formRef={formRef}
         columns={columns}
-        submitter={{render: () => <></>}}
+        submitter={{ render: () => <></> }}
       />
     </>
   );
