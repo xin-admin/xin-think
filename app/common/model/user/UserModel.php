@@ -23,7 +23,7 @@ class UserModel extends BaseModel
     protected $name = 'user';
 
     protected $hidden = [
-        'password', 'create_time', 'update_time', 'status'
+        'password', 'create_time', 'update_time'
     ];
 
     /**
