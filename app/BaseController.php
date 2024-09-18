@@ -114,7 +114,7 @@ abstract class BaseController
                 }
             }
         } catch (\ReflectionException $e) {
-            $this->throwError('当前方法未找到');
+            $this->throwError('注解验证失败：'.$e->getMessage());
         }
 
     }

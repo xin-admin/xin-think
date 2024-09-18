@@ -59,6 +59,7 @@ class Auth
         if ( $appName == 'app' && $tokenData['type'] != 'user' ) {
             self::throwError('Token 类型不正确！');
         }
+        if(empty($key)) return;
         $rules = [];
         if ($tokenData['type'] == 'admin') {
             $adminInfo = self::getAdminInfo();
@@ -80,7 +81,7 @@ class Auth
         }
 
         // 使用反射机制获取当前控制器的 AuthName
-        $class = 'app\\' . $appName . '\\controller\\' . str_replace(".", "\\", request()->controller());
+        $class = 'app\\' . $appName . '\\controller\\' . str_replace(".", "\\", request()->controller() . 'Controller');
         $reflection = new ReflectionClass($class);
         $properties = $reflection->getProperty('authName')->getDefaultValue();
         $allowAction = $reflection->getProperty('allowAction')->getDefaultValue(); // 权限验证白名单
