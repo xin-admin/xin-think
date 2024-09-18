@@ -2361,7 +2361,7 @@ class InstallData extends Migrator
             ],
             [
                 'id' => 7,
-                'key' => 'port',
+                'key' => 'Port',
                 'title' => '服务器端口',
                 'describe' => '邮箱服务器端口',
                 'values' => '465',
