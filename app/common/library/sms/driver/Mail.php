@@ -24,16 +24,25 @@ class Mail extends Driver
      */
     protected function getService(): PHPMailer
     {
+        $options = get_setting('mail');
+        trace($options);
         $mail = new PHPMailer(true);
-        $mail->CharSet = get_setting('mail.char');                     //设定邮件编码
-        $mail->SMTPDebug = 0;                        // 调试模式输出
-        $mail->isSMTP();                             // 使用SMTP
-        $mail->Host = get_setting('mail.smtp');                // SMTP服务器
-        $mail->SMTPAuth = true;                      // 允许 SMTP 认证
-        $mail->Username = get_setting('mail.username');                // SMTP 用户名  即邮箱的用户名
-        $mail->Password = get_setting('mail.password');             // SMTP 密码  部分邮箱是授权码(例如163邮箱)
-        $mail->SMTPSecure = get_setting('mail.SMTPSecure');                    // 允许 TLS 或者ssl协议
-        $mail->Port = get_setting('mail.Port');                            // 服务器端口 25 或者465 具体要看邮箱服务器支持
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+        $mail->isSMTP();                               // 使用SMTP
+        $mail->SMTPDebug    = 0;                       // 调试模式输出
+        $mail->SMTPAuth     = true;                    // 允许 SMTP 认证
+        $mail->CharSet      = $options['char'];        //设定邮件编码
+        $mail->Host         = $options['smtp'];        // SMTP服务器
+        $mail->Username     = $options['username'];    // SMTP 用户名  即邮箱的用户名
+        $mail->Password     = $options['password'];    // SMTP 密码  部分邮箱是授权码(例如163邮箱)
+        $mail->SMTPSecure   = $options['SMTPSecure'];  // 允许 TLS 或者ssl协议
+        $mail->Port         = $options['Port'];        // 服务器端口 25 或者465 具体要看邮箱服务器支持
         return $mail;
     }
 

@@ -74,18 +74,12 @@ class IndexController extends BaseController
             if(!$result){
                 return $this->warn($validate->getError());
             }
-            $mail = new Mail();
-            $verify = $mail->verify($data['email'],$data['captcha']);
-            if($verify !== true){
-                return $this->error($verify);
-            }
             $data = $model->mailLogin($data['email']);
             if($data){
                 return $this->success($data);
             }
             return $this->error($model->getErrorMsg());
         }
-
         // 手机号登录
         if(isset($data['loginType']) && $data['loginType'] === 'phone') {
             // 规则验证
@@ -122,13 +116,27 @@ class IndexController extends BaseController
 
     /**
      * 发送邮箱验证码
+     * @param string $type
      * @return Json
      */
-    public function sendMailCode(): Json
+    public function sendMailCode(string $type = 'login'): Json
     {
         $params = $this->request->param();
         if(!isset($params['email'])) {
             return $this->error('请输入邮箱！');
+        }
+        $model = new UserModel();
+        if($type == 'login' || $type == 'edit_pwd') {
+            $userInfo = $model->where('email',$params['email'])->findOrEmpty();
+            if($userInfo->isEmpty()){
+                return $this->error('邮箱尚未注册！');
+            }
+        }
+        if($type == 'reg') {
+            $userInfo = $model->where('email',$params['email'])->findOrEmpty();
+            if(!$userInfo->isEmpty()){
+                return $this->error('邮箱已经注册！');
+            }
         }
         $SMS = new Mail();
         $data = $SMS->sendCode($params['email']);

@@ -8,6 +8,7 @@ export default [
   '/',
   '/s/modules',
   '/public/reg',
-  '/reg',
+  '/client/reg',
+  '/client/login',
   '/user'
 ];

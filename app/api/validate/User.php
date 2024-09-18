@@ -11,6 +11,7 @@
 namespace app\api\validate;
 
 use app\common\attribute\Auth;
+use app\common\library\sms\driver\Mail;
 use think\Validate;
 
 class User extends Validate
@@ -21,14 +22,14 @@ class User extends Validate
         'password'  =>  'require|min:4|alphaDash',
         'autoLogin' =>  'boolean',
         'mobile'    =>  'require|mobile',
-        'captcha'   =>  'require|max:4',
+        'captcha'   =>  'require|max:4|captcha:thinkphp',
         'nickname'  =>  'require',
         'sex'       =>  'max:1|string',
         'email'     =>  'require|email',
         'gender'    =>  'max:1|string',
         'avatar'    =>  'url',
         'rePassword'=>  'require|alphaDash|confirm:password',
-        'oldPassword'=> 'require|alphaDash|oldPassword',
+        'oldPassword'=> 'require|alphaDash|oldPassword:thinkphp',
         'newPassword'=> 'require|alphaDash',
         'regType'   =>  'require'
     ];
@@ -55,26 +56,18 @@ class User extends Validate
         'account'  =>  ['username','password'],
         // 邮箱登录
         'email'    =>  ['email','captcha'],
-        // 手机号登录
-        'phone'    =>  ['mobile','captcha'],
         // 注册会员
-        'reg'      =>  ['username','nickname','password','rePassword','regType'],
+        'reg'      =>  ['username','password','rePassword','email', 'captcha'],
 
         'set'      =>  ['username','nickname','gender','email','avatar','mobile'],
 
         'set_pwd'  =>  ['oldPassword', 'newPassword', 'rePassword']
     ];
 
-    // 自定义验证规则
-    protected function rePassword($value,$rule, $data=[]): bool|string
+    protected function captcha($value, $rule, $data): bool|string
     {
-        return $value == $data['newPassword'] ? true : '两次密码不同';
-    }
-
-    // 自定义验证规则
-    protected function repeatPassword($value,$rule, $data=[]): bool|string
-    {
-        return $value == $data['password'] ? true : '两次密码不同';
+        $mail = new Mail();
+        return $mail->verify($data['email'],$value);
     }
 
     protected function oldPassword($value): bool|string

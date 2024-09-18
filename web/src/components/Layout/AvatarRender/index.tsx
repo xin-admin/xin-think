@@ -3,9 +3,7 @@ import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { Logout as UserLogout } from '@/services/api/user';
 import { Logout as AdminLogout } from '@/services/admin';
 import { index } from '@/services/api';
-import { useModel, useNavigate } from '@@/exports';
-import LoginModel from '@/components/Layout/UserLoginRender';
-import React, { useState } from 'react';
+import { useModel, useNavigate } from '@umijs/max';
 
 export default () => {
   const {initialState,setInitialState} = useModel('@@initialState');
@@ -28,7 +26,6 @@ export default () => {
     location.href = '/'
   }
   let navigate = useNavigate();
-  const [loginModel, setLoginModel] = useState(false);
   const dropItem = (): DropdownProps['menu']  => {
     let data: DropdownProps['menu'] = {
       items: [
@@ -61,11 +58,8 @@ export default () => {
         </Dropdown>
         :
         <>
-          <Button type={'link'} onClick={() => setLoginModel(true)}>登录</Button>
-          <Button type={'link'} onClick={() => navigate('/reg')}>注册</Button>
-          <Modal open={loginModel} footer={null} onCancel={() => setLoginModel(false)}>
-            <LoginModel></LoginModel>
-          </Modal>
+          <Button type={'link'} onClick={() => navigate('/client/login')}>登录</Button>
+          <Button type={'link'} onClick={() => navigate('/client/reg')}>注册</Button>
         </>
       }
     </>

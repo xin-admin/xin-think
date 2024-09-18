@@ -84,6 +84,9 @@ class UserModel extends BaseUserModel
                 return false;
             }
             $data['password'] = password_hash($data['password'],PASSWORD_DEFAULT);
+            $data['mobile'] = $data['mobile'] ?? '';
+            $data['nickname'] = $data['nickname'] ?? $data['email'];
+
             $user = self::create($data,['username','nickname','password','mobile','email']);
             return $this->getToken($user['id']);
         }catch(Exception $e){
