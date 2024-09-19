@@ -186,7 +186,7 @@ class Auth
         }
         $tokenData = self::getTokenData($token);
         $rules = [];
-        if ($tokenData['type'] == 'user' && $appName == 'app') {
+        if ($tokenData['type'] == 'user' && $appName == 'api') {
             $userInfo = self::getUserInfo();
             if (!$userInfo['status']) self::throwError('账户已被禁用！');
             $group = (new UserGroupModel())->where('id', $userInfo['group_id'])->findOrEmpty();
