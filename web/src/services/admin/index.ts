@@ -47,7 +47,7 @@ export async function refreshAdminToken() {
  * @constructor
  */
 export async function Logout() {
-  return request<ResponseStructure<any>>(api.logoutApi, {
+  return request<API.ResponseStructure<any>>(api.logoutApi, {
     method: 'post'
   });
 }

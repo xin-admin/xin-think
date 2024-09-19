@@ -8,27 +8,27 @@ const api = {
 }
 
 export async function GroupList() {
-  return request<ResponseStructure<any>>(api.list, {
+  return request<API.ResponseStructure<any>>(api.list, {
     method: 'get'
   });
 }
 
 export async function AddGroup(data: any) {
-  return request<ResponseStructure<any>>(api.add, {
+  return request<API.ResponseStructure<any>>(api.add, {
     method: 'post',
     data
   });
 }
 
 export async function EditGroup(data: any) {
-  return request<ResponseStructure<any>>(api.edit, {
+  return request<API.ResponseStructure<any>>(api.edit, {
     method: 'put',
     data
   });
 }
 
 export async function DeleteGroup(data: any) {
-  return request<ResponseStructure<any>>(api.delete, {
+  return request<API.ResponseStructure<any>>(api.delete, {
     method: 'delete',
     data
   });

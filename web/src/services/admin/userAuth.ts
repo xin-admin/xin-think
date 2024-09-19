@@ -10,7 +10,7 @@ const api = {
  * 获取权限父节点ID
  */
 export async function getRulePid() {
-  return request<ResponseStructure<any>>(api.getRulePidApi, {
+  return request<API.ResponseStructure<any>>(api.getRulePidApi, {
     method: 'get'
   });
 }
@@ -20,7 +20,7 @@ export async function getRulePid() {
  * @param data
  */
 export async function setGroupRule(data: {id:number, rule_ids: React.Key[]}) {
-  return request<ResponseStructure<any>>(api.setGroupRuleApi, {
+  return request<API.ResponseStructure<any>>(api.setGroupRuleApi, {
     method: 'post',
     data: data
   });

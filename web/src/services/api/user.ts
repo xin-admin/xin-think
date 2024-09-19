@@ -39,7 +39,7 @@ export async function refreshUserToken() {
  * @constructor
  */
 export async function Logout() {
-  return request<ResponseStructure<any>>(api.logoutApi, {
+  return request<API.ResponseStructure<any>>(api.logoutApi, {
     method: 'post'
   });
 }
@@ -50,7 +50,7 @@ export async function Logout() {
  * @constructor
  */
 export async function setUserInfo(data: USER.UserInfo) {
-  return request<ResponseStructure<any>>(api.setUserApi, {
+  return request<API.ResponseStructure<any>>(api.setUserApi, {
     method: 'post',
     data
   });
@@ -61,7 +61,7 @@ export async function setUserInfo(data: USER.UserInfo) {
  * @constructor
  */
 export async function setPassWord(data: USER.UpdatePassword) {
-  return request<ResponseStructure<any>>(api.setPwdApi, {
+  return request<API.ResponseStructure<any>>(api.setPwdApi, {
     method: 'post',
     data
   });
@@ -72,7 +72,7 @@ export async function setPassWord(data: USER.UpdatePassword) {
  * @constructor
  */
 export async function getMoneyLog(params: any) {
-  return request<ResponseStructure<any>>(api.getMoneyLogApi, {
+  return request<API.ResponseStructure<any>>(api.getMoneyLogApi, {
     method: 'get',
     params
   });
