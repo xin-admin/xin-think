@@ -16,7 +16,7 @@ use app\admin\model\MonitorModel;
 
 class MonitorController extends Controller
 {
-    protected string $authName = "monitor";
+    protected string $authName = "system.monitor";
 
     protected array $withModel = ['user.avatar'];
 
