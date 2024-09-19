@@ -1,16 +1,11 @@
-import { LockOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
-import { LoginForm, ProConfigProvider, ProFormCaptcha, ProFormText } from '@ant-design/pro-components';
-import { message, Tabs, theme } from 'antd';
-import { useState } from 'react';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LoginForm, ProFormCaptcha, ProFormText } from '@ant-design/pro-components';
+import { message, theme } from 'antd';
 import { useModel, useNavigate } from '@umijs/max';
 import { getMailCode, reg } from '@/services/api';
-import {  } from '@@/exports';
-
-type LoginType = 'phone' | 'email';
 
 export default () => {
   const { token } = theme.useToken();
-  const [loginType, setLoginType] = useState<LoginType>('email');
   const { initialState } = useModel('@@initialState');
   const navigate = useNavigate();
 
@@ -44,7 +39,7 @@ export default () => {
     );
   }
   const handleSubmit = async (values: USER.UserLoginFrom) => {
-    const msg = await reg(values);
+    await reg(values);
     message.success('注册成功，请重新登录！');
     navigate('/client/login', {replace: true})
     return;
@@ -142,7 +137,7 @@ export default () => {
           placeholder={'请输入邮箱验证码'}
           captchaTextRender={(timing, count) => {
             if (timing) {
-              return `${count} ${'获取验证码'}`;
+              return `${count} 获取验证码`;
             }
             return '获取验证码';
           }}
