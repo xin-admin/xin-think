@@ -7,23 +7,20 @@ import { useModel, useNavigate } from '@umijs/max';
 
 export default () => {
   const {initialState,setInitialState} = useModel('@@initialState');
+
   const logout =  async () => {
-    if(!localStorage.getItem('app') || localStorage.getItem('app') === 'app') {
+    if(initialState?.app === 'admin' && localStorage.getItem('x-token')) {
+      await AdminLogout();
+      localStorage.clear();
+      window.location.href = '/';
+    }else if(initialState?.app === 'api' && localStorage.getItem('x-user-token')){
       await UserLogout();
+      localStorage.clear();
+      window.location.href = '/';
     }else {
-      await AdminLogout()
+      localStorage.clear();
+      window.location.href = '/';
     }
-    let indexDate = await index();
-    localStorage.setItem('app','app')
-    setInitialState({
-      ...initialState!,
-      webSetting: indexDate.data.web_setting,
-      settings: indexDate.data.layout,
-      menus: indexDate.data.menus,
-      app: 'app'
-    })
-    localStorage.clear()
-    location.href = '/'
   }
   let navigate = useNavigate();
   const dropItem = (): DropdownProps['menu']  => {

@@ -15,7 +15,7 @@ interface XinApi {
     ): Promise<API.ResponseStructure<any>>
 }
 
-let app = localStorage.getItem('app') === 'app' ? '/api':'/admin'
+let app = '/admin'
 
 /**
  * 公共查询接口

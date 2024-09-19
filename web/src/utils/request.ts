@@ -25,7 +25,7 @@ const refreshToken = async (response: AxiosResponse) => {
   try {
     // 登录状态过期，刷新令牌并重新发起请求
     let app = localStorage.getItem('app');
-    if( !app || app === 'app'){
+    if( !app || app === 'api'){
       let res = await refreshUserToken()
       localStorage.setItem('x-user-token', res.data.token);
       response.headers!.xUserToken = res.data.token;

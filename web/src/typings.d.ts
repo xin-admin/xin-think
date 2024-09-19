@@ -21,7 +21,7 @@ interface initialStateType {
   // 菜单
   menus?: USER.MenuType[];
   // 当前app
-  app: string | null;
+  app: 'api' | 'admin';
   // 其它
   webSetting: { [key: string] : any };
 }

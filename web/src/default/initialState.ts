@@ -24,7 +24,7 @@ const defaultInitialState: initialStateType  = {
   currentUser: {},
   settings: appSettings,
   borderShow: true,
-  app: localStorage.getItem('app'),
+  app: localStorage.getItem('app') === 'admin' ? 'admin' : 'api',
   webSetting: {
     logo: 'https://file.xinadmin.cn/file/favicons.ico',
     title: 'Xin Admin'

@@ -13,18 +13,20 @@ import { getMailCode, login } from '@/services/api';
 
 export default () => {
   const navigate = useNavigate();
-  const { initialState, refresh } = useModel('@@initialState');
+  const { initialState } = useModel('@@initialState');
   const { token } = theme.useToken();
   const [loginType, setLoginType] = useState<USER.LoginType>('account');
   // 登录
   const handleSubmit = async (values: USER.UserLoginFrom) => {
     const msg = await login({ ...values, loginType });
     // 记录令牌
+    localStorage.setItem('app', 'api');
     localStorage.setItem('x-user-token', msg.data.token);
     localStorage.setItem('x-user-refresh-token', msg.data.refresh_token);
     message.success('登录成功！');
-    await refresh();
-    navigate('/', {replace: true})
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 100)
     return;
   };
 
