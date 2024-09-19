@@ -1,10 +1,12 @@
 import { refreshAdminToken } from '@/services/admin';
 import { refreshUserToken } from '@/services/api/user';
 import type { AxiosResponse, RequestConfig } from '@umijs/max';
-import { request } from '@umijs/max';
+import { request, history } from '@umijs/max';
 import { message, notification } from 'antd';
 
-// 错误处理方案： 错误类型
+/**
+ * 错误处理方案： 错误类型
+ */
 enum ErrorShowType {
   SUCCESS_MESSAGE = 0,
   WARN_MESSAGE = 1,
@@ -15,6 +17,10 @@ enum ErrorShowType {
   SILENT = 99,
 }
 
+/**
+ * 刷新Token
+ * @param response
+ */
 const refreshToken = async (response: AxiosResponse) => {
   try {
     // 登录状态过期，刷新令牌并重新发起请求
@@ -38,7 +44,71 @@ const refreshToken = async (response: AxiosResponse) => {
   }
 }
 
-
+/**
+ * 响应拦截
+ */
+const responseInterceptors: RequestConfig['responseInterceptors'] = [
+  async (response) => {
+    const { data = {} as any } = response;
+    if(response.status === 202) {
+      return await refreshToken(response);
+    }
+    if(response.status === 401) {
+      message.error(`请先登录！`);
+      if(localStorage.getItem('app') === 'admin') {
+        history.push('/admin/login');
+      }else {
+        history.push('/client/login');
+      }
+      return Promise.reject(response);
+    }
+    if(response.status >= 300) {
+      message.error(`Response status:${response.status}`);
+      return Promise.reject(response);
+    }
+    let {
+      success,
+      msg = '',
+      showType = 0,
+      description = ''
+    } = data as API.ResponseStructure<any>;
+    if(success) return Promise.resolve(response);
+    switch (showType) {
+      case ErrorShowType.SILENT:
+        break;
+      case ErrorShowType.SUCCESS_MESSAGE:
+        message.success(msg);
+        break;
+      case ErrorShowType.WARN_MESSAGE:
+        message.warning(msg);
+        break;
+      case ErrorShowType.ERROR_MESSAGE:
+        message.error(msg);
+        break;
+      case ErrorShowType.SUCCESS_NOTIFICATION:
+        notification.success({
+          description: description,
+          message: msg,
+        });
+        break;
+      case ErrorShowType.WARN_NOTIFICATION:
+        notification.warning({
+          description: description,
+          message: msg,
+        });
+        break;
+      case ErrorShowType.ERROR_NOTIFICATION:
+        notification.error({
+          description: description,
+          message: msg,
+        });
+        break;
+      default:
+        message.error(msg);
+    }
+    return Promise.reject(response);
+  }
+]
 const requestConfig: RequestConfig = {
   baseURL: process.env.DOMAIN,
   timeout: 5000,
@@ -57,62 +127,7 @@ const requestConfig: RequestConfig = {
       return { ...config };
     },
   ],
-  responseInterceptors: [
-    // 直接写一个 function，作为拦截器
-    async (response) =>
-    {
-      // 不再需要异步处理读取返回体内容，可直接在data中读出，部分字段可在 config 中找到
-      const { data = {} as any } = response;
-      if(response.status === 202) {
-        return await refreshToken(response);
-      }
-      if(response.status >= 300) {
-        message.error(`Response status:${response.status}`);
-        return Promise.reject(response);
-      }
-      let {
-        success,
-        msg = '',
-        showType = 0,
-        description = ''
-      } = data as API.ResponseStructure<any>;
-      if(success) return Promise.resolve(response);
-      switch (showType) {
-        case ErrorShowType.SILENT:
-          break;
-        case ErrorShowType.SUCCESS_MESSAGE:
-          message.success(msg);
-          break;
-        case ErrorShowType.WARN_MESSAGE:
-          message.warning(msg);
-          break;
-        case ErrorShowType.ERROR_MESSAGE:
-          message.error(msg);
-          break;
-        case ErrorShowType.SUCCESS_NOTIFICATION:
-          notification.success({
-            description: description,
-            message: msg,
-          });
-          break;
-        case ErrorShowType.WARN_NOTIFICATION:
-          notification.warning({
-            description: description,
-            message: msg,
-          });
-          break;
-        case ErrorShowType.ERROR_NOTIFICATION:
-          notification.error({
-            description: description,
-            message: msg,
-          });
-          break;
-        default:
-          message.error(msg);
-      }
-      return Promise.reject(response);
-    }
-  ]
+  responseInterceptors
 };
 
 export default requestConfig;

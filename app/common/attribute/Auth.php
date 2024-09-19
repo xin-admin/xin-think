@@ -15,7 +15,6 @@ use app\admin\model\admin\AdminModel as AdminModel;
 use app\admin\model\admin\AdminRuleModel;
 use app\api\model\UserModel as UserModel;
 use app\common\enum\ApiEnum\ShowType;
-use app\common\enum\ApiEnum\StatusCode;
 use app\common\library\token\Token;
 use app\common\model\user\UserGroupModel;
 use app\common\model\user\UserRuleModel;
@@ -31,12 +30,10 @@ use think\Response;
 #[Attribute(Attribute::TARGET_METHOD)]
 class Auth
 {
-
     /**
      * @var string
      */
     public string $token;
-
 
     /**
      * 权限初始化，获取请求用户验证权限
@@ -46,124 +43,38 @@ class Auth
     public function __construct(string $key = '')
     {
         if(!function_exists('app')) return;
-        $appName = app('http')->getName();
-        if ( $appName == 'admin' ) {
-            $token = self::getToken();
-        } else {
-            $token = self::getUserToken();
-        }
-        $tokenData = self::getTokenData($token);
-        if ( $appName == 'admin' && $tokenData['type'] != 'admin' ) {
-            self::throwError('Token 类型不正确！');
-        }
-        if ( $appName == 'app' && $tokenData['type'] != 'user' ) {
-            self::throwError('Token 类型不正确！');
-        }
+        // 获取权限标识
+        $rules = self::getRules();
         if(empty($key)) return;
-        $rules = [];
-        if ($tokenData['type'] == 'admin') {
-            $adminInfo = self::getAdminInfo();
-            if ($adminInfo['group_id'] == 1) {
-                return;
-            }
-            if (!$adminInfo['status']) self::throwError('账户已被禁用！');
-            // 获取用户所有权限
-            $group = (new AdminGroupModel())->where('id', $adminInfo['group_id'])->findOrEmpty();
-            $rules = (new AdminRuleModel())->where('id', 'in', $group->rules)->column('key');
-            $rules = array_map('strtolower',$rules);
-        }
-        if ($tokenData['type'] == 'user') {
-            $userInfo = self::getUserInfo();
-            if (!$userInfo['status']) self::throwError('账户已被禁用！');
-            $group = (new UserGroupModel())->where('id', $userInfo['group_id'])->findOrEmpty();
-            $rules = (new UserRuleModel())->where('id', 'in', $group->rules)->column('key');
-            $rules = array_map('strtolower',$rules);
-        }
-
         // 使用反射机制获取当前控制器的 AuthName
-        $class = 'app\\' . $appName . '\\controller\\' . str_replace(".", "\\", request()->controller() . 'Controller');
+        $appName = app('http')->getName();
+        $controllerName = request()->controller();
+        $class = 'app\\' . $appName . '\\controller\\' . str_replace(".", "\\", $controllerName . 'Controller');
         $reflection = new ReflectionClass($class);
-        $properties = $reflection->getProperty('authName')->getDefaultValue();
-        $allowAction = $reflection->getProperty('allowAction')->getDefaultValue(); // 权限验证白名单
-        if (in_array(request()->controller(), $allowAction)) {
-            return;
+        $authName = $reflection->getProperty('authName')->getDefaultValue();
+        if (!$authName) {
+            $authName = str_replace("\\", ".", $controllerName);
         }
-        if ($properties) {
-            $authKey = strtolower($properties . '.' . $key);
-        } else {
-            $authKey = strtolower(str_replace("\\", ".", request()->controller()) . '.' . $key);
+        $authKey = strtolower($authName . '.' . $key);
+        // 权限不存在添加权限
+        $authList = (new AdminRuleModel)->column('key');
+        if(!in_array($authKey, $authList)) {
+            self::addAuth($key, $authName);
         }
         if (!in_array($authKey, $rules)) {
-            self::throwError('暂无权限！');
+            $data = [
+                'success' => false,
+                'msg' => '暂无权限',
+                'showType' => ShowType::WARN_NOTIFICATION->value,
+                'description' => '请联系管理员获取权限，如果你是管理员请检查权限菜单中是否有本接口的权限！'
+            ];
+            $response = Response::create($data, 'json');
+            throw new HttpResponseException($response);
         }
-
     }
 
     /**
-     * 是否登录
-     * @return string
-     */
-    static public function getUserToken(): string
-    {
-        $token = request()->header('x-user-token');
-        if (!$token) {
-            static::throwError('请先登录！');
-        }
-        return $token;
-    }
-
-    /**
-     * 是否登录
-     * @return string
-     */
-    static public function getToken(): string
-    {
-        $token = request()->header('x-token');
-        if (!$token) {
-            static::throwError('请先登录！');
-        }
-        return $token;
-    }
-
-
-    /**
-     * 是否登录 Api
-     * @return bool
-     */
-    static public function isUserLogin(): bool
-    {
-        $token = request()->header('x-user-token');
-        if ($token) return true;
-        return false;
-    }
-
-    /**
-     * 是否登录 Admin
-     * @return bool
-     */
-    static public function isLogin(): bool
-    {
-        $token = request()->header('x-token');
-        if ($token) return true;
-        return false;
-    }
-
-    /**
-     * 获取 Token Data
-     * @param $token
-     * @return array
-     */
-    static public function getTokenData($token): array
-    {
-        $tokenData = (new Token)->get($token);
-        if (!$tokenData) {
-            static::throwError('请先登录！');
-        }
-        return $tokenData;
-    }
-
-    /**
-     * 获取用户ID
+     * 获取用户ID，未登录抛出错误
      * @return int
      */
     static public function getUserId(): int
@@ -177,7 +88,7 @@ class Auth
     }
 
     /**
-     * 获取用户信息
+     * 获取用户信息（用户端）未登录抛出错误
      * @return array
      */
     public static function getUserInfo(): array
@@ -206,7 +117,7 @@ class Auth
     }
 
     /**
-     * 获取用户信息
+     * 获取管理员信息（管理端）未登录抛出错误
      * @return array
      */
     public static function getAdminInfo(): array
@@ -221,20 +132,116 @@ class Auth
     }
 
     /**
+     * 获取 Token （用户端）未登录抛出错误
+     * @return string
+     */
+    static private function getUserToken(): string
+    {
+        $token = request()->header('x-user-token');
+        if (!$token) {
+            self::throwError('请先登录！');
+        }
+        return $token;
+    }
+
+    /**
+     * 获取 Token （管理端） 未登录抛出错误
+     * @return string
+     */
+    static private function getToken(): string
+    {
+        $token = request()->header('x-token');
+        if (!$token) {
+            self::throwError('请先登录！');
+        }
+        return $token;
+    }
+
+    /**
+     * 获取 Token Data
+     * @param $token
+     * @return array
+     */
+    static private function getTokenData($token): array
+    {
+        $tokenData = (new Token)->get($token);
+        if (!$tokenData) {
+            self::throwError('请先登录！');
+        }
+        return $tokenData;
+    }
+
+    /**
+     * 获取权限
+     * @return array
+     */
+    static private function getRules(): array
+    {
+        $appName = app('http')->getName();
+        if ( $appName == 'admin' ) {
+            $token = self::getToken();
+        } else {
+            $token = self::getUserToken();
+        }
+        $tokenData = self::getTokenData($token);
+        $rules = [];
+        if ($tokenData['type'] == 'user' && $appName == 'app') {
+            $userInfo = self::getUserInfo();
+            if (!$userInfo['status']) self::throwError('账户已被禁用！');
+            $group = (new UserGroupModel())->where('id', $userInfo['group_id'])->findOrEmpty();
+            $rules = (new UserRuleModel())->where('id', 'in', $group->rules)->column('key');
+            $rules = array_map('strtolower',$rules);
+        }else if($tokenData['type'] == 'admin' && $appName == 'admin') {
+            $adminInfo = self::getAdminInfo();
+            if (!$adminInfo['status']) self::throwError('账户已被禁用！');
+            $group = (new AdminGroupModel())->where('id', $adminInfo['group_id'])->findOrEmpty();
+            $rules = (new AdminRuleModel())->where('id', 'in', $group->rules)->column('key');
+            $rules = array_map('strtolower',$rules);
+        }else {
+            self::throwError('Token 类型错误！');
+        }
+        return $rules;
+    }
+
+    /**
+     * 权限验证错误
      * @param string $msg
      * @return void
      */
     static private function throwError(string $msg = ''): void
     {
-        $data = [
-            'data' => ['type' => 'user'],
-            'success' => false,
-            'status' => StatusCode::RULE->value,
-            'msg' => $msg,
-            'showType' => ShowType::ERROR_MESSAGE->value
-        ];
-        $response = Response::create($data, 'json', StatusCode::RULE->value);
+        $data = ['success' => false, 'msg' => $msg];
+        $response = Response::create($data, 'json', 401);
         throw new HttpResponseException($response);
     }
 
+    /**
+     * 如果是新写的接口，权限不存在，自动添加按钮/接口权限
+     * @param string $key
+     * @param string $authName
+     * @return void
+     */
+    static private function addAuth(string $key, string $authName): void
+    {
+        $model = new AdminRuleModel();
+        $p_auth = $model->where('key', $authName)->findOrEmpty();
+        if($p_auth->isEmpty()){
+            return;
+        }
+        $model->insert([
+            'name' => '新接口',
+            'sort' => 0,
+            'type' => 2,
+            'pid' => $p_auth->id,
+            'key' => $authName . '.' . $key
+        ]);
+        $data = [
+            'success' => false,
+            'msg' => '权限更新',
+            'showType' => ShowType::WARN_NOTIFICATION->value,
+            'description' => '权限自动更新，请刷新页面重试~'
+        ];
+        $response = Response::create($data, 'json');
+        throw new HttpResponseException($response);
+    }
 }
