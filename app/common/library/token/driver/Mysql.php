@@ -72,8 +72,13 @@ class Mysql extends Driver
         $data['token'] = $token;
         // 返回剩余有效时间
         $data['expires_in'] = $this->getExpiredIn($data['expire_time'] ?? 0);
+        // token过期-触发前端刷新token
         if ($data['expire_time'] && $data['expire_time'] <= time() && $expirationException) {
-            // token过期-触发前端刷新token
+            if($data['type'] == 'user-refresh' || $data['type'] == 'admin-refresh') {
+                // 刷新 Token 过期重新登录
+                $response = Response::create([ 'msg' => 'logout' ], 'json', 401);
+                throw new HttpResponseException($response);
+            }
             $response = Response::create([ 'msg' => 'Refresh Token' ], 'json', 202);
             throw new HttpResponseException($response);
         }

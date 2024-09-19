@@ -48,66 +48,68 @@ const refreshToken = async (response: AxiosResponse) => {
  * 响应拦截
  */
 const responseInterceptors: RequestConfig['responseInterceptors'] = [
-  async (response) => {
-    const { data = {} as any } = response;
-    if(response.status === 202) {
-      return await refreshToken(response);
-    }
-    if(response.status === 401) {
-      message.error(`请先登录！`);
-      if(localStorage.getItem('app') === 'admin') {
-        history.push('/admin/login');
-      }else {
-        history.push('/client/login');
+  [
+    async (response) => {
+      const { data = {} as any } = response;
+      if(response.status === 202) {
+        return await refreshToken(response);
+      }
+      let {
+        success,
+        msg = '',
+        showType = 0,
+        description = ''
+      } = data as API.ResponseStructure<any>;
+      if(success) return Promise.resolve(response);
+      switch (showType) {
+        case ErrorShowType.SILENT:
+          break;
+        case ErrorShowType.SUCCESS_MESSAGE:
+          message.success(msg);
+          break;
+        case ErrorShowType.WARN_MESSAGE:
+          message.warning(msg);
+          break;
+        case ErrorShowType.ERROR_MESSAGE:
+          message.error(msg);
+          break;
+        case ErrorShowType.SUCCESS_NOTIFICATION:
+          notification.success({
+            description: description,
+            message: msg,
+          });
+          break;
+        case ErrorShowType.WARN_NOTIFICATION:
+          notification.warning({
+            description: description,
+            message: msg,
+          });
+          break;
+        case ErrorShowType.ERROR_NOTIFICATION:
+          notification.error({
+            description: description,
+            message: msg,
+          });
+          break;
+        default:
+          message.error(msg);
       }
       return Promise.reject(response);
+    },
+    async (error: any) => {
+      if(error.response?.status === 401) {
+        message.error(`请先登录！`);
+        if(localStorage.getItem('app') === 'admin') {
+          history.push('/admin/login');
+        }else {
+          history.push('/client/login');
+        }
+        return Promise.reject(error);
+      }
+      message.error(`Response status:${error.response.status}`);
+      return Promise.reject(error);
     }
-    if(response.status >= 300) {
-      message.error(`Response status:${response.status}`);
-      return Promise.reject(response);
-    }
-    let {
-      success,
-      msg = '',
-      showType = 0,
-      description = ''
-    } = data as API.ResponseStructure<any>;
-    if(success) return Promise.resolve(response);
-    switch (showType) {
-      case ErrorShowType.SILENT:
-        break;
-      case ErrorShowType.SUCCESS_MESSAGE:
-        message.success(msg);
-        break;
-      case ErrorShowType.WARN_MESSAGE:
-        message.warning(msg);
-        break;
-      case ErrorShowType.ERROR_MESSAGE:
-        message.error(msg);
-        break;
-      case ErrorShowType.SUCCESS_NOTIFICATION:
-        notification.success({
-          description: description,
-          message: msg,
-        });
-        break;
-      case ErrorShowType.WARN_NOTIFICATION:
-        notification.warning({
-          description: description,
-          message: msg,
-        });
-        break;
-      case ErrorShowType.ERROR_NOTIFICATION:
-        notification.error({
-          description: description,
-          message: msg,
-        });
-        break;
-      default:
-        message.error(msg);
-    }
-    return Promise.reject(response);
-  }
+  ]
 ]
 const requestConfig: RequestConfig = {
   baseURL: process.env.DOMAIN,
