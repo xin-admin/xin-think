@@ -374,7 +374,8 @@ class Crud
                 'type' => 2,
                 'pid' => $model->getKey(),
                 'key' => $auth . '.add',
-                'remark' => $this->crudConfig['sqlTableRemark'].'新增'
+                'create_time' => time(),
+                'update_time' => time()
             ],
             [
                 'name' => $this->crudConfig['sqlTableRemark'] . '编辑',
@@ -382,7 +383,8 @@ class Crud
                 'type' => 2,
                 'pid' => $model->getKey(),
                 'key' => $auth . '.edit',
-                'remark' => $this->crudConfig['sqlTableRemark'].'编辑'
+                'create_time' => time(),
+                'update_time' => time()
             ],
             [
                 'name' => $this->crudConfig['sqlTableRemark'] . '查询',
@@ -390,7 +392,8 @@ class Crud
                 'type' => 2,
                 'pid' => $model->getKey(),
                 'key' => $auth . '.list',
-                'remark' => $this->crudConfig['sqlTableRemark'].'查询'
+                'create_time' => time(),
+                'update_time' => time()
             ],
             [
                 'name' => $this->crudConfig['sqlTableRemark'] . '删除',
@@ -398,7 +401,8 @@ class Crud
                 'type' => 2,
                 'pid' => $model->getKey(),
                 'key' => $auth . '.delete',
-                'remark' => $this->crudConfig['sqlTableRemark'].'删除'
+                'create_time' => time(),
+                'update_time' => time()
             ]
         ];
         $model->saveAll($dataAll);
