@@ -58,6 +58,7 @@ class Auth
         $authKey = strtolower($authName . '.' . $key);
         // 权限不存在添加权限
         $authList = (new AdminRuleModel)->column('key');
+        $authList = array_map('strtolower',$authList);
         if(!in_array($authKey, $authList)) {
             self::addAuth($key, $authName);
         }
