@@ -1,13 +1,8 @@
 <?php
 // 应用公共文件
 use app\admin\model\setting\SettingGroupModel;
-use app\common\enum\ApiEnum\ShowType;
-use app\common\enum\ApiEnum\StatusCode;
-use think\exception\HttpResponseException;
 use think\facade\Request;
-use think\Response;
 
-use app\common\trait\RequestJson;
 /**
  * 驼峰转下划线
  * @param string $camelCaps
@@ -20,52 +15,32 @@ function uncamelize(string $camelCaps, string $separator = '_'): string
 }
 
 /**
- * 获取站点的系统配置，不传递参数则获取所有配置项
+ * 获取站点的系统配置，不传递参数则获取所有配置项，配置项不存在返回 null
  * @param string $name 变量名
- * @return string | array
+ * @return string | array | null
  */
-function get_setting(string $name): array | string
+function get_setting(string $name): array | string | null
 {
     $setting_name = explode('.',$name);
     $setting_group = (new SettingGroupModel())->where('key',$setting_name[0])->findOrEmpty();
     if($setting_group->isEmpty()){
-        $data = [
-            'data' => [],
-            'success' => false,
-            'status' => StatusCode::WARN->value,
-            'msg'   => '设置不存在',
-            'showType' => ShowType::WARN_MESSAGE->value
-        ];
-        $response = Response::create($data, 'json', StatusCode::WARN->value);
-        throw new HttpResponseException($response);
+        trace("配置项不存在：{$name}", 'setting');
+        return null;
     }
     if(count($setting_name) > 1){
         $setting = $setting_group->setting()->where('key',$setting_name[1])->findOrEmpty();
         if($setting->isEmpty()){
-            $data = [
-                'data' => [],
-                'success' => false,
-                'status' => StatusCode::WARN->value,
-                'msg'   => '设置不存在',
-                'showType' => ShowType::WARN_MESSAGE->value
-            ];
-            $response = Response::create($data, 'json', StatusCode::WARN->value);
-            throw new HttpResponseException($response);
+            trace("设置不存在: $name", 'setting');
+            return null;
         }
         return $setting['values'];
     }else {
         try {
             $setting = $setting_group->setting()->select();
         } catch (Exception $e) {
-            $data = [
-                'data' => [],
-                'success' => false,
-                'status' => StatusCode::WARN->value,
-                'msg'   => $e->getMessage(),
-                'showType' => ShowType::WARN_MESSAGE->value
-            ];
-            $response = Response::create($data, 'json', StatusCode::WARN->value);
-            throw new HttpResponseException($response);
+            $msg = $e->getMessage();
+            trace("获取设置错误：$msg", 'setting');
+            return null;
         }
         $arr = [];
         foreach ($setting as $set){
