@@ -23,7 +23,7 @@ class UserController extends Controller
 
     protected array $withModel = ['avatar'];
 
-    protected string $authName = 'user';
+    protected string $authName = 'user.list';
 
     protected array $searchField = [];
 

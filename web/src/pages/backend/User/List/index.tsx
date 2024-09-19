@@ -151,7 +151,7 @@ const User: React.FC = () => {
       rowSelectionShow={true}
       editShow={false}
       deleteShow={true}
-      accessName={'admin.rule'}
+      accessName={'user.list'}
     />
   )
 

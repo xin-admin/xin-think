@@ -115,7 +115,7 @@ class Install extends Migrator
                 ->addColumn('show', 'integer', ['comment' => '显示状态', 'null' => false, 'default' => 1, 'limit' => 1])
                 ->addColumn('create_time', 'integer', ['limit' => 10, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '更新时间'])
                 ->addColumn('update_time', 'integer', ['limit' => 10, 'signed' => false, 'null' => true, 'default' => null, 'comment' => '创建时间'])
-                ->addIndex(['key'], ['unique' => true, 'type' => 'btree'])
+                ->addIndex(['key'], ['unique' => true])
                 ->create();
         }
     }
