@@ -10,22 +10,29 @@
 // +----------------------------------------------------------------------
 namespace app\common\enum\ApiEnum;
 
+/**
+ * 响应状态枚举类
+ */
 enum ShowType: int
 {
-
-    // 无状态响应
-	case SILENT = 0;
+    // 成功响应
+    case SUCCESS_MESSAGE = 0;
 
     // 警告响应
     case WARN_MESSAGE = 1;
 
-    // 失败响应
+    // 错误响应
     case ERROR_MESSAGE = 2;
 
-    // 通知响应
-    case NOTIFICATION = 3;
+    // 成功通知
+    case SUCCESS_NOTIFICATION = 3;
 
-    // 待处理响应
-    case REDIRECT = 9;
-    
+    // 警告通知
+    case WARN_NOTIFICATION = 4;
+
+    // 错误通知
+    case ERROR_NOTIFICATION = 5;
+
+    // 静默响应
+    case SILENT = 99;
 }

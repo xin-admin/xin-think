@@ -11,7 +11,6 @@
 namespace app\common\library\token\driver;
 
 use app\common\enum\ApiEnum\ShowType;
-use app\common\enum\ApiEnum\StatusCode;
 use think\exception\HttpResponseException;
 use think\facade\Cache;
 use think\facade\Db;
@@ -77,12 +76,11 @@ class Mysql extends Driver
         if ($data['expire_time'] && $data['expire_time'] <= time() && $expirationException) {
             // token过期-触发前端刷新token
             $response = Response::create([
-                'status' => StatusCode::ACCEPTED->value,
                 'msg' => 'Token 已过期', 
                 'data' => $data, 
                 'success'=> false, 
                 'showType' => ShowType::SILENT->value
-            ], 'json', StatusCode::ACCEPTED->value);
+            ], 'json');
             throw new HttpResponseException($response);
         }
         return $data;

@@ -24,6 +24,8 @@ declare namespace API {
     msg?: string
     showType?: ErrorShowType
     status?: number
+    description?: string
+    placement?: 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' | 'bottomRight'
   }
 
   type TableData<T> = ResponseStructure<ListResponse<T>>

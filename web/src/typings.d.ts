@@ -41,14 +41,3 @@ interface Menus {
   locale: string;
   update_time: string;
 }
-
-
-// 与后端约定的响应数据格式
-interface ResponseStructure<T> {
-  success: boolean
-  data: T
-  errorCode?: number
-  msg?: string
-  showType?: ErrorShowType
-  status?: number
-}

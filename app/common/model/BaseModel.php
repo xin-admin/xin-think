@@ -11,7 +11,6 @@
 namespace app\common\model;
 
 use app\common\enum\ApiEnum\ShowType as ShopTypeEnum;
-use app\common\enum\ApiEnum\StatusCode;
 use app\common\trait\RequestJson;
 use think\Model;
 
@@ -41,14 +40,14 @@ class BaseModel extends Model
     public static function onBeforeWrite(Model $model): void
     {
         if (env('WEB_NAME') && env('WEB_NAME') == 'xin_test') {
-            self::renderThrow(false, [], StatusCode::WARN->value, '演示站已禁止此操作', ShopTypeEnum::WARN_MESSAGE->value);
+            self::renderThrow(false, [], '演示站已禁止此操作', ShopTypeEnum::WARN_MESSAGE);
         }
     }
 
     public static function onBeforeDelete(Model $model): void
     {
         if (env('WEB_NAME') && env('WEB_NAME') == 'xin_test') {
-            self::renderThrow(false, [], StatusCode::WARN->value, '演示站已禁止此操作', ShopTypeEnum::WARN_MESSAGE->value);
+            self::renderThrow(false, [], '演示站已禁止此操作', ShopTypeEnum::WARN_MESSAGE);
         }
     }
 
