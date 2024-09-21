@@ -4,7 +4,7 @@ import { history, Navigate } from '@umijs/max';
 import type { MenuDataItem } from '@ant-design/pro-components';
 import defaultRoutes from '@/default/routes';
 import defaultInitialState from '@/default/initialState';
-import { adminSettings, appSettings } from '@/default/settings';
+import { adminSettings, appSettings, Settings } from '@/default/settings';
 import { index } from '@/services/api';
 import defaultConfig from '@/utils/request';
 import fixMenuItemIcon from '@/utils/menuDataRender';
@@ -57,7 +57,7 @@ export async function getInitialState(): Promise<initialStateType> {
 }
 
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
-  return {
+  return Object.assign(Settings, {
     logo: initialState?.webSetting?.logo,
     title: initialState?.webSetting?.title,
     menu: { request: async () => initialState?.menus },
@@ -72,7 +72,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
       return <Access>{children}</Access>;
     },
     ...initialState?.settings,
-  }
+  })
 }
 
 // 修改被 react-router 渲染前的树状路由表，接收内容同 useRoutes

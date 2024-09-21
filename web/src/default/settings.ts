@@ -3,18 +3,18 @@ import { ProLayoutProps } from '@ant-design/pro-components';
 /**
  * 默认 Layout
  */
-const Settings: ProLayoutProps & {
+export const Settings: ProLayoutProps & {
   pwa?: boolean;
   logo?: string;
 } = {
   navTheme: 'light',
   colorPrimary: '#1890ff',
-  layout: 'mix',
-  contentWidth: 'Fluid',
-  fixedHeader: false,
+  layout: 'top',
+  contentWidth: 'Fixed',
+  fixedHeader: true,
   fixSiderbar: true,
   colorWeak: false,
-  title: 'Ant Design Pro',
+  title: 'Xin Admin',
   pwa: true,
   logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   iconfontUrl: '',
@@ -56,5 +56,3 @@ export const adminSettings: ProLayoutProps = {
   fixSiderbar: true,
   splitMenus: false,
 }
-
-export default Settings;
