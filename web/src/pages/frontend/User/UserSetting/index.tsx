@@ -50,7 +50,7 @@ const Table : React.FC = () => {
         return <UploadImgItem
           form={form}
           dataIndex={'avatar_id'}
-          api={'/api/user/upAvatar'}
+          api={'api/user/upAvatar'}
           defaultFile={form.getFieldValue('avatar_url')}
           crop={true}
         />

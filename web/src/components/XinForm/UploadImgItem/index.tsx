@@ -1,6 +1,6 @@
 import ImgCrop from 'antd-img-crop';
 import React, { useEffect, useState } from 'react';
-import { Upload } from 'antd';
+import { message, Upload } from 'antd';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import { FormInstance } from 'antd/lib/form';
 
@@ -49,8 +49,12 @@ const UploadImgItem: React.FC<PropsType> = (props) => {
       return
     }
     if (newFileList[0].status === 'done') {
-      console.log(newFileList[0].response)
-      form.setFieldValue(dataIndex, newFileList[0].response.data.fileInfo.file_id)
+      if(newFileList[0].response.success) {
+        form.setFieldValue(dataIndex, newFileList[0].response.data.fileInfo.file_id)
+      }else {
+        message.warning(newFileList[0].response.msg)
+        setFileList([])
+      }
     }
   };
 
@@ -81,7 +85,8 @@ const UploadImgItem: React.FC<PropsType> = (props) => {
             onChange={onChange}
             onPreview={onPreview}
             headers={{
-              'X-Token': localStorage.getItem('x-token')!
+              'X-Token': localStorage.getItem('x-token')!,
+              'X-User-Token': localStorage.getItem('x-user-token')!,
             }}
           >+ Upload</Upload>
         </ImgCrop>
@@ -93,7 +98,8 @@ const UploadImgItem: React.FC<PropsType> = (props) => {
           fileList={fileList}
           onChange={onChange}
           headers={{
-            'X-Token': localStorage.getItem('x-token')!
+            'X-Token': localStorage.getItem('x-token')!,
+            'X-User-Token': localStorage.getItem('x-user-token')!,
           }}
         >+ Upload</Upload>
       }
