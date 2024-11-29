@@ -17,6 +17,7 @@ class AdminGroupModel extends BaseAdminGroupModel
 
     public function getRulesAttr($value): array
     {
+        if (!$value)return [];
         if($value == '*') {
             return (new AdminRuleModel())->where('status',1)->column('id');
         }else {
