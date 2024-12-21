@@ -50,7 +50,7 @@ class Monitor
     public function getMethod($ip): string
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://searchplugin.csdn.net/api/v1/ip/get?ip='.$ip);
+        curl_setopt($ch, CURLOPT_URL, 'http://ip-api.com/json/' . $ip . '?lang=zh-CN');
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -59,8 +59,8 @@ class Monitor
         $response = curl_exec($ch);
         curl_close($ch);
         $resData = json_decode($response,true);
-        if($resData['code'] == 200) {
-            return $resData['data']['address'];
+        if(!empty($resData['status']) && $resData['status'] == 'success') {
+            return $resData['country'] . $resData['regionName'] . $resData['city'];
         }else {
             return '未知';
         }
