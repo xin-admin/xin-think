@@ -336,7 +336,7 @@ class Crud
             'table_config' => $tableConfig,
             'api'     => $api
         ];
-        $web_path = env('web_path', './web/admin');
+        $web_path = env('web_path', './web');
         $pagePath = root_path() . $web_path .'/src/pages/backend' . $this->crudConfig['pagePath'] . '/' . $this->crudConfig['name'];
         if(!is_dir($pagePath)){
             mkdir($pagePath, 0777, true); // 使用递归创建目录
